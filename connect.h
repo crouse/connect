@@ -40,6 +40,8 @@ private slots:
 
     void on_pushButtonPrevious_clicked();
 
+    void on_pushButtonClear_clicked();
+
 private:
     Ui::Connect *ui;
 };

@@ -488,16 +488,7 @@ bool Connect::complete_fields(QString name, QString value)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Connect::on_pushButtonClear_clicked()
+{
+    clear_lineEdits();
+}
