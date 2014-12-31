@@ -69,11 +69,28 @@ Connect::Connect(QWidget *parent) :
     QRegExp regExpPostcode("^[1-9][0-9]{5}$");
     ui->lineEditPostcode->setValidator(new QRegExpValidator(regExpPostcode, this));
 
-    /* database setting */
+    // database setting
     db = QSqlDatabase::addDatabase("QSQLITE");
     //db.setDatabaseName(":memory"); // in memory db
     db.setDatabaseName("/Users/quqinglei/Desktop/memory.db");
     db.open();
+
+    /*
+    // mysql
+    QCoreApplication::addLibraryPath("/Users/quqinglei/Qt5.4.0/5.4/clang_64/plugins/sqldrivers");
+    QCoreApplication::addLibraryPath("/opt/local/lib");
+    QCoreApplication::addLibraryPath("/usr/local/lib");
+    QCoreApplication::addLibraryPath("/usr/lib");
+    QCoreApplication::addLibraryPath("/opt/local/lib/mysql55/mysql/");
+
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("10.0.0.18");
+    db.setDatabaseName("connect");
+    db.setUserName("connect");
+    db.setPassword("connect");
+    db.open();
+    qDebug() << QCoreApplication::libraryPaths();
+    */
 
     QSqlQuery query;
     QString createTableSql = "                             \
@@ -261,7 +278,7 @@ bool Connect::update_sqlite_database()
                   buddhist_disciples_of_family     ,\
                   editor                           ,\
                   others                            \
-        ) VALUES (                                  \
+                  ) VALUES (                        \
                   :name                            ,\
                   :gender                          ,\
                   :job                             ,\
@@ -346,6 +363,8 @@ bool Connect::update_sqlite_database()
     bool rt = query.exec();
     if (!rt) {
         qDebug() << "rt:" << rt << query.lastError().text();
+        // 输出错误到屏幕！[tbd] 这个得考虑到输入重复问题，下面的错误用户未必理解，所以得考虑到
+        QMessageBox::information(this, "", query.lastError().text());
     }
 
     return true;

@@ -75,7 +75,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditReceipt">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;收据编号&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;收据编号，这个是唯一值，如果输入的收据编号在数据库中存在，当收据编号输入完后，则会自动补全数据库中的数据到所有输入框&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="placeholderText">
              <string>收据编号：</string>
