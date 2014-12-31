@@ -477,7 +477,7 @@
          </font>
         </property>
         <property name="mouseTracking">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="acceptDrops">
          <bool>false</bool>
@@ -495,7 +495,7 @@
          <string>确定</string>
         </property>
         <property name="shortcut">
-         <string>Return</string>
+         <string>Meta+Return</string>
         </property>
         <property name="flat">
          <bool>false</bool>

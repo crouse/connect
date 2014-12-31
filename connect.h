@@ -26,6 +26,7 @@ public:
     bool update_sqlite_database();
     bool clear_lineEdits();
     bool complete_fields(QString name, QString value);
+    void append_items2_tableView();
 private:
     QSqlDatabase db;
 

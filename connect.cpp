@@ -4,20 +4,38 @@
 #include <QValidator>
 #include <QStringList>
 #include <QCompleter>
+#include <QList>
 
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Connect)
 {
     ui->setupUi(this);
-    //setStyleSheet("background-color:white");
 
     //completor
     QStringList family_list;
-    family_list << "父亲" << "母亲" << "兄弟" << "姐妹";
+    family_list << "1. 父亲" << "2. 母亲" << "3. 兄弟" << "4. 姐妹" << "5. 妻子" << "6. 孩子";
     QCompleter *family_completer = new QCompleter(family_list, this);
     family_completer->setCaseSensitivity(Qt::CaseInsensitive);
     ui->lineEditBuddhistDisciplesOfFamily->setCompleter(family_completer);
+
+    QStringList degree_list;
+    degree_list << "1. 小学" << "2. 初中" << "3. 高中" << "4. 大学专科" << "5. 大学本科" << "6. 硕士" << "7. 博士" << "8. 博士后";
+    QCompleter *degree_completer = new QCompleter(degree_list, this);
+    family_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->lineEditDegree->setCompleter(degree_completer);
+
+    QStringList knowledge_list;
+    knowledge_list << "1. 完全不了解" << "2. 不深刻" << "3. 比较深刻";
+    QCompleter *knowledge_completer = new QCompleter(knowledge_list, this);
+    knowledge_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->lineEditBuddhismLevel->setCompleter(knowledge_completer);
+
+    QStringList reason_list;
+    reason_list << "1. 由法师(居士)引导学佛" << "2. 由读佛教经典领悟学佛" << "3. 由经历启发学佛";
+    QCompleter *reason_completer = new QCompleter(reason_list, this);
+    reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
 
     viewModel = new QStandardItemModel();
     viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
@@ -25,12 +43,6 @@ Connect::Connect(QWidget *parent) :
     viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
     ui->tableView->setModel(viewModel);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    viewModel->setItem(0, 0, new QStandardItem("屈庆磊"));
-    viewModel->setItem(0, 1, new QStandardItem("18201620963"));
-
-    viewModel->setItem(1, 0, new QStandardItem("小明"));
-    viewModel->setItem(1, 1, new QStandardItem("17201620963"));
 
     /* set validators */
     QRegExp regExpGender("^[\u7537\u5973]+$"); // 性别只允许输入男或者女
@@ -152,20 +164,22 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 {
     switch(index.column()) {
     case 0:
-        ui->lineEditName->setText(index.data().toString());
+        complete_fields("name", index.data().toString());
+        viewModel->removeRow(index.row());
         break;
     case 1:
-        ui->lineEditPhoneNum->setText(index.data().toString());
+        complete_fields("phone_num", index.data().toString());
+        viewModel->removeRow(index.row());
         break;
     case 2:
-        ui->lineEditID->setText(index.data().toString());
+        complete_fields("receipt", index.data().toString());
+        viewModel->removeRow(index.row());
         break;
     }
 }
 
 void Connect::on_lineEditReceipt_editingFinished()
 {
-   ui->lineEditAddress->setText("helloWorld");
    complete_fields("receipt", ui->lineEditReceipt->text());
    qDebug() << "one_lineEditReceipt_editingFinished";
 }
@@ -188,6 +202,7 @@ void Connect::on_pushButtonOK_clicked()
 
     validate_input_values();
     update_sqlite_database();
+    append_items2_tableView();
     clear_lineEdits();
 }
 
@@ -458,7 +473,7 @@ bool Connect::complete_fields(QString name, QString value)
             buddhist_disciples_of_family,\
             editor,\
             others\
-            from people where %1 = %2"
+            from people where %1 = '%2'"
      ).arg(name).arg(value);
     query.exec(sql);
     while(query.next()) {
@@ -511,3 +526,28 @@ void Connect::on_pushButtonClear_clicked()
 {
     clear_lineEdits();
 }
+
+void Connect::append_items2_tableView()
+{
+    QString name = ui->lineEditName->text();
+    QString phone = ui->lineEditPhoneNum->text();
+    QString receipt = ui->lineEditReceipt->text();
+
+    QList <QStandardItem*> standardItemList;
+    QStandardItem *nameItem = new QStandardItem(name);
+    QStandardItem *phoneItem = new QStandardItem(phone);
+    QStandardItem *receiptItem = new QStandardItem(receipt);
+    viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem);
+}
+
+
+
+
+
+
+
+
+
+
+
+
