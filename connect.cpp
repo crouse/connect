@@ -430,6 +430,7 @@ bool Connect::complete_fields(QString name, QString value)
 {
     // 1. 从本地数据库查询是否有此记录，如果有记录，补全所有选项
     // 2. 从服务器数据库查询是否有记录，如果有记录，补全所有选项
+    int count = 0;
     qDebug() << name << value;
     QSqlQuery query;
     QString sql = QString(
@@ -477,7 +478,8 @@ bool Connect::complete_fields(QString name, QString value)
      ).arg(name).arg(value);
     query.exec(sql);
     while(query.next()) {
-        qDebug() << "name:(" << query.value(0).toString();
+        count++;
+        qDebug() << "name: " << query.value(0).toString();
         ui->lineEditName->setText(query.value(0).toString());
         ui->lineEditGender->setText(query.value(1).toString());
         ui->lineEditJob->setText(query.value(2).toString());
@@ -517,6 +519,11 @@ bool Connect::complete_fields(QString name, QString value)
         ui->lineEditBuddhistDisciplesOfFamily->setText(query.value(36).toString());
         ui->lineEditor->setText(query.value(37).toString());
         ui->lineEditOthers->setText(query.value(38).toString());
+    }
+    qDebug() << "query count: " << count;
+    if (count >1) {
+        QMessageBox::information(this, "", "数据库中包含多条同样的数据，填充采用的是随机记录，如果不对，请使用收据编号查询");
+        ui->lineEditReceipt->setFocus();
     }
     return true;
 }
