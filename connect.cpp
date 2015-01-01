@@ -188,15 +188,16 @@ bool Connect::check_lineEdit_items()
 {
     bool name = ui->lineEditName->text().isEmpty();
     bool receipt = ui->lineEditReceipt->text().isEmpty();
+    bool editor = ui->lineEditor->text().isEmpty();
 
-    if (name || receipt) return false;
+    if (name || receipt || editor) return false;
     else return true;
 }
 
 void Connect::on_pushButtonOK_clicked()
 {
     if (!check_lineEdit_items()) {
-        QMessageBox::information(this, "", "请至少填写姓名、收据编号");
+        QMessageBox::information(this, "", "请至少填写姓名、收据编号、编辑人");
         return;
     }
 
@@ -204,6 +205,7 @@ void Connect::on_pushButtonOK_clicked()
     update_sqlite_database();
     append_items2_tableView();
     clear_lineEdits();
+    ui->lineEditName->setFocus();
 }
 
 void Connect::on_pushButtonNext_clicked()
