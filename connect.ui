@@ -658,6 +658,7 @@
   <tabstop>lineEditDegree</tabstop>
   <tabstop>lineEditHealth</tabstop>
   <tabstop>lineEditTelephoneNum</tabstop>
+  <tabstop>lineEditTime</tabstop>
   <tabstop>lineEditWorkPlace</tabstop>
   <tabstop>lineEditProvince</tabstop>
   <tabstop>lineEditCity</tabstop>
@@ -670,6 +671,8 @@
   <tabstop>lineEditFirstJobWorkspace</tabstop>
   <tabstop>lineEditSecondJobDate</tabstop>
   <tabstop>lineEditSecondJobWorkspace</tabstop>
+  <tabstop>lineEditLearnBuddhismDate</tabstop>
+  <tabstop>lineEditYearsOfLearningBuddhism</tabstop>
   <tabstop>lineEditBuddhismLevel</tabstop>
   <tabstop>lineEditReasonToLearnDharma</tabstop>
   <tabstop>lineEditReadNumsOfBuddhismBook</tabstop>
@@ -680,6 +683,10 @@
   <tabstop>lineEditRetirementDate</tabstop>
   <tabstop>lineEditRetirementWorkspace</tabstop>
   <tabstop>lineEditor</tabstop>
+  <tabstop>lineEditLearnKind</tabstop>
+  <tabstop>lineEditLearnAddress</tabstop>
+  <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditOthers</tabstop>
   <tabstop>pushButtonOK</tabstop>
   <tabstop>pushButtonNext</tabstop>
   <tabstop>pushButtonPrevious</tabstop>

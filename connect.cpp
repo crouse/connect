@@ -33,7 +33,7 @@ Connect::Connect(QWidget *parent) :
     ui->lineEditBuddhismLevel->setCompleter(knowledge_completer);
 
     QStringList reason_list;
-    reason_list << "1. 由法师(居士)引导学佛" << "2. 由读佛教经典领悟学佛" << "3. 由经历启发学佛";
+    reason_list << " 1. 由法师(居士)引导学佛" << " 2. 由读佛教经典领悟学佛" << " 3. 由经历启发学佛";
     QCompleter *reason_completer = new QCompleter(reason_list, this);
     reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
     ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
@@ -382,8 +382,8 @@ bool Connect::update_sqlite_database()
     query.bindValue(":second_job_workplace", ui->lineEditSecondJobWorkspace->text());
     query.bindValue(":retirement_date", ui->lineEditRetirementDate->text());
     query.bindValue(":retirement_workplace", ui->lineEditRetirementWorkspace->text());
-    query.bindValue(":years2start_learning_buddhism", ui->lineEditLearnBuddhismDate->text());
-    query.bindValue(":years_of_learning_buhddhism", ui->lineEditYearsOfLearningBuddhism->text());
+    query.bindValue(":year2start_learning_buddhism", ui->lineEditLearnBuddhismDate->text());
+    query.bindValue(":years_of_learning_buddhism", ui->lineEditYearsOfLearningBuddhism->text());
     query.bindValue(":deep_understanding_of_dharma", ui->lineEditBuddhismLevel->text());
     query.bindValue(":reason2learning_dharma", ui->lineEditReasonToLearnDharma->text());
     query.bindValue(":nums_of_buddhism_book", ui->lineEditReadNumsOfBuddhismBook->text());
@@ -398,10 +398,7 @@ bool Connect::update_sqlite_database()
     query.bindValue(":code", ui->lineEditCode->text());
 
     bool rt = query.exec();
-    qDebug() << query.executedQuery();
-    qDebug() << query.lastQuery();
     if (!rt) {
-        qDebug() << "rt:" << rt << query.lastError().text();
         // 输出错误到屏幕！[tbd] 这个得考虑到输入重复问题，下面的错误用户未必理解，所以得考虑到
         QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
         db.close();
@@ -414,7 +411,7 @@ bool Connect::update_sqlite_database()
 bool Connect::clear_lineEdits()
 {
     ui->lineEditName->clear();
-    //ui->lineEditGender->clear();
+    ui->lineEditGender->clear();
     ui->lineEditJob->clear();
     ui->lineEditHobby->clear();
     ui->lineEditFName->clear();
@@ -424,6 +421,12 @@ bool Connect::clear_lineEdits()
     ui->lineEditDegree->clear();
     ui->lineEditHealth->clear();
     ui->lineEditTelephoneNum->clear();
+    ui->lineEditRace->clear();
+    ui->lineEditProvince->clear();
+    ui->lineEditLearnKind->clear();
+    ui->lineEditLearnAddress->clear();
+    ui->lineEditCode->clear();
+    ui->lineEditCity->clear();
     ui->lineEditTime->clear();
     ui->lineEditReceipt->clear();
     ui->lineEditWorkPlace->clear();
@@ -499,7 +502,10 @@ bool Connect::complete_fields(QString name, QString value)
             maxim,\
             buddhist_disciples_of_family,\
             editor,\
-            others\
+            others,\
+            learn_dharma_kinds,\
+            learn_dharma_address,\
+            code\
             from people where %1 = '%2'"
      ).arg(name).arg(value);
     query.exec(sql);
@@ -545,6 +551,9 @@ bool Connect::complete_fields(QString name, QString value)
         ui->lineEditBuddhistDisciplesOfFamily->setText(query.value(36).toString());
         ui->lineEditor->setText(query.value(37).toString());
         ui->lineEditOthers->setText(query.value(38).toString());
+        ui->lineEditLearnKind->setText(query.value(39).toString());
+        ui->lineEditLearnAddress->setText(query.value(40).toString());
+        ui->lineEditCode->setText(query.value(41).toString());
     }
     qDebug() << "query count: " << count;
     if (count >1) {
@@ -558,6 +567,7 @@ bool Connect::complete_fields(QString name, QString value)
 void Connect::on_pushButtonClear_clicked()
 {
     clear_lineEdits();
+    ui->lineEditName->setFocus();
 }
 
 void Connect::append_items2_tableView()
