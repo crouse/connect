@@ -530,84 +530,6 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonNext">
-        <property name="font">
-         <font>
-          <family>KaiTi</family>
-         </font>
-        </property>
-        <property name="text">
-         <string>下一个</string>
-        </property>
-        <property name="shortcut">
-         <string>Down</string>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonPrevious">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="font">
-         <font>
-          <family>KaiTi</family>
-         </font>
-        </property>
-        <property name="text">
-         <string>上一个</string>
-        </property>
-        <property name="shortcut">
-         <string>Up</string>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QPushButton" name="pushButtonClear">
         <property name="font">
          <font>
@@ -619,6 +541,9 @@
         </property>
         <property name="text">
          <string>清空</string>
+        </property>
+        <property name="shortcut">
+         <string>Meta+L</string>
         </property>
         <property name="flat">
          <bool>false</bool>
@@ -688,8 +613,6 @@
   <tabstop>lineEditCode</tabstop>
   <tabstop>lineEditOthers</tabstop>
   <tabstop>pushButtonOK</tabstop>
-  <tabstop>pushButtonNext</tabstop>
-  <tabstop>pushButtonPrevious</tabstop>
   <tabstop>pushButtonClear</tabstop>
   <tabstop>tableView</tabstop>
  </tabstops>

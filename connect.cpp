@@ -14,6 +14,19 @@ Connect::Connect(QWidget *parent) :
     ui->setupUi(this);
 
     //completor
+    // 民族
+    QStringList race_list;
+    race_list << "acz 阿昌族" << "bz 白族" << "baz 保安族" << "blz 布朗族" << "cxz 朝鲜族" << "dwez 达斡尔族" << "dz 傣族" << "daz 德昂族"
+              << "dxz 东乡族" << "dz 侗族" << "dlz 独龙族" << "elsz 俄罗斯族" << "elcz 鄂伦春族" << "ewkz 鄂温克族" << "gsz 高山族" << "glz 仡佬族"
+              << "hnz 哈尼族" << "hskz 哈萨克族" << "hz 汉族" << "hzz 赫哲族" << "hz 回族" << "jnz 基诺族" << "jz 京族" << "jpz 景颇族" << "hekzz 哈尔克孜族"
+              << "lhz 拉祜族" << "lz 黎族" << "lsz 傈僳族" << "lbz 珞巴族" << "mz 满族" << "mnz 毛南族" << "mbz 门巴族" << "mgz 蒙古族" << "mz 苗族"
+              << "mlz 仫佬族" << "nxz 纳西族" << "nz 怒族" << "pmz 普米族" << "qz 羌族" << "slz 撒拉族" << "sz 畲族" << "sz 水族" << "tjkz 塔吉克族"
+              << "ttez 塔塔尔族" << "tjz 土家族" << "tz 土族" << "wz 佤族" << "wwez 维吾尔族" << "wzbkz 乌孜别克族" << "xbz 锡伯族" << "yz 瑶族"
+              << "yz 彝族" << "ygz 裕固族" << "zz 藏族" << "zz 壮族";
+    QCompleter *race_completer = new QCompleter(race_list, this);
+    race_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->lineEditRace->setCompleter(race_completer);
+
     QStringList family_list;
     family_list << "1. 父亲" << "2. 母亲" << "3. 兄弟" << "4. 姐妹" << "5. 妻子" << "6. 孩子";
     QCompleter *family_completer = new QCompleter(family_list, this);
@@ -217,17 +230,6 @@ void Connect::on_pushButtonOK_clicked()
     ui->lineEditName->setFocus();
 }
 
-void Connect::on_pushButtonNext_clicked()
-{
-   qDebug() << "on_pushButtonNext_clicked()";
-}
-
-void Connect::on_pushButtonPrevious_clicked()
-{
-   qDebug() << "on_pushButtonPrevious_clicked()";
-}
-
-
 /* user defined functions */
 bool Connect::validate_input_values()
 {
@@ -362,7 +364,7 @@ bool Connect::update_sqlite_database()
     query.bindValue(":birthday", ui->lineEditBirthday->text());
     query.bindValue(":personnel_id", ui->lineEditID->text());
     query.bindValue(":phone_num", ui->lineEditPhoneNum->text());
-    query.bindValue(":race", ui->lineEditRace->text());
+    query.bindValue(":race", ui->lineEditRace->text().section(' ', -1));
     query.bindValue(":degree", ui->lineEditDegree->text());
     query.bindValue(":health", ui->lineEditHealth->text());
     query.bindValue(":telephone_num", ui->lineEditTelephoneNum->text());
@@ -427,7 +429,7 @@ bool Connect::clear_lineEdits()
     ui->lineEditLearnAddress->clear();
     ui->lineEditCode->clear();
     ui->lineEditCity->clear();
-    ui->lineEditTime->clear();
+    //ui->lineEditTime->clear();
     ui->lineEditReceipt->clear();
     ui->lineEditWorkPlace->clear();
     ui->lineEditDistrict->clear();
