@@ -585,7 +585,18 @@ void Connect::append_items2_tableView()
     viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem);
 }
 
-
+void Connect::closeEvent(QCloseEvent *event)
+{
+    QMessageBox::StandardButton ask = QMessageBox::question(this, "connect", "你确定要关闭程序?\n", QMessageBox
+                                                            ::Cancel|QMessageBox::Yes);
+    if (ask != QMessageBox::Yes) {
+        event->ignore();
+        qDebug() << "ignore close event";
+    } else {
+        db.close();
+        qDebug() << "db connection is closed";
+    }
+}
 
 
 

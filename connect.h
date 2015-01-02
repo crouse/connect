@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QStandardItemModel>
+#include <QCloseEvent>
 
 namespace Ui {
 class Connect;
@@ -38,6 +39,9 @@ private slots:
     void on_pushButtonOK_clicked();
 
     void on_pushButtonClear_clicked();
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::Connect *ui;
