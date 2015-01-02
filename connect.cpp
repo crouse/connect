@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <QCompleter>
 #include <QList>
+#include <QDateTime>
 
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
@@ -44,7 +45,7 @@ Connect::Connect(QWidget *parent) :
     ui->tableView->setModel(viewModel);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    /* set validators */
+    /* set validators [below] */
     QRegExp regExpGender("^[\u7537\u5973]+$"); // 性别只允许输入男或者女
     ui->lineEditGender->setValidator(new QRegExpValidator(regExpGender, this));
 
@@ -80,29 +81,32 @@ Connect::Connect(QWidget *parent) :
 
     QRegExp regExpPostcode("^[1-9][0-9]{5}$");
     ui->lineEditPostcode->setValidator(new QRegExpValidator(regExpPostcode, this));
+    /* set validators [above] */
 
+
+    /* set edit time [below] */
+    QDateTime time = QDateTime::currentDateTime();
+    QString edit_date = time.toString("yyyy.MM.dd");
+    ui->lineEditTime->setText(edit_date);
+    /* set edit time [above] */
+
+    /*
     // database setting
     db = QSqlDatabase::addDatabase("QSQLITE");
     //db.setDatabaseName(":memory"); // in memory db
     db.setDatabaseName("/Users/quqinglei/Desktop/memory.db");
     db.open();
-
-    /*
-    // mysql
-    QCoreApplication::addLibraryPath("/Users/quqinglei/Qt5.4.0/5.4/clang_64/plugins/sqldrivers");
-    QCoreApplication::addLibraryPath("/opt/local/lib");
-    QCoreApplication::addLibraryPath("/usr/local/lib");
-    QCoreApplication::addLibraryPath("/usr/lib");
-    QCoreApplication::addLibraryPath("/opt/local/lib/mysql55/mysql/");
-
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("10.0.0.18");
-    db.setDatabaseName("connect");
-    db.setUserName("connect");
-    db.setPassword("connect");
-    db.open();
-    qDebug() << QCoreApplication::libraryPaths();
     */
+
+    // mysql
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setDatabaseName("connect");
+    db.setUserName("root");
+    db.setPassword("123456");
+    if(!db.open()) {
+        QMessageBox::critical(this, "数据库错误", db.lastError().text());
+    }
 
     QSqlQuery query;
     QString createTableSql = "                             \
@@ -136,18 +140,22 @@ Connect::Connect(QWidget *parent) :
             retirement_date                  varchar(32),  \
             retirement_workplace             varchar(64),  \
             year2start_learning_buddhism     varchar(32),  \
-            years_of_learning_buddhism       integer,      \
+            years_of_learning_buddhism       varchar(10),  \
             deep_understanding_of_dharma     varchar(64),  \
             reason2learning_dharma           varchar(128), \
-            nums_of_buddhism_book            integer,      \
+            nums_of_buddhism_book            varchar(10),  \
             easy2learn_buddhism_book         varchar(128), \
             hard2read                        varchar(128), \
             maxim                            varchar(128), \
             buddhist_disciples_of_family     varchar(128), \
             editor                           varchar(128), \
-            others                           varchar(128)  \
-            );";
+            others                           varchar(128), \
+            learn_dharma_kinds               varchar(64),  \
+            learn_dharma_address             varchar(128), \
+            code                             varchar(64) \
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
     query.exec(createTableSql);
+    qDebug() << query.lastError().text();
 }
 
 Connect::~Connect()
@@ -202,8 +210,9 @@ void Connect::on_pushButtonOK_clicked()
     }
 
     validate_input_values();
-    update_sqlite_database();
-    append_items2_tableView();
+    if (update_sqlite_database()) {
+        append_items2_tableView();
+    }
     clear_lineEdits();
     ui->lineEditName->setFocus();
 }
@@ -294,7 +303,10 @@ bool Connect::update_sqlite_database()
                   maxim                            ,\
                   buddhist_disciples_of_family     ,\
                   editor                           ,\
-                  others                            \
+                  others                           ,\
+                  learn_dharma_kinds               ,\
+                  learn_dharma_address             ,\
+                  code                             \
                   ) VALUES (                        \
                   :name                            ,\
                   :gender                          ,\
@@ -334,7 +346,10 @@ bool Connect::update_sqlite_database()
                   :maxim                           ,\
                   :buddhist_disciples_of_family    ,\
                   :editor                          ,\
-                  :others                          )"
+                  :others                          ,\
+                  :learn_dharma_kinds              ,\
+                  :learn_dharma_address            ,\
+                  :code                          )"
     );
 
     query.bindValue(":name", ui->lineEditName->text());
@@ -376,12 +391,17 @@ bool Connect::update_sqlite_database()
     query.bindValue(":buddhist_disciples_of_family", ui->lineEditBuddhistDisciplesOfFamily->text());
     query.bindValue(":editor", ui->lineEditor->text());
     query.bindValue(":others", ui->lineEditOthers->text());
+    query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text());
+    query.bindValue(":learn_dharma_address", ui->lineEditLearnAddress->text());
+    query.bindValue(":code", ui->lineEditCode->text());
 
     bool rt = query.exec();
     if (!rt) {
         qDebug() << "rt:" << rt << query.lastError().text();
         // 输出错误到屏幕！[tbd] 这个得考虑到输入重复问题，下面的错误用户未必理解，所以得考虑到
-        QMessageBox::information(this, "", query.lastError().text());
+        QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
+        db.close();
+        return false;
     }
 
     return true;
