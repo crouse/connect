@@ -166,7 +166,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditTelphoneNum">
+           <widget class="QLineEdit" name="lineEditTelephoneNum">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;固定电话，包含区号&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -657,7 +657,7 @@
   <tabstop>lineEditRace</tabstop>
   <tabstop>lineEditDegree</tabstop>
   <tabstop>lineEditHealth</tabstop>
-  <tabstop>lineEditTelphoneNum</tabstop>
+  <tabstop>lineEditTelephoneNum</tabstop>
   <tabstop>lineEditWorkPlace</tabstop>
   <tabstop>lineEditProvince</tabstop>
   <tabstop>lineEditCity</tabstop>

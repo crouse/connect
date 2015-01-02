@@ -53,7 +53,7 @@ Connect::Connect(QWidget *parent) :
     ui->lineEditPhoneNum->setValidator(new QRegExpValidator(regExpPhoneNum, this));
 
     QRegExp regExpTel("\\d{3}-\\d{8}|\\d{4}-\\d{7}");
-    ui->lineEditTelphoneNum->setValidator(new QRegExpValidator(regExpTel, this));
+    ui->lineEditTelephoneNum->setValidator(new QRegExpValidator(regExpTel, this));
 
     QRegExp regExpBirthday("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
     ui->lineEditBirthday->setValidator(new QRegExpValidator(regExpBirthday, this));
@@ -122,7 +122,7 @@ Connect::Connect(QWidget *parent) :
             race                             varchar(20),  \
             degree                           varchar(32),  \
             health                           varchar(32),  \
-            telphone_num                     varchar(20),  \
+            telephone_num                    varchar(20),  \
             edit_time                        varchar(32),  \
             receipt                          varchar(32),  \
             workplace                        varchar(64),  \
@@ -276,7 +276,7 @@ bool Connect::update_sqlite_database()
                   race                             ,\
                   degree                           ,\
                   health                           ,\
-                  telphone_num                     ,\
+                  telephone_num                     ,\
                   edit_time                        ,\
                   receipt                          ,\
                   workplace                        ,\
@@ -319,7 +319,7 @@ bool Connect::update_sqlite_database()
                   :race                            ,\
                   :degree                          ,\
                   :health                          ,\
-                  :telphone_num                    ,\
+                  :telephone_num                    ,\
                   :edit_time                       ,\
                   :receipt                         ,\
                   :workplace                       ,\
@@ -352,18 +352,20 @@ bool Connect::update_sqlite_database()
                   :code                          )"
     );
 
+    qDebug() << "telephone num: " << ui->lineEditTelephoneNum->text();
+
     query.bindValue(":name", ui->lineEditName->text());
     query.bindValue(":gender", ui->lineEditGender->text());
     query.bindValue(":job", ui->lineEditJob->text());
     query.bindValue(":hobby", ui->lineEditHobby->text());
     query.bindValue(":fname", ui->lineEditFName->text());
     query.bindValue(":birthday", ui->lineEditBirthday->text());
-    query.bindValue(":personel_id", ui->lineEditID->text());
+    query.bindValue(":personnel_id", ui->lineEditID->text());
     query.bindValue(":phone_num", ui->lineEditPhoneNum->text());
     query.bindValue(":race", ui->lineEditRace->text());
     query.bindValue(":degree", ui->lineEditDegree->text());
     query.bindValue(":health", ui->lineEditHealth->text());
-    query.bindValue(":telephone_num", ui->lineEditTelphoneNum->text());
+    query.bindValue(":telephone_num", ui->lineEditTelephoneNum->text());
     query.bindValue(":edit_time", ui->lineEditTime->text());
     query.bindValue(":receipt", ui->lineEditReceipt->text());
     query.bindValue(":workplace", ui->lineEditWorkPlace->text());
@@ -375,7 +377,7 @@ bool Connect::update_sqlite_database()
     query.bindValue(":graduate_time", ui->lineEditGraduateTime->text());
     query.bindValue(":graduate_school", ui->lineEditGraduateSchool->text());
     query.bindValue(":first_job_entry_time", ui->lineEditFirstJobDate->text());
-    query.bindValue(":first_job_worksplace", ui->lineEditFirstJobWorkspace->text());
+    query.bindValue(":first_job_workplace", ui->lineEditFirstJobWorkspace->text());
     query.bindValue(":second_job_entry_time", ui->lineEditSecondJobDate->text());
     query.bindValue(":second_job_workplace", ui->lineEditSecondJobWorkspace->text());
     query.bindValue(":retirement_date", ui->lineEditRetirementDate->text());
@@ -396,6 +398,8 @@ bool Connect::update_sqlite_database()
     query.bindValue(":code", ui->lineEditCode->text());
 
     bool rt = query.exec();
+    qDebug() << query.executedQuery();
+    qDebug() << query.lastQuery();
     if (!rt) {
         qDebug() << "rt:" << rt << query.lastError().text();
         // 输出错误到屏幕！[tbd] 这个得考虑到输入重复问题，下面的错误用户未必理解，所以得考虑到
@@ -419,7 +423,7 @@ bool Connect::clear_lineEdits()
     ui->lineEditPhoneNum->clear();
     ui->lineEditDegree->clear();
     ui->lineEditHealth->clear();
-    ui->lineEditTelphoneNum->clear();
+    ui->lineEditTelephoneNum->clear();
     ui->lineEditTime->clear();
     ui->lineEditReceipt->clear();
     ui->lineEditWorkPlace->clear();
@@ -468,7 +472,7 @@ bool Connect::complete_fields(QString name, QString value)
             race,\
             degree,\
             health,\
-            telphone_num,\
+            telephone_num,\
             edit_time,\
             receipt,\
             workplace,\
@@ -513,7 +517,7 @@ bool Connect::complete_fields(QString name, QString value)
         ui->lineEditRace->setText(query.value(8).toString());
         ui->lineEditDegree->setText(query.value(9).toString());
         ui->lineEditHealth->setText(query.value(10).toString());
-        ui->lineEditTelphoneNum->setText(query.value(11).toString());
+        ui->lineEditTelephoneNum->setText(query.value(11).toString());
         ui->lineEditTime->setText(query.value(12).toString());
         ui->lineEditReceipt->setText(query.value(13).toString());
         ui->lineEditWorkPlace->setText(query.value(14).toString());
