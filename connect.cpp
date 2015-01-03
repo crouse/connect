@@ -18,32 +18,32 @@ Connect::Connect(QWidget *parent) :
     {
         // 民族
         QStringList race_list;
-        race_list << "acz 阿昌族" << "bz 白族" << "baz 保安族" << "blz 布朗族" << "cxz 朝鲜族" << "dwez 达斡尔族" << "dz 傣族" << "daz 德昂族"
-                  << "dxz 东乡族" << "dz 侗族" << "dlz 独龙族" << "elsz 俄罗斯族" << "elcz 鄂伦春族" << "ewkz 鄂温克族" << "gsz 高山族" << "glz 仡佬族"
-                  << "hnz 哈尼族" << "hskz 哈萨克族" << "hz 汉族" << "hzz 赫哲族" << "hz 回族" << "jnz 基诺族" << "jz 京族" << "jpz 景颇族" << "hekzz 哈尔克孜族"
-                  << "lhz 拉祜族" << "lz 黎族" << "lsz 傈僳族" << "lbz 珞巴族" << "mz 满族" << "mnz 毛南族" << "mbz 门巴族" << "mgz 蒙古族" << "mz 苗族"
-                  << "mlz 仫佬族" << "nxz 纳西族" << "nz 怒族" << "pmz 普米族" << "qz 羌族" << "slz 撒拉族" << "sz 畲族" << "sz 水族" << "tjkz 塔吉克族"
-                  << "ttez 塔塔尔族" << "tjz 土家族" << "tz 土族" << "wz 佤族" << "wwez 维吾尔族" << "wzbkz 乌孜别克族" << "xbz 锡伯族" << "yz 瑶族"
-                  << "yz 彝族" << "ygz 裕固族" << "zz 藏族" << "zz 壮族";
+        race_list << " acz 阿昌族" << " bz 白族" << " baz 保安族" << " blz 布朗族" << " cxz 朝鲜族" << " dwez 达斡尔族" << " dz 傣族" << " daz 德昂族"
+                  << " dxz 东乡族" << " dz 侗族" << " dlz 独龙族" << " elsz 俄罗斯族" << " elcz 鄂伦春族" << " ewkz 鄂温克族" << " gsz 高山族" << " glz 仡佬族"
+                  << " hnz 哈尼族" << " hskz 哈萨克族" << " hz 汉族" << " hzz 赫哲族" << " hz 回族" << " jnz 基诺族" << " jz 京族" << " jpz 景颇族" << " hekzz 哈尔克孜族"
+                  << " lhz 拉祜族" << " lz 黎族" << " lsz 傈僳族" << " lbz 珞巴族" << " mz 满族" << " mnz 毛南族" << " mbz 门巴族" << " mgz 蒙古族" << " mz 苗族"
+                  << " mlz 仫佬族" << " nxz 纳西族" << " nz 怒族" << " pmz 普米族" << " qz 羌族" << " slz 撒拉族" << " sz 畲族" << " sz 水族" << " tjkz 塔吉克族"
+                  << " ttez 塔塔尔族" << "tjz 土家族" << " tz 土族" << " wz 佤族" << " wwez 维吾尔族" << " wzbkz 乌孜别克族" << " xbz 锡伯族" << " yz 瑶族"
+                  << " yz 彝族" << " ygz 裕固族" << " zz 藏族" << " zz 壮族";
         QCompleter *race_completer = new QCompleter(race_list, this);
         race_completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditRace->setCompleter(race_completer);
 
         // 文化程度
         QStringList degree_list;
-        degree_list << "1. 小学" << "2. 初中" << "3. 高中" << "4. 大学专科" << "5. 大学本科" << "6. 硕士" << "7. 博士" << "8. 博士后";
+        degree_list << " 1. 小学" << " 2. 初中" << " 3. 高中" << " 4. 大学专科" << " 5. 大学本科" << " 6. 硕士" << " 7. 博士" << " 8. 博士后";
         QCompleter *degree_completer = new QCompleter(degree_list, this);
         ui->lineEditDegree->setCompleter(degree_completer);
 
         // 健康状况
         QStringList health_list;
-        health_list << "1. 良好" << "2. 一般" << "3. 欠佳" << "4. 重病";
+        health_list << " 1. 良好" << " 2. 一般" << " 3. 欠佳" << " 4. 重病";
         QCompleter *health_completer = new QCompleter(health_list, this);
         ui->lineEditHealth->setCompleter(health_completer);
 
         // 是否深刻了解佛法
         QStringList knowledge_list;
-        knowledge_list << "1. 完全不了解" << "2. 不深刻" << "3. 比较深刻";
+        knowledge_list << " 1. 完全不了解" << " 2. 不深刻" << " 3. 比较深刻";
         QCompleter *knowledge_completer = new QCompleter(knowledge_list, this);
         knowledge_completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditBuddhismLevel->setCompleter(knowledge_completer);
@@ -57,15 +57,15 @@ Connect::Connect(QWidget *parent) :
 
         // 家庭成员三宝弟子
         QStringList family_list;
-        family_list << "1. 父亲" << "2. 母亲" << "3. 兄弟" << "4. 姐妹" << "5. 妻子" << "6. 孩子";
+        family_list << " 1. 父亲" << " 2. 母亲" << " 3. 兄弟" << " 4. 姐妹" << " 5. 妻子" << " 6. 孩子";
         QCompleter *family_completer = new QCompleter(family_list, this);
         family_completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditBuddhistDisciplesOfFamily->setCompleter(family_completer);
 
         // 学佛小组种类
         QStringList learn_kinds_list;
-        learn_kinds_list << "1. 周日山上 " << "2. 平常山下" << "3. 京外" << "4. 周日山上/平常山下" << "5. 周日山上/京外"
-                   << "6. 平常上下/京外" << "7. 周日山上/平常山下/京外";
+        learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周日山上/平常山下" << " 5. 周日山上/京外"
+                   << " 6. 平常上下/京外" << " 7. 周日山上/平常山下/京外";
         QCompleter *learn_kinds_completer = new QCompleter(learn_kinds_list, this);
         ui->lineEditLearnKind->setCompleter(learn_kinds_completer);
     }
@@ -198,11 +198,6 @@ Connect::Connect(QWidget *parent) :
 Connect::~Connect()
 {
     delete ui;
-}
-
-bool Connect::update_items()
-{
-    return true;
 }
 
 void Connect::on_tableView_doubleClicked(const QModelIndex &index)
@@ -389,8 +384,8 @@ bool Connect::update_sqlite_database()
     query.bindValue(":personnel_id", ui->lineEditID->text());
     query.bindValue(":phone_num", ui->lineEditPhoneNum->text());
     query.bindValue(":race", ui->lineEditRace->text().section(' ', -1));
-    query.bindValue(":degree", ui->lineEditDegree->text());
-    query.bindValue(":health", ui->lineEditHealth->text());
+    query.bindValue(":degree", ui->lineEditDegree->text().section(' ', -1));
+    query.bindValue(":health", ui->lineEditHealth->text().section(' ', -1));
     query.bindValue(":telephone_num", ui->lineEditTelephoneNum->text());
     query.bindValue(":edit_time", ui->lineEditTime->text());
     query.bindValue(":receipt", ui->lineEditReceipt->text());
@@ -410,16 +405,16 @@ bool Connect::update_sqlite_database()
     query.bindValue(":retirement_workplace", ui->lineEditRetirementWorkspace->text());
     query.bindValue(":year2start_learning_buddhism", ui->lineEditLearnBuddhismDate->text());
     query.bindValue(":years_of_learning_buddhism", ui->lineEditYearsOfLearningBuddhism->text());
-    query.bindValue(":deep_understanding_of_dharma", ui->lineEditBuddhismLevel->text());
-    query.bindValue(":reason2learning_dharma", ui->lineEditReasonToLearnDharma->text());
+    query.bindValue(":deep_understanding_of_dharma", ui->lineEditBuddhismLevel->text().section(' ', -1));
+    query.bindValue(":reason2learning_dharma", ui->lineEditReasonToLearnDharma->text().section(' ', -1));
     query.bindValue(":nums_of_buddhism_book", ui->lineEditReadNumsOfBuddhismBook->text());
     query.bindValue(":easy2learn_buddhism_book", ui->lineEditEasyToLearnBuddhismBook->text());
     query.bindValue(":hard2read", ui->lineEditHardToLearnBuddhismBook->text());
     query.bindValue(":maxim", ui->lineEditMaximOfBuddhism->text());
-    query.bindValue(":buddhist_disciples_of_family", ui->lineEditBuddhistDisciplesOfFamily->text());
+    query.bindValue(":buddhist_disciples_of_family", ui->lineEditBuddhistDisciplesOfFamily->text().section(' ', -1));
     query.bindValue(":editor", ui->lineEditor->text());
     query.bindValue(":others", ui->lineEditOthers->text());
-    query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text());
+    query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text().section(' ', -1));
     query.bindValue(":learn_dharma_address", ui->lineEditLearnAddress->text());
     query.bindValue(":code", ui->lineEditCode->text());
 

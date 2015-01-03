@@ -24,7 +24,6 @@ public:
     ~Connect();
     QStandardItemModel *viewModel;
     bool check_lineEdit_items();
-    bool update_items();
     bool validate_input_values();
     bool update_sqlite_database();
     bool clear_lineEdits();
