@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1103</width>
+    <width>1318</width>
     <height>535</height>
    </rect>
   </property>
@@ -14,8 +14,8 @@
    <string>Connect</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -493,7 +493,7 @@
       </widget>
      </widget>
     </item>
-    <item>
+    <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <widget class="QPushButton" name="pushButtonOK">
@@ -530,6 +530,19 @@
        </widget>
       </item>
       <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButtonClear">
         <property name="font">
          <font>
@@ -550,10 +563,24 @@
         </property>
        </widget>
       </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAbout">
    <property name="checkable">
     <bool>false</bool>
@@ -612,7 +639,6 @@
   <tabstop>lineEditLearnAddress</tabstop>
   <tabstop>lineEditCode</tabstop>
   <tabstop>lineEditOthers</tabstop>
-  <tabstop>pushButtonOK</tabstop>
   <tabstop>pushButtonClear</tabstop>
   <tabstop>tableView</tabstop>
  </tabstops>

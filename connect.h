@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QCloseEvent>
+#include <QtNetwork>
+#include <QLabel>
 
 namespace Ui {
 class Connect;
@@ -29,7 +31,10 @@ public:
     bool complete_fields(QString name, QString value);
     void append_items2_tableView();
 private:
+    QLabel *status_label;
     QSqlDatabase db;
+    QString local_ip;
+    void get_local_ip();
 
 private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);

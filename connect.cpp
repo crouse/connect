@@ -12,90 +12,114 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     ui->setupUi(this);
+    status_label = new QLabel;
 
     //completor
-    // 民族
-    QStringList race_list;
-    race_list << "acz 阿昌族" << "bz 白族" << "baz 保安族" << "blz 布朗族" << "cxz 朝鲜族" << "dwez 达斡尔族" << "dz 傣族" << "daz 德昂族"
-              << "dxz 东乡族" << "dz 侗族" << "dlz 独龙族" << "elsz 俄罗斯族" << "elcz 鄂伦春族" << "ewkz 鄂温克族" << "gsz 高山族" << "glz 仡佬族"
-              << "hnz 哈尼族" << "hskz 哈萨克族" << "hz 汉族" << "hzz 赫哲族" << "hz 回族" << "jnz 基诺族" << "jz 京族" << "jpz 景颇族" << "hekzz 哈尔克孜族"
-              << "lhz 拉祜族" << "lz 黎族" << "lsz 傈僳族" << "lbz 珞巴族" << "mz 满族" << "mnz 毛南族" << "mbz 门巴族" << "mgz 蒙古族" << "mz 苗族"
-              << "mlz 仫佬族" << "nxz 纳西族" << "nz 怒族" << "pmz 普米族" << "qz 羌族" << "slz 撒拉族" << "sz 畲族" << "sz 水族" << "tjkz 塔吉克族"
-              << "ttez 塔塔尔族" << "tjz 土家族" << "tz 土族" << "wz 佤族" << "wwez 维吾尔族" << "wzbkz 乌孜别克族" << "xbz 锡伯族" << "yz 瑶族"
-              << "yz 彝族" << "ygz 裕固族" << "zz 藏族" << "zz 壮族";
-    QCompleter *race_completer = new QCompleter(race_list, this);
-    race_completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->lineEditRace->setCompleter(race_completer);
+    {
+        // 民族
+        QStringList race_list;
+        race_list << "acz 阿昌族" << "bz 白族" << "baz 保安族" << "blz 布朗族" << "cxz 朝鲜族" << "dwez 达斡尔族" << "dz 傣族" << "daz 德昂族"
+                  << "dxz 东乡族" << "dz 侗族" << "dlz 独龙族" << "elsz 俄罗斯族" << "elcz 鄂伦春族" << "ewkz 鄂温克族" << "gsz 高山族" << "glz 仡佬族"
+                  << "hnz 哈尼族" << "hskz 哈萨克族" << "hz 汉族" << "hzz 赫哲族" << "hz 回族" << "jnz 基诺族" << "jz 京族" << "jpz 景颇族" << "hekzz 哈尔克孜族"
+                  << "lhz 拉祜族" << "lz 黎族" << "lsz 傈僳族" << "lbz 珞巴族" << "mz 满族" << "mnz 毛南族" << "mbz 门巴族" << "mgz 蒙古族" << "mz 苗族"
+                  << "mlz 仫佬族" << "nxz 纳西族" << "nz 怒族" << "pmz 普米族" << "qz 羌族" << "slz 撒拉族" << "sz 畲族" << "sz 水族" << "tjkz 塔吉克族"
+                  << "ttez 塔塔尔族" << "tjz 土家族" << "tz 土族" << "wz 佤族" << "wwez 维吾尔族" << "wzbkz 乌孜别克族" << "xbz 锡伯族" << "yz 瑶族"
+                  << "yz 彝族" << "ygz 裕固族" << "zz 藏族" << "zz 壮族";
+        QCompleter *race_completer = new QCompleter(race_list, this);
+        race_completer->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditRace->setCompleter(race_completer);
 
-    QStringList family_list;
-    family_list << "1. 父亲" << "2. 母亲" << "3. 兄弟" << "4. 姐妹" << "5. 妻子" << "6. 孩子";
-    QCompleter *family_completer = new QCompleter(family_list, this);
-    family_completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->lineEditBuddhistDisciplesOfFamily->setCompleter(family_completer);
+        // 文化程度
+        QStringList degree_list;
+        degree_list << "1. 小学" << "2. 初中" << "3. 高中" << "4. 大学专科" << "5. 大学本科" << "6. 硕士" << "7. 博士" << "8. 博士后";
+        QCompleter *degree_completer = new QCompleter(degree_list, this);
+        ui->lineEditDegree->setCompleter(degree_completer);
 
-    QStringList degree_list;
-    degree_list << "1. 小学" << "2. 初中" << "3. 高中" << "4. 大学专科" << "5. 大学本科" << "6. 硕士" << "7. 博士" << "8. 博士后";
-    QCompleter *degree_completer = new QCompleter(degree_list, this);
-    family_completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->lineEditDegree->setCompleter(degree_completer);
+        // 健康状况
+        QStringList health_list;
+        health_list << "1. 良好" << "2. 一般" << "3. 欠佳" << "4. 重病";
+        QCompleter *health_completer = new QCompleter(health_list, this);
+        ui->lineEditHealth->setCompleter(health_completer);
 
-    QStringList knowledge_list;
-    knowledge_list << "1. 完全不了解" << "2. 不深刻" << "3. 比较深刻";
-    QCompleter *knowledge_completer = new QCompleter(knowledge_list, this);
-    knowledge_completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->lineEditBuddhismLevel->setCompleter(knowledge_completer);
+        // 是否深刻了解佛法
+        QStringList knowledge_list;
+        knowledge_list << "1. 完全不了解" << "2. 不深刻" << "3. 比较深刻";
+        QCompleter *knowledge_completer = new QCompleter(knowledge_list, this);
+        knowledge_completer->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditBuddhismLevel->setCompleter(knowledge_completer);
 
-    QStringList reason_list;
-    reason_list << " 1. 由法师(居士)引导学佛" << " 2. 由读佛教经典领悟学佛" << " 3. 由经历启发学佛";
-    QCompleter *reason_completer = new QCompleter(reason_list, this);
-    reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
+        // 以何因缘了解佛法
+        QStringList reason_list;
+        reason_list << " 1. 由法师(居士)引导学佛" << " 2. 由读佛教经典领悟学佛" << " 3. 由经历启发学佛";
+        QCompleter *reason_completer = new QCompleter(reason_list, this);
+        reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
 
-    viewModel = new QStandardItemModel();
-    viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
-    viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
-    viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
-    ui->tableView->setModel(viewModel);
-    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        // 家庭成员三宝弟子
+        QStringList family_list;
+        family_list << "1. 父亲" << "2. 母亲" << "3. 兄弟" << "4. 姐妹" << "5. 妻子" << "6. 孩子";
+        QCompleter *family_completer = new QCompleter(family_list, this);
+        family_completer->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditBuddhistDisciplesOfFamily->setCompleter(family_completer);
 
-    /* set validators [below] */
-    QRegExp regExpGender("^[\u7537\u5973]+$"); // 性别只允许输入男或者女
-    ui->lineEditGender->setValidator(new QRegExpValidator(regExpGender, this));
+        // 学佛小组种类
+        QStringList learn_kinds_list;
+        learn_kinds_list << "1. 周日山上 " << "2. 平常山下" << "3. 京外" << "4. 周日山上/平常山下" << "5. 周日山上/京外"
+                   << "6. 平常上下/京外" << "7. 周日山上/平常山下/京外";
+        QCompleter *learn_kinds_completer = new QCompleter(learn_kinds_list, this);
+        ui->lineEditLearnKind->setCompleter(learn_kinds_completer);
+    }
 
-    QRegExp regExpPhoneNum("1[3|5|7|8|][0-9]{9}"); // 判断输入是否为手机号，只允许输入正常手机号
-    ui->lineEditPhoneNum->setValidator(new QRegExpValidator(regExpPhoneNum, this));
+    // left table view
+    {
+        viewModel = new QStandardItemModel();
+        viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
+        viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
+        viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
+        ui->tableView->setModel(viewModel);
+        ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    }
 
-    QRegExp regExpTel("\\d{3}-\\d{8}|\\d{4}-\\d{7}");
-    ui->lineEditTelephoneNum->setValidator(new QRegExpValidator(regExpTel, this));
+    // Regex to test if insert is right
+    {
+        /* set validators [below] */
+        QRegExp regExpGender("^[\u7537\u5973]+$"); // 性别只允许输入男或者女
+        ui->lineEditGender->setValidator(new QRegExpValidator(regExpGender, this));
 
-    QRegExp regExpBirthday("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
-    ui->lineEditBirthday->setValidator(new QRegExpValidator(regExpBirthday, this));
+        QRegExp regExpPhoneNum("1[3|5|7|8|][0-9]{9}"); // 判断输入是否为手机号，只允许输入正常手机号
+        ui->lineEditPhoneNum->setValidator(new QRegExpValidator(regExpPhoneNum, this));
 
-    QRegExp regExpEditTime("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
-    ui->lineEditTime->setValidator(new QRegExpValidator(regExpEditTime, this));
+        QRegExp regExpTel("\\d{3}-\\d{8}|\\d{4}-\\d{7}");
+        ui->lineEditTelephoneNum->setValidator(new QRegExpValidator(regExpTel, this));
 
-    QRegExp regExpGraduateTime("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
-    ui->lineEditGraduateTime->setValidator(new QRegExpValidator(regExpGraduateTime, this));
+        QRegExp regExpBirthday("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
+        ui->lineEditBirthday->setValidator(new QRegExpValidator(regExpBirthday, this));
 
-    QRegExp regExpFirstJobDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
-    ui->lineEditFirstJobDate->setValidator(new QRegExpValidator(regExpFirstJobDate, this));
+        QRegExp regExpEditTime("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
+        ui->lineEditTime->setValidator(new QRegExpValidator(regExpEditTime, this));
 
-    QRegExp regExpSecondJobDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
-    ui->lineEditSecondJobDate->setValidator(new QRegExpValidator(regExpSecondJobDate, this));
+        QRegExp regExpGraduateTime("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
+        ui->lineEditGraduateTime->setValidator(new QRegExpValidator(regExpGraduateTime, this));
 
-    QRegExp regExpRetirementDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
-    ui->lineEditRetirementDate->setValidator(new QRegExpValidator(regExpRetirementDate, this));
+        QRegExp regExpFirstJobDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
+        ui->lineEditFirstJobDate->setValidator(new QRegExpValidator(regExpFirstJobDate, this));
 
-    QRegExp regExpID("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$");
-    ui->lineEditID->setValidator(new QRegExpValidator(regExpID, this));
+        QRegExp regExpSecondJobDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
+        ui->lineEditSecondJobDate->setValidator(new QRegExpValidator(regExpSecondJobDate, this));
 
-    QRegExp regExpYearsOfLearningBuhddhism("^[1-9]\\d?$");
-    ui->lineEditYearsOfLearningBuddhism->setValidator(new QRegExpValidator(regExpYearsOfLearningBuhddhism, this));
+        QRegExp regExpRetirementDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
+        ui->lineEditRetirementDate->setValidator(new QRegExpValidator(regExpRetirementDate, this));
 
-    QRegExp regExpPostcode("^[1-9][0-9]{5}$");
-    ui->lineEditPostcode->setValidator(new QRegExpValidator(regExpPostcode, this));
-    /* set validators [above] */
+        QRegExp regExpID("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$");
+        ui->lineEditID->setValidator(new QRegExpValidator(regExpID, this));
 
+        QRegExp regExpYearsOfLearningBuhddhism("^[1-9]\\d?$");
+        ui->lineEditYearsOfLearningBuddhism->setValidator(new QRegExpValidator(regExpYearsOfLearningBuhddhism, this));
+
+        QRegExp regExpPostcode("^[1-9][0-9]{5}$");
+        ui->lineEditPostcode->setValidator(new QRegExpValidator(regExpPostcode, this));
+        /* set validators [above] */
+    }
 
     /* set edit time [below] */
     QDateTime time = QDateTime::currentDateTime();
@@ -103,72 +127,72 @@ Connect::Connect(QWidget *parent) :
     ui->lineEditTime->setText(edit_date);
     /* set edit time [above] */
 
-    /*
+    // set local ip at status bar
+    get_local_ip();
+    status_label->setText(local_ip);
+    statusBar()->addWidget(status_label);
+
     // database setting
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    //db.setDatabaseName(":memory"); // in memory db
-    db.setDatabaseName("/Users/quqinglei/Desktop/memory.db");
-    db.open();
-    */
+    {
+        // mysql
+        db = QSqlDatabase::addDatabase("QMYSQL");
+        db.setHostName("localhost");
+        db.setDatabaseName("connect");
+        db.setUserName("root");
+        db.setPassword("123456");
+        if(!db.open()) {
+            QMessageBox::critical(this, "数据库错误", db.lastError().text());
+        }
 
-    // mysql
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("connect");
-    db.setUserName("root");
-    db.setPassword("123456");
-    if(!db.open()) {
-        QMessageBox::critical(this, "数据库错误", db.lastError().text());
+        QSqlQuery query;
+        QString createTableSql = "                             \
+                create table if not exists people (            \
+                    name                             varchar(32),  \
+                    gender                           varchar(10),  \
+                    job                              varchar(32),  \
+                    hobby                            varchar(64),  \
+                    fname                            varchar(32),  \
+                    birthday                         varchar(32),  \
+                    personnel_id                     varchar(32),  \
+                    phone_num                        varchar(20),  \
+                    race                             varchar(20),  \
+                    degree                           varchar(32),  \
+                    health                           varchar(32),  \
+                    telephone_num                    varchar(20),  \
+                    edit_time                        varchar(32),  \
+                    receipt                          varchar(32),  \
+                    workplace                        varchar(64),  \
+                    province                         varchar(64),  \
+                    city                             varchar(64),  \
+                    district                         varchar(64),  \
+                    address                          varchar(64),  \
+                    postcode                         varchar(64),  \
+                    graduate_time                    varchar(32),  \
+                    graduate_school                  varchar(64),  \
+                    first_job_entry_time             varchar(64),  \
+                    first_job_workplace              varchar(64),  \
+                    second_job_entry_time            varchar(32),  \
+                    second_job_workplace             varchar(64),  \
+                    retirement_date                  varchar(32),  \
+                    retirement_workplace             varchar(64),  \
+                    year2start_learning_buddhism     varchar(32),  \
+                    years_of_learning_buddhism       varchar(10),  \
+                    deep_understanding_of_dharma     varchar(64),  \
+                    reason2learning_dharma           varchar(128), \
+                    nums_of_buddhism_book            varchar(10),  \
+                    easy2learn_buddhism_book         varchar(128), \
+                    hard2read                        varchar(128), \
+                    maxim                            varchar(128), \
+                    buddhist_disciples_of_family     varchar(128), \
+                    editor                           varchar(128), \
+                    others                           varchar(128), \
+                    learn_dharma_kinds               varchar(64),  \
+                    learn_dharma_address             varchar(128), \
+                    code                             varchar(64) \
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+        query.exec(createTableSql);
+        qDebug() << query.lastError().text();
     }
-
-    QSqlQuery query;
-    QString createTableSql = "                             \
-            create table if not exists people (            \
-            name                             varchar(32),  \
-            gender                           varchar(10),  \
-            job                              varchar(32),  \
-            hobby                            varchar(64),  \
-            fname                            varchar(32),  \
-            birthday                         varchar(32),  \
-            personnel_id                     varchar(32),  \
-            phone_num                        varchar(20),  \
-            race                             varchar(20),  \
-            degree                           varchar(32),  \
-            health                           varchar(32),  \
-            telephone_num                    varchar(20),  \
-            edit_time                        varchar(32),  \
-            receipt                          varchar(32),  \
-            workplace                        varchar(64),  \
-            province                         varchar(64),  \
-            city                             varchar(64),  \
-            district                         varchar(64),  \
-            address                          varchar(64),  \
-            postcode                         varchar(64),  \
-            graduate_time                    varchar(32),  \
-            graduate_school                  varchar(64),  \
-            first_job_entry_time             varchar(64),  \
-            first_job_workplace              varchar(64),  \
-            second_job_entry_time            varchar(32),  \
-            second_job_workplace             varchar(64),  \
-            retirement_date                  varchar(32),  \
-            retirement_workplace             varchar(64),  \
-            year2start_learning_buddhism     varchar(32),  \
-            years_of_learning_buddhism       varchar(10),  \
-            deep_understanding_of_dharma     varchar(64),  \
-            reason2learning_dharma           varchar(128), \
-            nums_of_buddhism_book            varchar(10),  \
-            easy2learn_buddhism_book         varchar(128), \
-            hard2read                        varchar(128), \
-            maxim                            varchar(128), \
-            buddhist_disciples_of_family     varchar(128), \
-            editor                           varchar(128), \
-            others                           varchar(128), \
-            learn_dharma_kinds               varchar(64),  \
-            learn_dharma_address             varchar(128), \
-            code                             varchar(64) \
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-    query.exec(createTableSql);
-    qDebug() << query.lastError().text();
 }
 
 Connect::~Connect()
@@ -201,8 +225,8 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 
 void Connect::on_lineEditReceipt_editingFinished()
 {
-   complete_fields("receipt", ui->lineEditReceipt->text());
-   qDebug() << "one_lineEditReceipt_editingFinished";
+    complete_fields("receipt", ui->lineEditReceipt->text());
+    qDebug() << "one_lineEditReceipt_editingFinished";
 }
 
 bool Connect::check_lineEdit_items()
@@ -310,49 +334,49 @@ bool Connect::update_sqlite_database()
                   learn_dharma_address             ,\
                   code                             \
                   ) VALUES (                        \
-                  :name                            ,\
-                  :gender                          ,\
-                  :job                             ,\
-                  :hobby                           ,\
-                  :fname                           ,\
-                  :birthday                        ,\
-                  :personnel_id                    ,\
-                  :phone_num                       ,\
-                  :race                            ,\
-                  :degree                          ,\
-                  :health                          ,\
-                  :telephone_num                    ,\
-                  :edit_time                       ,\
-                  :receipt                         ,\
-                  :workplace                       ,\
-                  :province                        ,\
-                  :city                            ,\
-                  :district                        ,\
-                  :address                         ,\
-                  :postcode                        ,\
-                  :graduate_time                   ,\
-                  :graduate_school                 ,\
-                  :first_job_entry_time            ,\
-                  :first_job_workplace             ,\
-                  :second_job_entry_time           ,\
-                  :second_job_workplace            ,\
-                  :retirement_date                 ,\
-                  :retirement_workplace            ,\
-                  :year2start_learning_buddhism    ,\
-                  :years_of_learning_buddhism      ,\
-                  :deep_understanding_of_dharma    ,\
-                  :reason2learning_dharma          ,\
-                  :nums_of_buddhism_book           ,\
-                  :easy2learn_buddhism_book        ,\
-                  :hard2read                       ,\
-                  :maxim                           ,\
-                  :buddhist_disciples_of_family    ,\
-                  :editor                          ,\
-                  :others                          ,\
-                  :learn_dharma_kinds              ,\
-                  :learn_dharma_address            ,\
-                  :code                          )"
-    );
+                :name                            ,\
+                :gender                          ,\
+                :job                             ,\
+                :hobby                           ,\
+                :fname                           ,\
+                :birthday                        ,\
+                :personnel_id                    ,\
+                :phone_num                       ,\
+                :race                            ,\
+                :degree                          ,\
+                :health                          ,\
+                :telephone_num                    ,\
+                :edit_time                       ,\
+                :receipt                         ,\
+                :workplace                       ,\
+                :province                        ,\
+                :city                            ,\
+                :district                        ,\
+                :address                         ,\
+                :postcode                        ,\
+                :graduate_time                   ,\
+                :graduate_school                 ,\
+                :first_job_entry_time            ,\
+                :first_job_workplace             ,\
+                :second_job_entry_time           ,\
+                :second_job_workplace            ,\
+                :retirement_date                 ,\
+                :retirement_workplace            ,\
+                :year2start_learning_buddhism    ,\
+                :years_of_learning_buddhism      ,\
+                :deep_understanding_of_dharma    ,\
+                :reason2learning_dharma          ,\
+                :nums_of_buddhism_book           ,\
+                :easy2learn_buddhism_book        ,\
+                :hard2read                       ,\
+                :maxim                           ,\
+                :buddhist_disciples_of_family    ,\
+                :editor                          ,\
+                :others                          ,\
+                :learn_dharma_kinds              ,\
+                :learn_dharma_address            ,\
+                :code                          )"
+            );
 
     qDebug() << "telephone num: " << ui->lineEditTelephoneNum->text();
 
@@ -465,51 +489,51 @@ bool Connect::complete_fields(QString name, QString value)
     qDebug() << name << value;
     QSqlQuery query;
     QString sql = QString(
-            "select \
-            name,\
-            gender,\
-            job,\
-            hobby,\
-            fname,\
-            birthday,\
-            personnel_id,\
-            phone_num,\
-            race,\
-            degree,\
-            health,\
-            telephone_num,\
-            edit_time,\
-            receipt,\
-            workplace,\
-            province,\
-            city,\
-            district,\
-            address,\
-            postcode,\
-            graduate_time,\
-            graduate_school,\
-            first_job_entry_time,\
-            first_job_workplace,\
-            second_job_entry_time,\
-            second_job_workplace,\
-            retirement_date,\
-            retirement_workplace,\
-            year2start_learning_buddhism,\
-            years_of_learning_buddhism,\
-            deep_understanding_of_dharma,\
-            reason2learning_dharma,\
-            nums_of_buddhism_book,\
-            easy2learn_buddhism_book,\
-            hard2read,\
-            maxim,\
-            buddhist_disciples_of_family,\
-            editor,\
-            others,\
-            learn_dharma_kinds,\
-            learn_dharma_address,\
-            code\
-            from people where %1 = '%2'"
-     ).arg(name).arg(value);
+                "select \
+                name,\
+                gender,\
+                job,\
+                hobby,\
+                fname,\
+                birthday,\
+                personnel_id,\
+                phone_num,\
+                race,\
+                degree,\
+                health,\
+                telephone_num,\
+                edit_time,\
+                receipt,\
+                workplace,\
+                province,\
+                city,\
+                district,\
+                address,\
+                postcode,\
+                graduate_time,\
+                graduate_school,\
+                first_job_entry_time,\
+                first_job_workplace,\
+                second_job_entry_time,\
+                second_job_workplace,\
+                retirement_date,\
+                retirement_workplace,\
+                year2start_learning_buddhism,\
+                years_of_learning_buddhism,\
+                deep_understanding_of_dharma,\
+                reason2learning_dharma,\
+                nums_of_buddhism_book,\
+                easy2learn_buddhism_book,\
+                hard2read,\
+                maxim,\
+                buddhist_disciples_of_family,\
+                editor,\
+                others,\
+                learn_dharma_kinds,\
+                learn_dharma_address,\
+                code\
+                from people where %1 = '%2'"
+            ).arg(name).arg(value);
     query.exec(sql);
     while(query.next()) {
         count++;
@@ -598,12 +622,18 @@ void Connect::closeEvent(QCloseEvent *event)
     }
 }
 
-
-
-
-
-
-
-
-
-
+void Connect::get_local_ip()
+{
+    QString tmp_ip;
+    QList<QHostAddress> list = QNetworkInterface::allAddresses();
+    foreach (QHostAddress address, list)
+    {
+        if(address.protocol() == QAbstractSocket::IPv4Protocol)
+            tmp_ip = address.toString();
+        if (!tmp_ip.startsWith("127")) {
+            local_ip = QString(" client address: ") + tmp_ip;
+        }
+        qDebug() << "local IP: " << local_ip;
+    }
+    qDebug() << "local IP: none";
+}
