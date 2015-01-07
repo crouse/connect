@@ -136,9 +136,9 @@ Connect::Connect(QWidget *parent) :
     {
         // mysql
         db = QSqlDatabase::addDatabase("QMYSQL");
-        db.setHostName("localhost");
+        db.setHostName("192.168.31.114");
         db.setDatabaseName("connect");
-        db.setUserName("root");
+        db.setUserName("lei");
         db.setPassword("123456");
         if(!db.open()) {
             QMessageBox::critical(this, "数据库错误", db.lastError().text());
