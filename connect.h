@@ -29,6 +29,7 @@ public:
     bool clear_lineEdits();
     bool complete_fields(QString name, QString value);
     void append_items2_tableView();
+    void init_and_append_items2_tableView();
 private:
     QLabel *status_label;
     QSqlDatabase db;
@@ -46,6 +47,8 @@ private slots:
     void on_pushButtonClear_clicked();
 
     void on_pushButtonExport_clicked();
+
+    void on_pushButton_clicked();
 
 protected:
     void closeEvent(QCloseEvent *event);

@@ -132,6 +132,7 @@ Connect::Connect(QWidget *parent) :
     // set local ip at status bar
     get_local_ip();
     status_label->setText(local_ip);
+
     statusBar()->addWidget(status_label);
 
     // database setting
@@ -193,6 +194,7 @@ Connect::Connect(QWidget *parent) :
                     code                             varchar(64) \
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
         query.exec(createTableSql);
+        query.clear();
         qDebug() << query.lastError().text();
     }
 
@@ -430,6 +432,8 @@ bool Connect::update_sqlite_database()
         return false;
     }
 
+    query.clear();
+
     return true;
 }
 
@@ -585,6 +589,8 @@ bool Connect::complete_fields(QString name, QString value)
         QMessageBox::information(this, "", "数据库中包含多条同样的数据，填充采用的是随机记录，如果不对，请使用收据编号查询");
         ui->lineEditReceipt->setFocus();
     }
+
+    query.clear();
     return true;
 }
 
@@ -705,6 +711,7 @@ void Connect::save_excel(QString fileName)
         }
         i++;
     }
+    query.clear();
     xlsx.saveAs(fileName);
 }
 
@@ -720,3 +727,40 @@ void Connect::on_pushButtonExport_clicked()
     }
 }
 
+
+void Connect::on_pushButton_clicked()
+{
+    init_and_append_items2_tableView();
+}
+
+
+void Connect::init_and_append_items2_tableView()
+{
+    QSqlQuery query;
+    QString sql;
+    QString editor = ui->lineEditor->text();
+    if (editor.isEmpty()) {
+        sql = QString("select name, phone_num, receipt from people");
+    } else {
+        sql = QString("select name, phone_num, receipt from people where editor = '%1'").arg(editor);
+    }
+    query.exec(sql);
+
+    viewModel->clear();
+    viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
+    viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
+    viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
+
+    while(query.next()) {
+        QString name = query.value(0).toString();
+        QString phone = query.value(1).toString();
+        QString receipt = query.value(2).toString();
+
+        QList <QStandardItem*> standardItemList;
+        QStandardItem *nameItem = new QStandardItem(name);
+        QStandardItem *phoneItem = new QStandardItem(phone);
+        QStandardItem *receiptItem = new QStandardItem(receipt);
+        viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem);
+    }
+    query.clear();
+}
