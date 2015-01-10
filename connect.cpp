@@ -6,6 +6,8 @@
 #include <QCompleter>
 #include <QList>
 #include <QDateTime>
+#include <QtXlsx>
+#include <QFileDialog>
 
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
@@ -193,6 +195,8 @@ Connect::Connect(QWidget *parent) :
         query.exec(createTableSql);
         qDebug() << query.lastError().text();
     }
+
+    //ui->pushButtonExport->setHidden(true);
 }
 
 Connect::~Connect()
@@ -632,3 +636,87 @@ void Connect::get_local_ip()
     }
     qDebug() << "local IP: none";
 }
+
+void Connect::save_excel(QString fileName)
+{
+    int i = 2;
+    int j;
+    QXlsx::Document xlsx;
+    QSqlQuery query;
+    query.exec("select * from people");
+    {
+        xlsx.write("A1", "姓名");
+        xlsx.write("B1", "性别");
+        xlsx.write("C1", "职业");
+        xlsx.write("D1", "特长");
+        xlsx.write("E1", "法名");
+        xlsx.write("F1", "出生年月");
+        xlsx.write("G1", "身份证号");
+        xlsx.write("H1", "手机号码");
+        xlsx.write("I1", "民族");
+        xlsx.write("J1", "文化程度");
+        xlsx.write("K1", "健康状况");
+        xlsx.write("L1", "固定电话");
+        xlsx.write("M1", "填表时间");
+        xlsx.write("N1", "收据编号");
+        xlsx.write("O1", "工作单位");
+        xlsx.write("P1", "省(直辖市/自治区)");
+        xlsx.write("Q1", "市");
+        xlsx.write("R1", "区/县");
+        xlsx.write("S1", "通讯地址");
+        xlsx.write("T1", "邮政编码");
+        xlsx.write("U1", "毕业时间");
+        xlsx.write("V1", "毕业学校");
+        xlsx.write("W1", "工作入职时间1");
+        xlsx.write("X1", "工作单位1");
+        xlsx.write("Y1", "工作入职时间2");
+        xlsx.write("Z1", "工作入职单位2");
+        xlsx.write("AA1", "退休时间");
+        xlsx.write("AB1", "退休单位");
+        xlsx.write("AC1", "学佛时间");
+        xlsx.write("AD1", "学佛时长");
+        xlsx.write("AE1", "是否深刻理解佛法");
+        xlsx.write("AF1", "以何因缘接触佛法");
+        xlsx.write("AG1", "所读经典部数");
+        xlsx.write("AH1", "认为易学经典");
+        xlsx.write("AI1", "认为不易学经典");
+        xlsx.write("AJ1", "感悟最深的一句话");
+        xlsx.write("AK1", "家庭成员三宝弟子");
+        xlsx.write("AL1", "编辑人");
+        xlsx.write("AM1", "其他");
+        xlsx.write("AN1", "学佛小组种类");
+        xlsx.write("AO1", "学佛小组地址");
+        xlsx.write("AP1", "皈依证编号");
+
+    }
+    // excel A-Z, AA-AZ, BA-BZ...
+    // 总共42列，所以下面代码是可以的，再多就不能这么写了，我图省事就这么写了！
+    while(query.next()) {
+        char start = 'A';
+        char ne = 'A';
+        for(j = 0; j < 42; j++) {
+            if (j < 26) {
+                xlsx.write(QString("%1%2").arg(start).arg(i), query.value(j).toString());
+                start++;
+            } else {
+                xlsx.write(QString("A%1%2").arg(ne).arg(i), query.value(j).toString());
+                ne++;
+            }
+        }
+        i++;
+    }
+    xlsx.saveAs(fileName);
+}
+
+void Connect::on_pushButtonExport_clicked()
+{
+    QString fileName;
+    fileName = QFileDialog::getSaveFileName(this, "打开保存文件路径", "", "xlsx (*.xlsx)");
+    if (!fileName.isNull()) {
+        qDebug() << "save file" << fileName;
+        save_excel(fileName);
+    } else {
+        return;
+    }
+}
+

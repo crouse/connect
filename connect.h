@@ -34,6 +34,7 @@ private:
     QSqlDatabase db;
     QString local_ip;
     void get_local_ip();
+    void save_excel(QString fileName);
 
 private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
@@ -43,6 +44,8 @@ private slots:
     void on_pushButtonOK_clicked();
 
     void on_pushButtonClear_clicked();
+
+    void on_pushButtonExport_clicked();
 
 protected:
     void closeEvent(QCloseEvent *event);
