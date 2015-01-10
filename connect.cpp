@@ -13,6 +13,8 @@ Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Connect)
 {
+    // 默认变量
+    server_ip = "192.168.31.114";
     ui->setupUi(this);
     status_label = new QLabel;
 
@@ -78,6 +80,8 @@ Connect::Connect(QWidget *parent) :
         viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
         viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
         viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
+        viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
+        viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
         ui->tableView->setModel(viewModel);
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -131,15 +135,15 @@ Connect::Connect(QWidget *parent) :
 
     // set local ip at status bar
     get_local_ip();
-    status_label->setText(local_ip);
-
+    status_label->setStyleSheet("font-size:9px");
+    status_label->setText(QString(" Local Address: [%1], Server Address: [%2]").arg(local_ip, server_ip));
     statusBar()->addWidget(status_label);
 
     // database setting
     {
         // mysql
         db = QSqlDatabase::addDatabase("QMYSQL");
-        db.setHostName("192.168.31.114");
+        db.setHostName(server_ip);
         db.setDatabaseName("connect");
         db.setUserName("lei");
         db.setPassword("123456");
@@ -198,7 +202,9 @@ Connect::Connect(QWidget *parent) :
         qDebug() << query.lastError().text();
     }
 
-    //ui->pushButtonExport->setHidden(true);
+    if (server_ip != local_ip) {
+        ui->pushButtonExport->setHidden(true);
+    }
 }
 
 Connect::~Connect()
@@ -540,7 +546,6 @@ bool Connect::complete_fields(QString name, QString value)
     query.exec(sql);
     while(query.next()) {
         count++;
-        qDebug() << "name: " << query.value(0).toString();
         ui->lineEditName->setText(query.value(0).toString());
         ui->lineEditGender->setText(query.value(1).toString());
         ui->lineEditJob->setText(query.value(2).toString());
@@ -606,12 +611,16 @@ void Connect::append_items2_tableView()
     QString name = ui->lineEditName->text();
     QString phone = ui->lineEditPhoneNum->text();
     QString receipt = ui->lineEditReceipt->text();
+    QString code = ui->lineEditCode->text();
+    QString learnAddress = ui->lineEditLearnAddress->text();
 
     QList <QStandardItem*> standardItemList;
     QStandardItem *nameItem = new QStandardItem(name);
     QStandardItem *phoneItem = new QStandardItem(phone);
     QStandardItem *receiptItem = new QStandardItem(receipt);
-    viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem);
+    QStandardItem *codeItem = new QStandardItem(code);
+    QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
+    viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
 }
 
 void Connect::closeEvent(QCloseEvent *event)
@@ -636,9 +645,8 @@ void Connect::get_local_ip()
         if(address.protocol() == QAbstractSocket::IPv4Protocol)
             tmp_ip = address.toString();
         if (!tmp_ip.startsWith("127")) {
-            local_ip = QString(" client address: ") + tmp_ip;
+            local_ip = tmp_ip;
         }
-        qDebug() << "local IP: " << local_ip;
     }
     qDebug() << "local IP: none";
 }
@@ -740,9 +748,9 @@ void Connect::init_and_append_items2_tableView()
     QString sql;
     QString editor = ui->lineEditor->text();
     if (editor.isEmpty()) {
-        sql = QString("select name, phone_num, receipt from people");
+        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people");
     } else {
-        sql = QString("select name, phone_num, receipt from people where editor = '%1'").arg(editor);
+        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people where editor = '%1'").arg(editor);
     }
     query.exec(sql);
 
@@ -750,17 +758,23 @@ void Connect::init_and_append_items2_tableView()
     viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
     viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
     viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
+    viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
+    viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
 
     while(query.next()) {
         QString name = query.value(0).toString();
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
+        QString code = query.value(3).toString();
+        QString learn_address = query.value(4).toString();
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
-        viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem);
+        QStandardItem *codeItem = new QStandardItem(code);
+        QStandardItem *learnAddressItem = new QStandardItem(learn_address);
+        viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
     }
     query.clear();
 }
