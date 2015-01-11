@@ -9,10 +9,5 @@ int main(int argc, char *argv[])
     Connect w;
     w.show();
     w.setWindowTitle("龙泉寺皈依录入软件");
-    //QFont font;
-    //font.setFamily("KaiTi");
-    //a.setFont(font);
-    //a.setStyleSheet("QLineEdit, QTableView { border: 0px; }");
-
     return a.exec();
 }

@@ -137,74 +137,11 @@ Connect::Connect(QWidget *parent) :
     // set local ip at status bar
     get_local_ip();
     status_label->setStyleSheet("font-size:9px");
-    status_label->setText(QString(" Local Address: [%1], Server Address: [%2]").arg(local_ip, server_ip));
+    status_label->setText(QString(" Local Address: [%1], Server Default Address: [%2]").arg(local_ip, server_ip));
     statusBar()->addWidget(status_label);
 
-    // database setting
-    {
-        // mysql
-        db = QSqlDatabase::addDatabase("QMYSQL");
-        db.setHostName(server_ip);
-        db.setDatabaseName("connect");
-        db.setUserName("lei");
-        db.setPassword("123456");
-        if(!db.open()) {
-            QMessageBox::critical(this, "数据库错误", db.lastError().text());
-        }
-
-        QSqlQuery query;
-        QString createTableSql = "                             \
-                create table if not exists people (            \
-                    name                             varchar(32),  \
-                    gender                           varchar(10),  \
-                    job                              varchar(32),  \
-                    hobby                            varchar(64),  \
-                    fname                            varchar(32),  \
-                    birthday                         varchar(32),  \
-                    personnel_id                     varchar(32),  \
-                    phone_num                        varchar(20),  \
-                    race                             varchar(20),  \
-                    degree                           varchar(32),  \
-                    health                           varchar(32),  \
-                    telephone_num                    varchar(20),  \
-                    edit_time                        varchar(32),  \
-                    receipt                          varchar(32),  \
-                    workplace                        varchar(64),  \
-                    province                         varchar(64),  \
-                    city                             varchar(64),  \
-                    district                         varchar(64),  \
-                    address                          varchar(64),  \
-                    postcode                         varchar(64),  \
-                    graduate_time                    varchar(32),  \
-                    graduate_school                  varchar(64),  \
-                    first_job_entry_time             varchar(64),  \
-                    first_job_workplace              varchar(64),  \
-                    second_job_entry_time            varchar(32),  \
-                    second_job_workplace             varchar(64),  \
-                    retirement_date                  varchar(32),  \
-                    retirement_workplace             varchar(64),  \
-                    year2start_learning_buddhism     varchar(32),  \
-                    years_of_learning_buddhism       varchar(10),  \
-                    deep_understanding_of_dharma     varchar(64),  \
-                    reason2learning_dharma           varchar(128), \
-                    nums_of_buddhism_book            varchar(10),  \
-                    easy2learn_buddhism_book         varchar(128), \
-                    hard2read                        varchar(128), \
-                    maxim                            varchar(128), \
-                    buddhist_disciples_of_family     varchar(128), \
-                    editor                           varchar(128), \
-                    others                           varchar(128), \
-                    learn_dharma_kinds               varchar(64),  \
-                    learn_dharma_address             varchar(128), \
-                    code                             varchar(64) \
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-        query.exec(createTableSql);
-        query.clear();
-        qDebug() << query.lastError().text();
-    }
-
-    if (server_ip != local_ip) {
-        ui->pushButtonExport->setHidden(true);
+    if (local_ip != server_ip) {
+        ui->pushButtonExport->hide();
     }
 }
 
@@ -234,7 +171,6 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 void Connect::on_lineEditReceipt_editingFinished()
 {
     complete_fields("receipt", ui->lineEditReceipt->text());
-    qDebug() << "one_lineEditReceipt_editingFinished";
 }
 
 bool Connect::check_lineEdit_items()
@@ -255,7 +191,7 @@ void Connect::on_pushButtonOK_clicked()
     }
 
     validate_input_values();
-    if (update_sqlite_database()) {
+    if (update_database()) {
         append_items2_tableView();
     }
     clear_lineEdits();
@@ -267,7 +203,6 @@ bool Connect::validate_input_values()
 {
     //[1] valid ID card
     if (ui->lineEditID->text().isEmpty()) {
-        qDebug() << "ID card is empty";
     } else {
         if (ui->lineEditID->text().length() != 18) {
             QMessageBox::information(this, "", "身份证号必须是18位得组合");
@@ -289,7 +224,7 @@ bool Connect::validate_input_values()
     return true;
 }
 
-bool Connect::update_sqlite_database()
+bool Connect::update_database()
 {
     QSqlQuery query;
     // 如果存在一行一模一样的，先删除
@@ -385,8 +320,6 @@ bool Connect::update_sqlite_database()
                 :learn_dharma_address            ,\
                 :code                          )"
             );
-
-    qDebug() << "telephone num: " << ui->lineEditTelephoneNum->text();
 
     query.bindValue(":name", ui->lineEditName->text());
     query.bindValue(":gender", ui->lineEditGender->text());
@@ -742,7 +675,7 @@ void Connect::on_pushButton_clicked()
 }
 
 
-void Connect::init_and_append_items2_tableView()
+bool Connect::init_and_append_items2_tableView()
 {
     QSqlQuery query;
     QString sql;
@@ -752,6 +685,7 @@ void Connect::init_and_append_items2_tableView()
     } else {
         sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people where editor = '%1'").arg(editor);
     }
+
     query.exec(sql);
 
     viewModel->clear();
@@ -776,26 +710,89 @@ void Connect::init_and_append_items2_tableView()
         QStandardItem *learnAddressItem = new QStandardItem(learn_address);
         viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
     }
+
     query.clear();
+    return true;
+}
+
+bool Connect::init_db()
+{
+    // mysql
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName(server_ip);
+    db.setDatabaseName("connect");
+    db.setUserName("lei");
+    db.setPassword("123456");
+    if(!db.open()) {
+        QMessageBox::critical(this, "数据库错误", db.lastError().text());
+        return false;
+    }
+
+    QSqlQuery query;
+    QString createTableSql = "                             \
+            create table if not exists people (            \
+                name                             varchar(32),  \
+                gender                           varchar(10),  \
+                job                              varchar(32),  \
+                hobby                            varchar(64),  \
+                fname                            varchar(32),  \
+                birthday                         varchar(32),  \
+                personnel_id                     varchar(32),  \
+                phone_num                        varchar(20),  \
+                race                             varchar(20),  \
+                degree                           varchar(32),  \
+                health                           varchar(32),  \
+                telephone_num                    varchar(20),  \
+                edit_time                        varchar(32),  \
+                receipt                          varchar(32),  \
+                workplace                        varchar(64),  \
+                province                         varchar(64),  \
+                city                             varchar(64),  \
+                district                         varchar(64),  \
+                address                          varchar(64),  \
+                postcode                         varchar(64),  \
+                graduate_time                    varchar(32),  \
+                graduate_school                  varchar(64),  \
+                first_job_entry_time             varchar(64),  \
+                first_job_workplace              varchar(64),  \
+                second_job_entry_time            varchar(32),  \
+                second_job_workplace             varchar(64),  \
+                retirement_date                  varchar(32),  \
+                retirement_workplace             varchar(64),  \
+                year2start_learning_buddhism     varchar(32),  \
+                years_of_learning_buddhism       varchar(10),  \
+                deep_understanding_of_dharma     varchar(64),  \
+                reason2learning_dharma           varchar(128), \
+                nums_of_buddhism_book            varchar(10),  \
+                easy2learn_buddhism_book         varchar(128), \
+                hard2read                        varchar(128), \
+                maxim                            varchar(128), \
+                buddhist_disciples_of_family     varchar(128), \
+                editor                           varchar(128), \
+                others                           varchar(128), \
+                learn_dharma_kinds               varchar(64),  \
+                learn_dharma_address             varchar(128), \
+                code                             varchar(64) \
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+    query.exec(createTableSql);
+    query.clear();
+    return true;
+}
+
+void Connect::on_pushButtonDatabase_pressed()
+{
+    if (!db.isOpen()) {
+        if (init_db()) {
+            ui->pushButtonDatabase->setDisabled(true);
+        }
+    }
 }
 
 void Connect::on_action_triggered()
 {
-   qDebug() << "re-connect to db";
-   bool status;
-   QString address = QInputDialog::getText(this, "DB ADDRESS",
-                                           "PLEASE INPUT DB ADDRESS",
-                                           QLineEdit::Normal, "192.168.1.5", &status);
-   if (db.isOpen()) db.close();
-
-   db.setHostName(address);
-   if (!db.open()) {
-       QMessageBox::critical(this, "数据库错误", db.lastError().text());
-   }
-}
-
-void Connect::on_actionThanks_triggered()
-{
-    QString thanks = "愿以此功德回向Qt的所有员工，回向美术LIUZONGYAN，以及dbzhang800 qtxlsx 的编写者。";
-    QMessageBox::about(this, "", thanks);
+    bool ok;
+    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.1.5", &ok);
+    if (ok && !text.isEmpty()) {
+        server_ip = text;
+    }
 }

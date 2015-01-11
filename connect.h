@@ -25,11 +25,12 @@ public:
     QStandardItemModel *viewModel;
     bool check_lineEdit_items();
     bool validate_input_values();
-    bool update_sqlite_database();
+    bool update_database();
     bool clear_lineEdits();
     bool complete_fields(QString name, QString value);
     void append_items2_tableView();
-    void init_and_append_items2_tableView();
+    bool init_and_append_items2_tableView();
+    bool init_db();
 private:
     QLabel *status_label;
     QSqlDatabase db;
@@ -51,9 +52,9 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_action_triggered();
+    void on_pushButtonDatabase_pressed();
 
-    void on_actionThanks_triggered();
+    void on_action_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);
