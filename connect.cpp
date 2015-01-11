@@ -8,13 +8,14 @@
 #include <QDateTime>
 #include <QtXlsx>
 #include <QFileDialog>
+#include <QInputDialog>
 
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.114";
+    server_ip = "192.168.1.5";
     ui->setupUi(this);
     status_label = new QLabel;
 
@@ -648,7 +649,6 @@ void Connect::get_local_ip()
             local_ip = tmp_ip;
         }
     }
-    qDebug() << "local IP: none";
 }
 
 void Connect::save_excel(QString fileName)
@@ -777,4 +777,25 @@ void Connect::init_and_append_items2_tableView()
         viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
     }
     query.clear();
+}
+
+void Connect::on_action_triggered()
+{
+   qDebug() << "re-connect to db";
+   bool status;
+   QString address = QInputDialog::getText(this, "DB ADDRESS",
+                                           "PLEASE INPUT DB ADDRESS",
+                                           QLineEdit::Normal, "192.168.1.5", &status);
+   if (db.isOpen()) db.close();
+
+   db.setHostName(address);
+   if (!db.open()) {
+       QMessageBox::critical(this, "数据库错误", db.lastError().text());
+   }
+}
+
+void Connect::on_actionThanks_triggered()
+{
+    QString thanks = "愿以此功德回向Qt的所有员工，回向美术LIUZONGYAN，以及dbzhang800 qtxlsx 的编写者。";
+    QMessageBox::about(this, "", thanks);
 }

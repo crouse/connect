@@ -21,3 +21,6 @@ SOURCES += main.cpp\
 HEADERS  += connect.h
 
 FORMS    += connect.ui
+
+RESOURCES += \
+    img.qrc
