@@ -140,7 +140,7 @@ Connect::Connect(QWidget *parent) :
     status_label->setText(QString(" Local Address: [%1], Server Default Address: [%2]").arg(local_ip, server_ip));
     statusBar()->addWidget(status_label);
 
-    if (local_ip != server_ip) {
+    if (local_ip.section('.', -1).toInt() > 10) {
         ui->pushButtonExport->hide();
     }
 }
@@ -592,7 +592,49 @@ void Connect::save_excel(QString fileName)
     int j;
     QXlsx::Document xlsx;
     QSqlQuery query;
-    query.exec("select * from people");
+    query.exec("select \
+               name,\
+               gender,\
+               job,\
+               hobby,\
+               fname,\
+               birthday,\
+               personnel_id,\
+               phone_num,\
+               race,\
+               degree,\
+               health,\
+               telephone_num,\
+               edit_time,\
+               receipt,\
+               workplace,\
+               province,\
+               city,\
+               district,\
+               address,\
+               postcode,\
+               graduate_time,\
+               graduate_school,\
+               first_job_entry_time,\
+               first_job_workplace,\
+               second_job_entry_time,\
+               second_job_workplace,\
+               retirement_date,\
+               retirement_workplace,\
+               year2start_learning_buddhism,\
+               years_of_learning_buddhism,\
+               deep_understanding_of_dharma,\
+               reason2learning_dharma,\
+               nums_of_buddhism_book,\
+               easy2learn_buddhism_book,\
+               hard2read,\
+               maxim,\
+               buddhist_disciples_of_family,\
+               editor,\
+               others,\
+               learn_dharma_kinds,\
+               learn_dharma_address,\
+               code from people order by receipt");
     {
         xlsx.write("A1", "姓名");
         xlsx.write("B1", "性别");
@@ -683,9 +725,9 @@ bool Connect::init_and_append_items2_tableView()
     QString sql;
     QString editor = ui->lineEditor->text();
     if (editor.isEmpty()) {
-        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people");
+        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people order by receipt");
     } else {
-        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people where editor = '%1'").arg(editor);
+        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people where editor = '%1' order by receipt").arg(editor);
     }
 
     query.exec(sql);
