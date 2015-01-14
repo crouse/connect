@@ -228,8 +228,8 @@ bool Connect::update_database()
 {
     QSqlQuery query;
     // 如果存在一行一模一样的，先删除
-    QString deleteDuplicateSql = "delete from people where receipt = "
-            + QString("'") + ui->lineEditReceipt->text() + QString("'");
+    QString deleteDuplicateSql = QString("delete from people where id = '%1'").arg(dbid);
+    dbid = 0;
 
     qDebug() << deleteDuplicateSql;
     query.exec(deleteDuplicateSql);
@@ -474,12 +474,14 @@ bool Connect::complete_fields(QString name, QString value)
                 others,\
                 learn_dharma_kinds,\
                 learn_dharma_address,\
-                code\
+                code,\
+                id\
                 from people where %1 = '%2'"
             ).arg(name).arg(value);
     query.exec(sql);
     while(query.next()) {
         count++;
+        dbid = query.value(42).toInt();
         ui->lineEditName->setText(query.value(0).toString());
         ui->lineEditGender->setText(query.value(1).toString());
         ui->lineEditJob->setText(query.value(2).toString());
@@ -731,6 +733,7 @@ bool Connect::init_db()
     QSqlQuery query;
     QString createTableSql = "                             \
             create table if not exists people (            \
+                id int(11) primary key not null auto_increment,\
                 name                             varchar(32),  \
                 gender                           varchar(10),  \
                 job                              varchar(32),  \

@@ -36,6 +36,7 @@ private:
     QSqlDatabase db;
     QString local_ip;
     QString server_ip;
+    int dbid;
     void get_local_ip();
     void save_excel(QString fileName);
 
