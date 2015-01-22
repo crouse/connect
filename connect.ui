@@ -463,6 +463,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="lineEditLearnAddress">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;学佛小组地址&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="placeholderText">
              <string>学佛小组地址：</string>
             </property>
@@ -470,6 +473,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="lineEditCode">
+            <property name="toolTip">
+             <string>皈依证编号</string>
+            </property>
             <property name="placeholderText">
              <string>皈依证编号：</string>
             </property>
@@ -477,6 +483,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="lineEditOthers">
+            <property name="toolTip">
+             <string>其他</string>
+            </property>
             <property name="placeholderText">
              <string>其他：</string>
             </property>
