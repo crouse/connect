@@ -31,6 +31,7 @@ public:
     void append_items2_tableView();
     bool init_and_append_items2_tableView();
     bool init_db();
+    bool db_port_test();
 private:
     QLabel *status_label;
     QSqlDatabase db;

@@ -9,6 +9,7 @@
 #include <QtXlsx>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QTcpSocket>
 
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
@@ -21,6 +22,13 @@ Connect::Connect(QWidget *parent) :
 
     //completor
     {
+
+        // 性别
+        QStringList gender_list;
+        gender_list << " 1. 男" << " 2. 女";
+        QCompleter *gender_completer = new QCompleter(gender_list, this);
+        ui->lineEditGender->setCompleter(gender_completer);
+
         // 民族
         QStringList race_list;
         race_list << " acz 阿昌族" << " bz 白族" << " baz 保安族" << " blz 布朗族" << " cxz 朝鲜族" << " dwez 达斡尔族" << " dz 傣族" << " daz 德昂族"
@@ -90,8 +98,11 @@ Connect::Connect(QWidget *parent) :
     // Regex to test if insert is right
     {
         /* set validators [below] */
+
+        /*
         QRegExp regExpGender("^[\u7537\u5973]+$"); // 性别只允许输入男或者女
         ui->lineEditGender->setValidator(new QRegExpValidator(regExpGender, this));
+        */
 
         QRegExp regExpPhoneNum("1[3|5|7|8|][0-9]{9}"); // 判断输入是否为手机号，只允许输入正常手机号
         ui->lineEditPhoneNum->setValidator(new QRegExpValidator(regExpPhoneNum, this));
@@ -322,7 +333,7 @@ bool Connect::update_database()
             );
 
     query.bindValue(":name", ui->lineEditName->text());
-    query.bindValue(":gender", ui->lineEditGender->text());
+    query.bindValue(":gender", ui->lineEditGender->text().section(' ', -1));
     query.bindValue(":job", ui->lineEditJob->text());
     query.bindValue(":hobby", ui->lineEditHobby->text());
     query.bindValue(":fname", ui->lineEditFName->text());
@@ -824,12 +835,25 @@ bool Connect::init_db()
     return true;
 }
 
+bool Connect::db_port_test()
+{
+    bool ret;
+    QTcpSocket tsock;
+    tsock.connectToHost(server_ip, 3306);
+    ret = tsock.waitForConnected(1000);
+    return ret;
+}
+
 void Connect::on_pushButtonDatabase_pressed()
 {
-    if (!db.isOpen()) {
+    if (!db.isOpen() && db_port_test()) {
         if (init_db()) {
+            ui->pushButtonDatabase->setText("已连接数据库");
             ui->pushButtonDatabase->setDisabled(true);
         }
+    } else {
+        QMessageBox::critical(this, "无法连接数据库", "请在编辑菜单设置正确的数据库地址以及端口.");
+        ui->pushButtonDatabase->setDown(false);
     }
 }
 
