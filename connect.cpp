@@ -841,6 +841,7 @@ bool Connect::db_port_test()
     QTcpSocket tsock;
     tsock.connectToHost(server_ip, 3306);
     ret = tsock.waitForConnected(1000);
+    if (ret) tsock.close();
     return ret;
 }
 
