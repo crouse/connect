@@ -48,8 +48,6 @@ private slots:
 
     void on_pushButtonOK_clicked();
 
-    void on_pushButtonClear_clicked();
-
     void on_pushButtonExport_clicked();
 
     void on_pushButton_clicked();

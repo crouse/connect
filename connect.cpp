@@ -167,14 +167,20 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
     case 0:
         complete_fields("name", index.data().toString());
         viewModel->removeRow(index.row());
+        qDebug() << QString("index.row = %1").arg(index.row());
         break;
     case 1:
         complete_fields("phone_num", index.data().toString());
+        qDebug() << QString("index.row = %1").arg(index.row());
         viewModel->removeRow(index.row());
         break;
     case 2:
         complete_fields("receipt", index.data().toString());
+        qDebug() << QString("index.row = %1").arg(index.row());
         viewModel->removeRow(index.row());
+        break;
+    case 3:
+        complete_fields("code", index.data().toString());
         break;
     }
 }
@@ -544,13 +550,6 @@ bool Connect::complete_fields(QString name, QString value)
 
     query.clear();
     return true;
-}
-
-
-void Connect::on_pushButtonClear_clicked()
-{
-    clear_lineEdits();
-    ui->lineEditName->setFocus();
 }
 
 void Connect::append_items2_tableView()
