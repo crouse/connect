@@ -19,6 +19,7 @@ Connect::Connect(QWidget *parent) :
     server_ip = "192.168.1.5";
     ui->setupUi(this);
     status_label = new QLabel;
+    if_query_is_set = 0;
 
     //completor
     {
@@ -95,6 +96,18 @@ Connect::Connect(QWidget *parent) :
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
 
+
+    {
+        viewModel_search = new QStandardItemModel();
+        viewModel_search->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
+        viewModel_search->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
+        viewModel_search ->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
+        viewModel_search->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
+        viewModel_search->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
+        ui->tableView_2->setModel(viewModel_search);
+        ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    }
+
     // Regex to test if insert is right
     {
         /* set validators [below] */
@@ -161,33 +174,60 @@ Connect::~Connect()
     delete ui;
 }
 
+bool Connect::modify_or_not()
+{
+    QMessageBox::StandardButton ask = QMessageBox::question(this, "connect", "你确定更改此行内容么? 如果更改请按 Yes，否则按 Cancel，更改后请保存\n",
+                                                            QMessageBox::Cancel|QMessageBox::Yes);
+    if (ask == QMessageBox::Yes)
+        return true;
+    else
+        return false;
+}
+
 void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 {
     switch(index.column()) {
     case 0:
-        complete_fields("name", index.data().toString());
-        viewModel->removeRow(index.row());
-        qDebug() << QString("index.row = %1").arg(index.row());
-        break;
+        if (modify_or_not())
+        {
+            complete_fields("name", index.data().toString());
+            viewModel->removeRow(index.row());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            break;
+        } else
+            return;
     case 1:
-        complete_fields("phone_num", index.data().toString());
-        qDebug() << QString("index.row = %1").arg(index.row());
-        viewModel->removeRow(index.row());
-        break;
+        if (modify_or_not())
+        {
+            complete_fields("phone_num", index.data().toString());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            viewModel->removeRow(index.row());
+            break;
+        } else
+            return;
     case 2:
-        complete_fields("receipt", index.data().toString());
-        qDebug() << QString("index.row = %1").arg(index.row());
-        viewModel->removeRow(index.row());
-        break;
+        if (modify_or_not())
+        {
+            complete_fields("receipt", index.data().toString());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            viewModel->removeRow(index.row());
+            break;
+        } else
+            return;
     case 3:
-        complete_fields("code", index.data().toString());
-        break;
+        if (modify_or_not())
+        {
+            complete_fields("code", index.data().toString());
+            break;
+        } else return;
     }
 }
 
 void Connect::on_lineEditReceipt_editingFinished()
 {
-    complete_fields("receipt", ui->lineEditReceipt->text());
+    if (ui->actionSearch->isChecked()) {
+        complete_fields("receipt", ui->lineEditReceipt->text());
+    }
 }
 
 bool Connect::check_lineEdit_items()
@@ -786,3 +826,83 @@ void Connect::on_action_triggered()
         server_ip = text;
     }
 }
+
+void Connect::on_actionQueryAnyThing_triggered()
+{
+    bool ok;
+/*
+    if (!ui->pushButtonDatabase->isChecked()) {
+        if (!db_port_test()) {
+            QMessageBox::critical(this, "无法连接数据库", "请在编辑菜单设置正确的数据库地址以及端口. 然后点击 连接 按钮");
+            return;
+        } else {
+            init_db();
+            ui->pushButtonDatabase->setText("已连接");
+            ui->pushButtonDatabase->setDisabled(true);
+        }
+    }
+
+*/
+    QString search_text = QInputDialog::getText(this, "查询窗口", "请输入姓名、手机号、皈依号进行查询，输入后按确定，或者点击 OK", QLineEdit::Normal, "", &ok);
+    if (!(ok && !search_text.isEmpty())) return;
+
+    QSqlQuery query;
+    QString sql = QString(
+                "select name, phone_num, receipt, code, learn_dharma_address from people where name = '%1' union\
+                select name, phone_num, receipt, code, learn_dharma_address from people where phone_num = '%1' union\
+            select name, phone_num, receipt, code, learn_dharma_address from people where receipt = '%1' union\
+            select name, phone_num, receipt, code, learn_dharma_address from people where code = '%1'"
+            ).arg(search_text);
+    query.exec(sql);
+    qDebug() << sql;
+
+    viewModel_search->clear();
+    viewModel_search->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
+    viewModel_search->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
+    viewModel_search->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
+    viewModel_search->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
+    viewModel_search->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
+
+    qDebug() << query.lastError();
+
+    while(query.next()) {
+        QString name = query.value(0).toString();
+        qDebug() << name;
+        QString phone = query.value(1).toString();
+        QString receipt = query.value(2).toString();
+        QString code = query.value(3).toString();
+        QString learn_address = query.value(4).toString();
+
+        QList <QStandardItem*> standardItemList;
+        QStandardItem *nameItem = new QStandardItem(name);
+        QStandardItem *phoneItem = new QStandardItem(phone);
+        QStandardItem *receiptItem = new QStandardItem(receipt);
+        QStandardItem *codeItem = new QStandardItem(code);
+        QStandardItem *learnAddressItem = new QStandardItem(learn_address);
+        viewModel_search->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
+    }
+
+    query.clear();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

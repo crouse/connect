@@ -13,6 +13,7 @@
   <property name="font">
    <font>
     <family>STKaiti</family>
+    <underline>false</underline>
    </font>
   </property>
   <property name="windowTitle">
@@ -21,6 +22,12 @@
   <property name="windowIcon">
    <iconset resource="img.qrc">
     <normaloff>:/image/img/longquan.png</normaloff>:/image/img/longquan.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
@@ -50,6 +57,9 @@
             <property name="whatsThis">
              <string/>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string notr="true">姓名：</string>
             </property>
@@ -60,6 +70,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;性别&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>性别（男/女):</string>
             </property>
@@ -69,6 +82,9 @@
            <widget class="QLineEdit" name="lineEditPhoneNum">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;手机号码&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="inputMethodHints">
              <set>Qt::ImhNone</set>
@@ -89,6 +105,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;收据编号，这个是唯一值，如果输入的收据编号在数据库中存在，当收据编号输入完后，则会自动补全数据库中的数据到所有输入框&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>收据编号：</string>
             </property>
@@ -98,6 +117,9 @@
            <widget class="QLineEdit" name="lineEditJob">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;职业&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>职业：</string>
@@ -109,6 +131,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;特长&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>特长：</string>
             </property>
@@ -119,6 +144,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;法名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>法名：</string>
             </property>
@@ -128,6 +156,9 @@
            <widget class="QLineEdit" name="lineEditBirthday">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;出生年月，如1987.01.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>出生年月：</string>
@@ -142,6 +173,9 @@
             <property name="whatsThis">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>身份证号：</string>
             </property>
@@ -151,6 +185,9 @@
            <widget class="QLineEdit" name="lineEditRace">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;民族&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>民族：</string>
@@ -162,6 +199,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文化程度，如本科、专科、硕士、博士&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>文化程度：</string>
             </property>
@@ -171,6 +211,9 @@
            <widget class="QLineEdit" name="lineEditHealth">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;健康情况，如良好、疾病、重病等&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>健康状况：</string>
@@ -182,6 +225,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;固定电话，包含区号&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>固定电话：</string>
             </property>
@@ -191,6 +237,9 @@
            <widget class="QLineEdit" name="lineEditTime">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;填表时间，如：2014.12.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>填表时间：</string>
@@ -206,6 +255,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;工作单位&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>工作单位：</string>
             </property>
@@ -215,6 +267,9 @@
            <widget class="QLineEdit" name="lineEditProvince">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;省份&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>省：</string>
@@ -226,6 +281,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;市&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>市：</string>
             </property>
@@ -235,6 +293,9 @@
            <widget class="QLineEdit" name="lineEditDistrict">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;区县&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>区县：</string>
@@ -246,6 +307,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;乡镇街道的通讯地址&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>通讯地址：</string>
             </property>
@@ -255,6 +319,9 @@
            <widget class="QLineEdit" name="lineEditPostcode">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;邮政编号&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>邮政编号：</string>
@@ -266,6 +333,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;毕业时间，一般填写最后一次毕业的时间&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>毕业时间：</string>
             </property>
@@ -275,6 +345,9 @@
            <widget class="QLineEdit" name="lineEditGraduateSchool">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;毕业于哪所学校&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>毕业学校：</string>
@@ -286,6 +359,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;第一次入职时间&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>工作入职时间一：</string>
             </property>
@@ -295,6 +371,9 @@
            <widget class="QLineEdit" name="lineEditFirstJobWorkspace">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;第一次入职单位&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>工作单位一：</string>
@@ -306,6 +385,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;第二次入职时间&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>工作入职时间二：</string>
             </property>
@@ -315,6 +397,9 @@
            <widget class="QLineEdit" name="lineEditSecondJobWorkspace">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;第二次入职单位&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>工作单位二：</string>
@@ -329,6 +414,9 @@
             <property name="whatsThis">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;学佛起始时间，如2014.11.20&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>学佛起始时间：</string>
             </property>
@@ -338,6 +426,9 @@
            <widget class="QLineEdit" name="lineEditYearsOfLearningBuddhism">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;学佛时长（年）请输入阿拉伯数字如：3&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>学佛时长(年)：</string>
@@ -353,6 +444,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;是否深刻理解佛法&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>是否深刻理解佛法：</string>
             </property>
@@ -362,6 +456,9 @@
            <widget class="QLineEdit" name="lineEditReasonToLearnDharma">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;接触佛法的因缘&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>以何因缘接触佛法：</string>
@@ -373,6 +470,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;所读经典部数，如金刚经、地藏菩萨本愿经等经典&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>所读经典部数：</string>
             </property>
@@ -382,6 +482,9 @@
            <widget class="QLineEdit" name="lineEditEasyToLearnBuddhismBook">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;认为容易学的经典&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>认为易学经典：</string>
@@ -396,6 +499,9 @@
             <property name="whatsThis">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;认为难学的经典&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>认为难学经典：</string>
             </property>
@@ -405,6 +511,9 @@
            <widget class="QLineEdit" name="lineEditBuddhistDisciplesOfFamily">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;家庭成员三宝弟子，也就是说家里人谁信佛&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>家庭成员三宝弟子：</string>
@@ -416,6 +525,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;感悟最深的一句话&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>感悟最深得一句话：</string>
             </property>
@@ -425,6 +537,9 @@
            <widget class="QLineEdit" name="lineEditRetirementDate">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退休时间，如2000或者2010.10 或者2014.01.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>退休时间：</string>
@@ -436,6 +551,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退休单位&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>退休单位：</string>
             </property>
@@ -445,6 +563,9 @@
            <widget class="QLineEdit" name="lineEditor">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;编辑人，也就是输入记录的人的姓名，嘿嘿。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>编辑人：</string>
@@ -456,6 +577,9 @@
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;学佛小组种类&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>学佛小组种类：</string>
             </property>
@@ -465,6 +589,9 @@
            <widget class="QLineEdit" name="lineEditLearnAddress">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;学佛小组地址&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>学佛小组地址：</string>
@@ -476,6 +603,9 @@
             <property name="toolTip">
              <string>皈依证编号</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="placeholderText">
              <string>皈依证编号：</string>
             </property>
@@ -485,6 +615,9 @@
            <widget class="QLineEdit" name="lineEditOthers">
             <property name="toolTip">
              <string>其他</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="placeholderText">
              <string>其他：</string>
@@ -734,6 +867,12 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -742,6 +881,7 @@
    </attribute>
    <addaction name="action"/>
    <addaction name="actionSearch"/>
+   <addaction name="actionQueryAnyThing"/>
   </widget>
   <action name="action">
    <property name="icon">
@@ -753,12 +893,30 @@
    </property>
   </action>
   <action name="actionSearch">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/image/img/edit.png</normaloff>:/image/img/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>search</string>
+   </property>
+  </action>
+  <action name="actionQueryAnyThing">
    <property name="icon">
     <iconset resource="img.qrc">
      <normaloff>:/image/img/search.png</normaloff>:/image/img/search.png</iconset>
    </property>
    <property name="text">
-    <string>search</string>
+    <string>queryAnyThing</string>
+   </property>
+   <property name="toolTip">
+    <string>查询窗口</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+F</string>
    </property>
   </action>
  </widget>

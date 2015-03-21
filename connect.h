@@ -23,6 +23,7 @@ public:
     explicit Connect(QWidget *parent = 0);
     ~Connect();
     QStandardItemModel *viewModel;
+    QStandardItemModel *viewModel_search;
     bool check_lineEdit_items();
     bool validate_input_values();
     bool update_database();
@@ -32,12 +33,14 @@ public:
     bool init_and_append_items2_tableView();
     bool init_db();
     bool db_port_test();
+    bool modify_or_not();
 private:
     QLabel *status_label;
     QSqlDatabase db;
     QString local_ip;
     QString server_ip;
     int dbid;
+    int if_query_is_set;
     void get_local_ip();
     void save_excel(QString fileName);
 
@@ -55,6 +58,8 @@ private slots:
     void on_pushButtonDatabase_pressed();
 
     void on_action_triggered();
+
+    void on_actionQueryAnyThing_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);
