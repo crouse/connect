@@ -244,99 +244,18 @@ bool Connect::validate_input_values()
 bool Connect::update_database()
 {
     QSqlQuery query;
-    // 如果存在一行一模一样的，先删除
-    QString deleteDuplicateSql = QString("delete from people where id = '%1'").arg(dbid);
-    dbid = 0;
-
-    qDebug() << deleteDuplicateSql;
-    query.exec(deleteDuplicateSql);
-    query.prepare("INSERT INTO people (             \
-                  name                             ,\
-                  gender                           ,\
-                  job                              ,\
-                  hobby                            ,\
-                  fname                            ,\
-                  birthday                         ,\
-                  personnel_id                     ,\
-                  phone_num                        ,\
-                  race                             ,\
-                  degree                           ,\
-                  health                           ,\
-                  telephone_num                     ,\
-                  edit_time                        ,\
-                  receipt                          ,\
-                  workplace                        ,\
-                  province                         ,\
-                  city                             ,\
-                  district                         ,\
-                  address                          ,\
-                  postcode                         ,\
-                  graduate_time                    ,\
-                  graduate_school                  ,\
-                  first_job_entry_time             ,\
-                  first_job_workplace              ,\
-                  second_job_entry_time            ,\
-                  second_job_workplace             ,\
-                  retirement_date                  ,\
-                  retirement_workplace             ,\
-                  year2start_learning_buddhism     ,\
-                  years_of_learning_buddhism       ,\
-                  deep_understanding_of_dharma     ,\
-                  reason2learning_dharma           ,\
-                  nums_of_buddhism_book            ,\
-                  easy2learn_buddhism_book         ,\
-                  hard2read                        ,\
-                  maxim                            ,\
-                  buddhist_disciples_of_family     ,\
-                  editor                           ,\
-                  others                           ,\
-                  learn_dharma_kinds               ,\
-                  learn_dharma_address             ,\
-                  code                             \
-                  ) VALUES (                        \
-                :name                            ,\
-                :gender                          ,\
-                :job                             ,\
-                :hobby                           ,\
-                :fname                           ,\
-                :birthday                        ,\
-                :personnel_id                    ,\
-                :phone_num                       ,\
-                :race                            ,\
-                :degree                          ,\
-                :health                          ,\
-                :telephone_num                    ,\
-                :edit_time                       ,\
-                :receipt                         ,\
-                :workplace                       ,\
-                :province                        ,\
-                :city                            ,\
-                :district                        ,\
-                :address                         ,\
-                :postcode                        ,\
-                :graduate_time                   ,\
-                :graduate_school                 ,\
-                :first_job_entry_time            ,\
-                :first_job_workplace             ,\
-                :second_job_entry_time           ,\
-                :second_job_workplace            ,\
-                :retirement_date                 ,\
-                :retirement_workplace            ,\
-                :year2start_learning_buddhism    ,\
-                :years_of_learning_buddhism      ,\
-                :deep_understanding_of_dharma    ,\
-                :reason2learning_dharma          ,\
-                :nums_of_buddhism_book           ,\
-                :easy2learn_buddhism_book        ,\
-                :hard2read                       ,\
-                :maxim                           ,\
-                :buddhist_disciples_of_family    ,\
-                :editor                          ,\
-                :others                          ,\
-                :learn_dharma_kinds              ,\
-                :learn_dharma_address            ,\
-                :code                          )"
-            );
+    query.prepare("update people set name = :name, gender = :gender, job = :job, hobby = :hobby, fname = :fname,\
+                  birthday = :birthday, personnel_id = :personnel_id, phone_num = :phone_num, race = :race, degree = :degree,\
+                  health = :health, telephone_num = :telephone_num, edit_time = :edit_time, receipt = :receipt, workplace = :workplace,\
+                  province = :province, city = :city, district = :district, address = :address, postcode = :postcode, graduate_time = :graduate_time,\
+                  graduate_school = :graduate_school, first_job_entry_time = :first_job_entry_time, first_job_workplace = :first_workplace,\
+                  second_job_entry_time = :second_job_workplace, retirement_date = :retirement_date, retirement_workplace = :retirement_workplace,\
+                  year2start_learning_buddhism = :year2start_learning_buddhism, years_of_learning_buddhism = :years_of_learning_buddhism, \
+                  deep_understanding_of_dharma = :deep_understanding_of_dharma, reason2learning_dharma = :reason2learning_dharma,\
+                  nums_of_buddhism_book = :nums_of_buddhism_book, easy2learn_buddhism_book = :easy2learn_buddhism_book,\
+                  hard2read = :hard2read, maxim = :maxim, buddhist_disciples_of_family = :buddhist_disciples_of_family,\
+                  editor = :editor, others = :others, learn_dharma_kinds = :learn_dharma_kinds, learn_dharma_address = :learn_dharma_address,\
+                  code = :code where id = :dbid");
 
     query.bindValue(":name", ui->lineEditName->text());
     query.bindValue(":gender", ui->lineEditGender->text().section(' ', -1));
@@ -380,6 +299,8 @@ bool Connect::update_database()
     query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text().section(' ', -1));
     query.bindValue(":learn_dharma_address", ui->lineEditLearnAddress->text());
     query.bindValue(":code", ui->lineEditCode->text());
+    query.bindValue(":dbid", dbid);
+    dbid = 0;
 
     bool rt = query.exec();
     if (!rt) {
@@ -848,7 +769,7 @@ void Connect::on_pushButtonDatabase_pressed()
 {
     if (!db.isOpen() && db_port_test()) {
         if (init_db()) {
-            ui->pushButtonDatabase->setText("已连接数据库");
+            ui->pushButtonDatabase->setText("已连接");
             ui->pushButtonDatabase->setDisabled(true);
         }
     } else {

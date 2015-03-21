@@ -7,5 +7,7 @@
         <file>img/ok.png</file>
         <file>img/sure.png</file>
         <file>img/wireless.png</file>
+        <file>img/search.png</file>
+        <file>img/setting.png</file>
     </qresource>
 </RCC>
