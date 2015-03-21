@@ -547,11 +547,21 @@
         <property name="text">
          <string>确定</string>
         </property>
+        <property name="icon">
+         <iconset resource="img.qrc">
+          <normaloff>:/image/img/ok.png</normaloff>:/image/img/ok.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="shortcut">
          <string>Meta+Return</string>
         </property>
         <property name="flat">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -578,6 +588,19 @@
         <property name="text">
          <string>导出</string>
         </property>
+        <property name="icon">
+         <iconset resource="img.qrc">
+          <normaloff>:/image/img/excel.png</normaloff>:/image/img/excel.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -603,6 +626,19 @@
         <property name="text">
          <string>浏览</string>
         </property>
+        <property name="icon">
+         <iconset resource="img.qrc">
+          <normaloff>:/image/img/list.png</normaloff>:/image/img/list.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -626,13 +662,26 @@
          </font>
         </property>
         <property name="text">
-         <string>连接数据库</string>
+         <string>连接</string>
+        </property>
+        <property name="icon">
+         <iconset resource="img.qrc">
+          <normaloff>:/image/img/wireless.png</normaloff>:/image/img/wireless.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
         </property>
         <property name="checkable">
          <bool>true</bool>
         </property>
         <property name="checked">
          <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -654,23 +703,6 @@
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1042</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>编辑</string>
-    </property>
-    <addaction name="action"/>
-   </widget>
-   <addaction name="menu"/>
-  </widget>
   <action name="action">
    <property name="text">
     <string>更改服务器地址</string>
