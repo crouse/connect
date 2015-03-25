@@ -21,7 +21,7 @@ Connect::Connect(QWidget *parent) :
     status_label = new QLabel;
     if_query_is_set = 0;
 
-    //hide_search_table(); // test
+    hide_search_table();
 
     //completor
     {
@@ -168,6 +168,7 @@ Connect::Connect(QWidget *parent) :
 
     if (local_ip.section('.', -1).toInt() > 10) {
         ui->pushButtonExport->hide();
+        ui->pushButton->hide();
     }
 }
 
@@ -188,44 +189,11 @@ bool Connect::modify_or_not()
 
 void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    switch(index.column()) {
-    case 0:
-        if (modify_or_not())
-        {
-            complete_fields("name", index.data().toString());
-            viewModel->removeRow(index.row());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            break;
-        } else
-            return;
-    case 1:
-        if (modify_or_not())
-        {
-            complete_fields("phone_num", index.data().toString());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            viewModel->removeRow(index.row());
-            break;
-        } else
-            return;
-    case 2:
-        if (modify_or_not())
-        {
-            complete_fields("receipt", index.data().toString());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            viewModel->removeRow(index.row());
-            break;
-        } else
-            return;
-    case 3:
-        if (modify_or_not())
-        {
-            complete_fields("code", index.data().toString());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            viewModel->removeRow(index.row());
-
-            break;
-        } else return;
-    }
+    QString receipt = index.sibling(index.row(), 2).data().toString();
+    if (modify_or_not()) {
+        complete_fields("receipt", receipt);
+        viewModel_search->removeRow(index.row());
+    } else return;
 }
 
 void Connect::on_lineEditReceipt_editingFinished()
@@ -535,6 +503,7 @@ bool Connect::clear_lineEdits()
 
 bool Connect::complete_fields(QString name, QString value)
 {
+    qDebug() << "complete_fields" << "name:" << name << "value:" << value;
     // 1. 从本地数据库查询是否有此记录，如果有记录，补全所有选项
     // 2. 从服务器数据库查询是否有记录，如果有记录，补全所有选项
     int count = 0;
@@ -961,6 +930,7 @@ void Connect::on_action_triggered()
 void Connect::on_actionQueryAnyThing_triggered()
 {
     bool ok;
+    show_search_table();
 /*
     if (!ui->pushButtonDatabase->isChecked()) {
         if (!db_port_test()) {
@@ -1029,43 +999,9 @@ void Connect::show_search_table()
 
 void Connect::on_tableView_2_doubleClicked(const QModelIndex &index)
 {
-    switch(index.column()) {
-    case 0:
-        if (modify_or_not())
-        {
-            complete_fields("name", index.data().toString());
-            viewModel_search->removeRow(index.row());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            break;
-        } else
-            return;
-    case 1:
-        if (modify_or_not())
-        {
-            complete_fields("phone_num", index.data().toString());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            viewModel_search->removeRow(index.row());
-            break;
-        } else
-            return;
-    case 2:
-        if (modify_or_not())
-        {
-            complete_fields("receipt", index.data().toString());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            viewModel_search->removeRow(index.row());
-            break;
-        } else
-            return;
-    case 3:
-        if (modify_or_not())
-        {
-            complete_fields("code", index.data().toString());
-            qDebug() << QString("index.row = %1").arg(index.row());
-            viewModel_search->removeRow(index.row());
-
-            break;
-        } else return;
-    }
-
+    QString receipt = index.sibling(index.row(), 2).data().toString();
+    if (modify_or_not()) {
+        complete_fields("receipt", receipt);
+        hide_search_table();
+    } else return;
 }

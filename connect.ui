@@ -1120,8 +1120,14 @@
           <property name="mouseTracking">
            <bool>true</bool>
           </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustIgnored</enum>
+          </property>
           <property name="dragDropMode">
            <enum>QAbstractItemView::NoDragDrop</enum>
+          </property>
+          <property name="showGrid">
+           <bool>true</bool>
           </property>
           <property name="gridStyle">
            <enum>Qt::SolidLine</enum>
