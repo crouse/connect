@@ -192,7 +192,7 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
     QString receipt = index.sibling(index.row(), 2).data().toString();
     if (modify_or_not()) {
         complete_fields("receipt", receipt);
-        viewModel_search->removeRow(index.row());
+        viewModel->removeRow(index.row());
     } else return;
 }
 
@@ -930,7 +930,6 @@ void Connect::on_action_triggered()
 void Connect::on_actionQueryAnyThing_triggered()
 {
     bool ok;
-    show_search_table();
 /*
     if (!ui->pushButtonDatabase->isChecked()) {
         if (!db_port_test()) {
@@ -982,6 +981,8 @@ void Connect::on_actionQueryAnyThing_triggered()
         QStandardItem *learnAddressItem = new QStandardItem(learn_address);
         viewModel_search->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
     }
+
+    show_search_table();
 
     query.clear();
 }
