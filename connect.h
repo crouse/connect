@@ -34,6 +34,8 @@ public:
     bool init_db();
     bool db_port_test();
     bool modify_or_not();
+    void hide_search_table();
+    void show_search_table();
 private:
     QLabel *status_label;
     QSqlDatabase db;
@@ -60,6 +62,8 @@ private slots:
     void on_action_triggered();
 
     void on_actionQueryAnyThing_triggered();
+
+    void on_tableView_2_doubleClicked(const QModelIndex &index);
 
 protected:
     void closeEvent(QCloseEvent *event);

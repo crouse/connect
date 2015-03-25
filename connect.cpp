@@ -21,6 +21,8 @@ Connect::Connect(QWidget *parent) :
     status_label = new QLabel;
     if_query_is_set = 0;
 
+    //hide_search_table(); // test
+
     //completor
     {
 
@@ -218,6 +220,9 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
         if (modify_or_not())
         {
             complete_fields("code", index.data().toString());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            viewModel->removeRow(index.row());
+
             break;
         } else return;
     }
@@ -1011,24 +1016,56 @@ void Connect::on_actionQueryAnyThing_triggered()
     query.clear();
 }
 
+void Connect::hide_search_table()
+{
+    ui->tableView_2->hide();
+    ui->label_2->hide();
+}
 
+void Connect::show_search_table()
+{
+    ui->tableView_2->show(); ui->label_2->show();
+}
 
+void Connect::on_tableView_2_doubleClicked(const QModelIndex &index)
+{
+    switch(index.column()) {
+    case 0:
+        if (modify_or_not())
+        {
+            complete_fields("name", index.data().toString());
+            viewModel_search->removeRow(index.row());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            break;
+        } else
+            return;
+    case 1:
+        if (modify_or_not())
+        {
+            complete_fields("phone_num", index.data().toString());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            viewModel_search->removeRow(index.row());
+            break;
+        } else
+            return;
+    case 2:
+        if (modify_or_not())
+        {
+            complete_fields("receipt", index.data().toString());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            viewModel_search->removeRow(index.row());
+            break;
+        } else
+            return;
+    case 3:
+        if (modify_or_not())
+        {
+            complete_fields("code", index.data().toString());
+            qDebug() << QString("index.row = %1").arg(index.row());
+            viewModel_search->removeRow(index.row());
 
+            break;
+        } else return;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
