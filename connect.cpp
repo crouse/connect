@@ -20,6 +20,7 @@ Connect::Connect(QWidget *parent) :
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
+    if_connected = false;
 
     hide_search_table();
 
@@ -198,6 +199,7 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 
 void Connect::on_lineEditReceipt_editingFinished()
 {
+    if (!test_if_connected()) return;
     if (ui->actionSearch->isChecked()) {
         complete_fields("receipt", ui->lineEditReceipt->text());
     }
@@ -215,6 +217,7 @@ bool Connect::check_lineEdit_items()
 
 void Connect::on_pushButtonOK_clicked()
 {
+    if (!test_if_connected()) return;
     if (!check_lineEdit_items()) {
         QMessageBox::information(this, "", "请至少填写姓名、收据编号、编辑人");
         return;
@@ -773,6 +776,7 @@ void Connect::save_excel(QString fileName)
 
 void Connect::on_pushButtonExport_clicked()
 {
+    if (!test_if_connected()) return;
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, "打开保存文件路径", "", "xlsx (*.xlsx)");
     if (!fileName.isNull()) {
@@ -786,6 +790,7 @@ void Connect::on_pushButtonExport_clicked()
 
 void Connect::on_pushButton_clicked()
 {
+    if (!test_if_connected()) return;
     init_and_append_items2_tableView();
 }
 
@@ -842,6 +847,8 @@ bool Connect::init_db()
         QMessageBox::critical(this, "数据库错误", db.lastError().text());
         return false;
     }
+
+    if_connected = true;
 
     QSqlQuery query;
     QString createTableSql = "                             \
@@ -929,6 +936,7 @@ void Connect::on_action_triggered()
 
 void Connect::on_actionQueryAnyThing_triggered()
 {
+    if (!test_if_connected()) return;
     bool ok;
 /*
     if (!ui->pushButtonDatabase->isChecked()) {
@@ -1005,4 +1013,13 @@ void Connect::on_tableView_2_doubleClicked(const QModelIndex &index)
         complete_fields("receipt", receipt);
         hide_search_table();
     } else return;
+}
+
+bool Connect::test_if_connected()
+{
+    if(!if_connected) {
+        QMessageBox::critical(this, "没有连接数据库", "请先连接数据库");
+        return false;
+    }
+    return true;
 }

@@ -36,6 +36,7 @@ public:
     bool modify_or_not();
     void hide_search_table();
     void show_search_table();
+    bool test_if_connected();
 private:
     QLabel *status_label;
     QSqlDatabase db;
@@ -43,6 +44,7 @@ private:
     QString server_ip;
     int dbid;
     int if_query_is_set;
+    bool if_connected;
     void get_local_ip();
     void save_excel(QString fileName);
 
