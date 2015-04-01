@@ -1170,7 +1170,7 @@
          <bool>false</bool>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;确定录入&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;确定录入快捷键: &lt;span style=&quot; font-weight:600;&quot;&gt;CTRL + ENTER&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="autoFillBackground">
          <bool>false</bool>
@@ -1183,7 +1183,7 @@
         </property>
         <property name="icon">
          <iconset resource="img.qrc">
-          <normaloff>:/image/img/ok.png</normaloff>:/image/img/ok.png</iconset>
+          <normaloff>:/image/img/check.png</normaloff>:/image/img/check.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1224,7 +1224,7 @@
         </property>
         <property name="icon">
          <iconset resource="img.qrc">
-          <normaloff>:/image/img/excel.png</normaloff>:/image/img/excel.png</iconset>
+          <normaloff>:/image/img/downloadit.png</normaloff>:/image/img/downloadit.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1262,7 +1262,7 @@
         </property>
         <property name="icon">
          <iconset resource="img.qrc">
-          <normaloff>:/image/img/list.png</normaloff>:/image/img/list.png</iconset>
+          <normaloff>:/image/img/compose.png</normaloff>:/image/img/compose.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1306,7 +1306,7 @@
         </property>
         <property name="icon">
          <iconset resource="img.qrc">
-          <normaloff>:/image/img/wireless.png</normaloff>:/image/img/wireless.png</iconset>
+          <normaloff>:/image/img/cdb.png</normaloff>:/image/img/cdb.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1344,14 +1344,25 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
+   <property name="font">
+    <font>
+     <stylestrategy>PreferDefault</stylestrategy>
+    </font>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string notr="true"/>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
    <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonIconOnly</enum>
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -1362,11 +1373,12 @@
    <addaction name="action"/>
    <addaction name="actionSearch"/>
    <addaction name="actionQueryAnyThing"/>
+   <addaction name="actionDbBack"/>
   </widget>
   <action name="action">
    <property name="icon">
     <iconset resource="img.qrc">
-     <normaloff>:/image/img/setting.png</normaloff>:/image/img/setting.png</iconset>
+     <normaloff>:/image/img/config.png</normaloff>:/image/img/config.png</iconset>
    </property>
    <property name="text">
     <string>更改服务器地址</string>
@@ -1378,25 +1390,37 @@
    </property>
    <property name="icon">
     <iconset resource="img.qrc">
-     <normaloff>:/image/img/edit.png</normaloff>:/image/img/edit.png</iconset>
+     <normaloff>:/image/img/else.png</normaloff>:/image/img/else.png</iconset>
    </property>
    <property name="text">
-    <string>search</string>
+    <string>自动补全</string>
    </property>
   </action>
   <action name="actionQueryAnyThing">
    <property name="icon">
     <iconset resource="img.qrc">
-     <normaloff>:/image/img/search.png</normaloff>:/image/img/search.png</iconset>
+     <normaloff>:/image/img/query2.png</normaloff>:/image/img/query2.png</iconset>
    </property>
    <property name="text">
-    <string>queryAnyThing</string>
+    <string>查询</string>
    </property>
    <property name="toolTip">
-    <string>查询窗口</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;查询窗口，快捷键: &lt;span style=&quot; font-weight:600;&quot;&gt;CTRL + F&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
     <string>Meta+F</string>
+   </property>
+  </action>
+  <action name="actionDbBack">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/image/img/sql.png</normaloff>:/image/img/sql.png</iconset>
+   </property>
+   <property name="text">
+    <string>备份数据库</string>
+   </property>
+   <property name="toolTip">
+    <string>下载当前数据库文件</string>
    </property>
   </action>
  </widget>
