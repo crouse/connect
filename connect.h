@@ -67,6 +67,8 @@ private slots:
 
     void on_tableView_2_doubleClicked(const QModelIndex &index);
 
+    void on_actionDbBack_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event);
 

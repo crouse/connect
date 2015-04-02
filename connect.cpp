@@ -167,9 +167,10 @@ Connect::Connect(QWidget *parent) :
     status_label->setText(QString(" Local Address: [%1], Server Default Address: [%2]").arg(local_ip, server_ip));
     statusBar()->addWidget(status_label);
 
-    if (local_ip.section('.', -1).toInt() > 10) {
+    if (local_ip.section('.', -1).toInt() > 5) {
         ui->pushButtonExport->hide();
         ui->pushButton->hide();
+        ui->actionDbBack->setDisabled(true);
     }
 }
 
@@ -1023,3 +1024,36 @@ bool Connect::test_if_connected()
     }
     return true;
 }
+
+void Connect::on_actionDbBack_triggered()
+{
+    if (!test_if_connected()) return;
+    bool retcode;
+    QDateTime dt;
+    QString current_dt = dt.currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
+    qDebug() << current_dt;
+
+    QString new_table_name = QString("people_%1").arg(current_dt);
+    QString sql = QString("create table %1 as select * from people;").arg(new_table_name);
+    QSqlQuery query;
+    retcode = query.exec(sql);
+    qDebug() << retcode;
+    if (!retcode)
+        QMessageBox::critical(this, "备份", QString("备份失败: %1").arg(query.lastError().text()));
+    else
+        QMessageBox::information(this, "备份", QString("备份数据到新表格成功: %1").arg(new_table_name));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
