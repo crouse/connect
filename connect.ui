@@ -973,30 +973,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;编辑人，也就是输入记录的人的姓名，嘿嘿。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="placeholderText">
-             <string>编辑人：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="lineEditLearnKind">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1069,6 +1045,30 @@
            </widget>
           </item>
           <item>
+           <widget class="QLineEdit" name="lineEditor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;编辑人，也就是输入记录的人的姓名，嘿嘿。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="placeholderText">
+             <string>编辑人：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLineEdit" name="lineEditOthers">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1082,13 +1082,13 @@
              </font>
             </property>
             <property name="toolTip">
-             <string>其他</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;第二次更改时的更改人名称&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
             <property name="placeholderText">
-             <string>其他：</string>
+             <string>变更人：</string>
             </property>
            </widget>
           </item>
@@ -1156,6 +1156,56 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
+       <widget class="QPushButton" name="pushButtonDatabase">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>STKaiti</family>
+         </font>
+        </property>
+        <property name="text">
+         <string>连接</string>
+        </property>
+        <property name="icon">
+         <iconset resource="img.qrc">
+          <normaloff>:/image/img/cdb.png</normaloff>:/image/img/cdb.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButtonOK">
         <property name="font">
          <font>
@@ -1193,44 +1243,6 @@
         </property>
         <property name="shortcut">
          <string>Meta+Return</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonExport">
-        <property name="font">
-         <font>
-          <family>STKaiti</family>
-         </font>
-        </property>
-        <property name="text">
-         <string>导出</string>
-        </property>
-        <property name="icon">
-         <iconset resource="img.qrc">
-          <normaloff>:/image/img/downloadit.png</normaloff>:/image/img/downloadit.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -1289,36 +1301,24 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonDatabase">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QPushButton" name="pushButtonExport">
         <property name="font">
          <font>
           <family>STKaiti</family>
          </font>
         </property>
         <property name="text">
-         <string>连接</string>
+         <string>导出</string>
         </property>
         <property name="icon">
          <iconset resource="img.qrc">
-          <normaloff>:/image/img/cdb.png</normaloff>:/image/img/cdb.png</iconset>
+          <normaloff>:/image/img/downloadit.png</normaloff>:/image/img/downloadit.png</iconset>
         </property>
         <property name="iconSize">
          <size>
           <width>32</width>
           <height>32</height>
          </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -1463,11 +1463,17 @@
   <tabstop>lineEditMaximOfBuddhism</tabstop>
   <tabstop>lineEditRetirementDate</tabstop>
   <tabstop>lineEditRetirementWorkspace</tabstop>
-  <tabstop>lineEditor</tabstop>
   <tabstop>lineEditLearnKind</tabstop>
   <tabstop>lineEditLearnAddress</tabstop>
   <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditor</tabstop>
   <tabstop>lineEditOthers</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>tableView_2</tabstop>
+  <tabstop>pushButtonDatabase</tabstop>
+  <tabstop>pushButtonOK</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButtonExport</tabstop>
  </tabstops>
  <resources>
   <include location="img.qrc"/>

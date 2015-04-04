@@ -500,7 +500,7 @@ bool Connect::clear_lineEdits()
     ui->lineEditHardToLearnBuddhismBook->clear();
     ui->lineEditMaximOfBuddhism->clear();
     ui->lineEditBuddhistDisciplesOfFamily->clear();
-    ui->lineEditOthers->clear();
+    //ui->lineEditOthers->clear();
     return true;
 }
 
@@ -602,7 +602,10 @@ bool Connect::complete_fields(QString name, QString value)
         ui->lineEditMaximOfBuddhism->setText(query.value(35).toString());
         ui->lineEditBuddhistDisciplesOfFamily->setText(query.value(36).toString());
         ui->lineEditor->setText(query.value(37).toString());
-        ui->lineEditOthers->setText(query.value(38).toString());
+        if (!query.value(38).toString().isEmpty()) {
+            qDebug() << "other";
+            ui->lineEditOthers->setText(query.value(38).toString());
+        }
         ui->lineEditLearnKind->setText(query.value(39).toString());
         ui->lineEditLearnAddress->setText(query.value(40).toString());
         ui->lineEditCode->setText(query.value(41).toString());
