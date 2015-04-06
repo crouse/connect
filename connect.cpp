@@ -21,6 +21,7 @@ Connect::Connect(QWidget *parent) :
     status_label = new QLabel;
     if_query_is_set = 0;
     if_connected = false;
+    dbid = 0;
 
     hide_search_table();
 
