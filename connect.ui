@@ -164,6 +164,30 @@
            </widget>
           </item>
           <item>
+           <widget class="QLineEdit" name="lineEditCode">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>皈依证编号</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="placeholderText">
+             <string>皈依证编号：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLineEdit" name="lineEditJob">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -379,30 +403,6 @@
             </property>
             <property name="placeholderText">
              <string>固定电话：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEditTime">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;填表时间，如：2014.12.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="placeholderText">
-             <string>填表时间：</string>
             </property>
            </widget>
           </item>
@@ -1021,30 +1021,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditCode">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>皈依证编号</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="placeholderText">
-             <string>皈依证编号：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="lineEditor">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1089,6 +1065,30 @@
             </property>
             <property name="placeholderText">
              <string>变更人：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditTime">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;填表时间，如：2014.12.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="placeholderText">
+             <string>填表时间：</string>
             </property>
            </widget>
           </item>
@@ -1209,7 +1209,7 @@
        <widget class="QPushButton" name="pushButtonOK">
         <property name="font">
          <font>
-          <family>KaiTi</family>
+          <family>STKaiti</family>
           <underline>false</underline>
          </font>
         </property>
@@ -1430,6 +1430,7 @@
   <tabstop>lineEditGender</tabstop>
   <tabstop>lineEditPhoneNum</tabstop>
   <tabstop>lineEditReceipt</tabstop>
+  <tabstop>lineEditCode</tabstop>
   <tabstop>lineEditJob</tabstop>
   <tabstop>lineEditHobby</tabstop>
   <tabstop>lineEditFName</tabstop>
@@ -1439,7 +1440,6 @@
   <tabstop>lineEditDegree</tabstop>
   <tabstop>lineEditHealth</tabstop>
   <tabstop>lineEditTelephoneNum</tabstop>
-  <tabstop>lineEditTime</tabstop>
   <tabstop>lineEditWorkPlace</tabstop>
   <tabstop>lineEditProvince</tabstop>
   <tabstop>lineEditCity</tabstop>
@@ -1465,9 +1465,9 @@
   <tabstop>lineEditRetirementWorkspace</tabstop>
   <tabstop>lineEditLearnKind</tabstop>
   <tabstop>lineEditLearnAddress</tabstop>
-  <tabstop>lineEditCode</tabstop>
   <tabstop>lineEditor</tabstop>
   <tabstop>lineEditOthers</tabstop>
+  <tabstop>lineEditTime</tabstop>
   <tabstop>tableView</tabstop>
   <tabstop>tableView_2</tabstop>
   <tabstop>pushButtonDatabase</tabstop>

@@ -167,12 +167,6 @@ Connect::Connect(QWidget *parent) :
     status_label->setStyleSheet("font-size:9px");
     status_label->setText(QString(" Local Address: [%1], Server Default Address: [%2]").arg(local_ip, server_ip));
     statusBar()->addWidget(status_label);
-
-    if (local_ip.section('.', -1).toInt() > 5) {
-        ui->pushButtonExport->hide();
-        ui->pushButton->hide();
-        ui->actionDbBack->setDisabled(true);
-    }
 }
 
 Connect::~Connect()
@@ -210,10 +204,11 @@ void Connect::on_lineEditReceipt_editingFinished()
 bool Connect::check_lineEdit_items()
 {
     bool name = ui->lineEditName->text().isEmpty();
-    bool receipt = ui->lineEditReceipt->text().isEmpty();
+    // 这个不好说，有时候就是空的，所以允许空
+    //bool receipt = ui->lineEditReceipt->text().isEmpty();
     bool editor = ui->lineEditor->text().isEmpty();
 
-    if (name || receipt || editor) return false;
+    if (name || editor) return false;
     else return true;
 }
 
@@ -221,7 +216,7 @@ void Connect::on_pushButtonOK_clicked()
 {
     if (!test_if_connected()) return;
     if (!check_lineEdit_items()) {
-        QMessageBox::information(this, "", "请至少填写姓名、收据编号、编辑人");
+        QMessageBox::information(this, "", "请至少填写姓名、编辑人");
         return;
     }
 
@@ -659,9 +654,8 @@ void Connect::get_local_ip()
     {
         if(address.protocol() == QAbstractSocket::IPv4Protocol)
             tmp_ip = address.toString();
-        if (!tmp_ip.startsWith("127")) {
+        if (tmp_ip.startsWith(server_ip.section(".", 0, 2)))
             local_ip = tmp_ip;
-        }
     }
 }
 
@@ -872,7 +866,7 @@ bool Connect::init_db()
                 health                           varchar(32),  \
                 telephone_num                    varchar(20),  \
                 edit_time                        varchar(32),  \
-                receipt                          varchar(32),  \
+                receipt                          varchar(32) unique,  \
                 workplace                        varchar(64),  \
                 province                         varchar(64),  \
                 city                             varchar(64),  \
@@ -900,7 +894,7 @@ bool Connect::init_db()
                 others                           varchar(128), \
                 learn_dharma_kinds               varchar(64),  \
                 learn_dharma_address             varchar(128), \
-                code                             varchar(64) \
+                code                             varchar(64) unique \
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
     query.exec(createTableSql);
     query.clear();
@@ -919,6 +913,8 @@ bool Connect::db_port_test()
 
 void Connect::on_pushButtonDatabase_pressed()
 {
+    hide_menu_and_button();
+
     if (!db.isOpen() && db_port_test()) {
         if (init_db()) {
             ui->pushButtonDatabase->setText("已连接");
@@ -937,6 +933,8 @@ void Connect::on_action_triggered()
     if (ok && !text.isEmpty()) {
         server_ip = text;
     }
+    get_local_ip();
+    status_label->setText(QString(" Local Address: [%1], Server Address: [%2]").arg(local_ip, server_ip));
 }
 
 void Connect::on_actionQueryAnyThing_triggered()
@@ -1048,8 +1046,15 @@ void Connect::on_actionDbBack_triggered()
         QMessageBox::information(this, "备份", QString("备份数据到新表格成功: %1").arg(new_table_name));
 }
 
-
-
+void Connect::hide_menu_and_button()
+{
+    get_local_ip();
+    if (local_ip.section('.', -1).toInt() > 5) {
+        ui->pushButtonExport->hide();
+        ui->pushButton->hide();
+        ui->actionDbBack->setDisabled(true);
+    }
+}
 
 
 

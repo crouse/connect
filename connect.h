@@ -35,6 +35,7 @@ public:
     bool db_port_test();
     bool modify_or_not();
     void hide_search_table();
+    void hide_menu_and_button();
     void show_search_table();
     bool test_if_connected();
 private:
