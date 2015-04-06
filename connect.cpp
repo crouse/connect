@@ -96,6 +96,7 @@ Connect::Connect(QWidget *parent) :
         viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
         viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
         viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
+        viewModel->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("身份证号码")));
         ui->tableView->setModel(viewModel);
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -623,6 +624,7 @@ void Connect::append_items2_tableView()
     QString receipt = ui->lineEditReceipt->text();
     QString code = ui->lineEditCode->text();
     QString learnAddress = ui->lineEditLearnAddress->text();
+    QString personId = ui->lineEditID->text();
 
     QList <QStandardItem*> standardItemList;
     QStandardItem *nameItem = new QStandardItem(name);
@@ -630,7 +632,8 @@ void Connect::append_items2_tableView()
     QStandardItem *receiptItem = new QStandardItem(receipt);
     QStandardItem *codeItem = new QStandardItem(code);
     QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
-    viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
+    QStandardItem *personIdItem = new QStandardItem(personId);
+    viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem << personIdItem);
 }
 
 void Connect::closeEvent(QCloseEvent *event)
@@ -800,9 +803,9 @@ bool Connect::init_and_append_items2_tableView()
     QString sql;
     QString editor = ui->lineEditor->text();
     if (editor.isEmpty()) {
-        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people order by receipt");
+        sql = QString("select name, phone_num, receipt, code, learn_dharma_address, personnel_id from people order by receipt");
     } else {
-        sql = QString("select name, phone_num, receipt, code, learn_dharma_address from people where editor = '%1' order by receipt").arg(editor);
+        sql = QString("select name, phone_num, receipt, code, learn_dharma_address, personnel_id from people where editor = '%1' order by receipt").arg(editor);
     }
 
     query.exec(sql);
@@ -813,6 +816,7 @@ bool Connect::init_and_append_items2_tableView()
     viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
     viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
     viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
+    viewModel->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("身份证号码")));
 
     while(query.next()) {
         QString name = query.value(0).toString();
@@ -820,6 +824,7 @@ bool Connect::init_and_append_items2_tableView()
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
         QString learn_address = query.value(4).toString();
+        QString personId = query.value(5).toString();
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
@@ -827,7 +832,8 @@ bool Connect::init_and_append_items2_tableView()
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
         QStandardItem *learnAddressItem = new QStandardItem(learn_address);
-        viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
+        QStandardItem *personnelIDItem = new QStandardItem(personId);
+        viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem << personnelIDItem);
     }
 
     query.clear();
