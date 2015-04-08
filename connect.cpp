@@ -73,12 +73,14 @@ Connect::Connect(QWidget *parent) :
         reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
 
+        /*
         // 家庭成员三宝弟子
         QStringList family_list;
         family_list << " 1. 父亲" << " 2. 母亲" << " 3. 兄弟" << " 4. 姐妹" << " 5. 妻子" << " 6. 孩子";
         QCompleter *family_completer = new QCompleter(family_list, this);
         family_completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditBuddhistDisciplesOfFamily->setCompleter(family_completer);
+        */
 
         // 学佛小组种类
         QStringList learn_kinds_list;
@@ -435,7 +437,7 @@ bool Connect::update_database()
     query.bindValue(":easy2learn_buddhism_book", ui->lineEditEasyToLearnBuddhismBook->text());
     query.bindValue(":hard2read", ui->lineEditHardToLearnBuddhismBook->text());
     query.bindValue(":maxim", ui->lineEditMaximOfBuddhism->text());
-    query.bindValue(":buddhist_disciples_of_family", ui->lineEditBuddhistDisciplesOfFamily->text().section(' ', -1));
+    query.bindValue(":buddhist_disciples_of_family", ui->lineEditBuddhistDisciplesOfFamily->text());
     query.bindValue(":editor", ui->lineEditor->text());
     query.bindValue(":others", ui->lineEditOthers->text());
     query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text().section(' ', -1));

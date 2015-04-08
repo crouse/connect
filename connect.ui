@@ -83,66 +83,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditGender">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;性别&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="placeholderText">
-             <string>性别（男/女):</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEditPhoneNum">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;手机号码&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="inputMethodHints">
-             <set>Qt::ImhNone</set>
-            </property>
-            <property name="inputMask">
-             <string/>
-            </property>
-            <property name="cursorPosition">
-             <number>0</number>
-            </property>
-            <property name="dragEnabled">
-             <bool>true</bool>
-            </property>
-            <property name="placeholderText">
-             <string>手机号码：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="lineEditReceipt">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -187,6 +127,30 @@
             </property>
             <property name="placeholderText">
              <string>皈依证编号：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditGender">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;性别&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="placeholderText">
+             <string>性别（男/女):</string>
             </property>
            </widget>
           </item>
@@ -310,6 +274,42 @@
             </property>
             <property name="placeholderText">
              <string>身份证号：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditPhoneNum">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;手机号码&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhNone</set>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="cursorPosition">
+             <number>0</number>
+            </property>
+            <property name="dragEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>手机号码：</string>
             </property>
            </widget>
           </item>
@@ -529,7 +529,7 @@
              <string notr="true"/>
             </property>
             <property name="placeholderText">
-             <string>通讯地址：</string>
+             <string>街道(村)地址：</string>
             </property>
            </widget>
           </item>
@@ -702,6 +702,58 @@
            </widget>
           </item>
           <item>
+           <widget class="QLineEdit" name="lineEditRetirementDate">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退休时间，如2000或者2010.10 或者2014.01.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="placeholderText">
+             <string>退休时间：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditRetirementWorkspace">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退休单位&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="placeholderText">
+             <string>退休单位：</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
            <widget class="QLineEdit" name="lineEditLearnBuddhismDate">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -752,10 +804,6 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLineEdit" name="lineEditBuddhismLevel">
             <property name="sizePolicy">
@@ -880,30 +928,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditBuddhistDisciplesOfFamily">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;家庭成员三宝弟子，也就是说家里人谁信佛&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="placeholderText">
-             <string>家庭成员三宝弟子：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="lineEditMaximOfBuddhism">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -928,7 +952,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEditRetirementDate">
+           <widget class="QLineEdit" name="lineEditBuddhistDisciplesOfFamily">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -941,37 +965,13 @@
              </font>
             </property>
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退休时间，如2000或者2010.10 或者2014.01.01&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;家庭成员三宝弟子，也就是说家里人谁信佛&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
             <property name="placeholderText">
-             <string>退休时间：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEditRetirementWorkspace">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退休单位&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="placeholderText">
-             <string>退休单位：</string>
+             <string>家庭成员三宝弟子：</string>
             </property>
            </widget>
           </item>
@@ -1429,16 +1429,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>lineEditName</tabstop>
-  <tabstop>lineEditGender</tabstop>
   <tabstop>lineEditPhoneNum</tabstop>
-  <tabstop>lineEditReceipt</tabstop>
-  <tabstop>lineEditCode</tabstop>
-  <tabstop>lineEditJob</tabstop>
-  <tabstop>lineEditHobby</tabstop>
-  <tabstop>lineEditFName</tabstop>
-  <tabstop>lineEditBirthday</tabstop>
-  <tabstop>lineEditID</tabstop>
   <tabstop>lineEditRace</tabstop>
   <tabstop>lineEditDegree</tabstop>
   <tabstop>lineEditHealth</tabstop>
@@ -1455,17 +1446,12 @@
   <tabstop>lineEditFirstJobWorkspace</tabstop>
   <tabstop>lineEditSecondJobDate</tabstop>
   <tabstop>lineEditSecondJobWorkspace</tabstop>
-  <tabstop>lineEditLearnBuddhismDate</tabstop>
-  <tabstop>lineEditYearsOfLearningBuddhism</tabstop>
   <tabstop>lineEditBuddhismLevel</tabstop>
   <tabstop>lineEditReasonToLearnDharma</tabstop>
   <tabstop>lineEditReadNumsOfBuddhismBook</tabstop>
   <tabstop>lineEditEasyToLearnBuddhismBook</tabstop>
   <tabstop>lineEditHardToLearnBuddhismBook</tabstop>
   <tabstop>lineEditBuddhistDisciplesOfFamily</tabstop>
-  <tabstop>lineEditMaximOfBuddhism</tabstop>
-  <tabstop>lineEditRetirementDate</tabstop>
-  <tabstop>lineEditRetirementWorkspace</tabstop>
   <tabstop>lineEditLearnKind</tabstop>
   <tabstop>lineEditLearnAddress</tabstop>
   <tabstop>lineEditor</tabstop>
