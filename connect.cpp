@@ -677,6 +677,7 @@ void Connect::save_excel(QString fileName)
                job,\
                hobby,\
                fname,\
+               code,\
                birthday,\
                personnel_id,\
                phone_num,\
@@ -712,51 +713,96 @@ void Connect::save_excel(QString fileName)
                editor,\
                others,\
                learn_dharma_kinds,\
-               learn_dharma_address,\
-               code from people order by receipt");
+               learn_dharma_address\
+               from people order by receipt");
+
+
     {
+        xlsx.setColumnWidth(1, 10); // 姓名
+        xlsx.setColumnWidth(2, 5); // 性别
+        xlsx.setColumnWidth(3, 20); // 职业
+        xlsx.setColumnWidth(4, 20); // 特长
+        xlsx.setColumnWidth(5, 8); // 法名
+        xlsx.setColumnWidth(6, 16); // 皈依证编号
+        xlsx.setColumnWidth(7, 11); // 出生年月
+        xlsx.setColumnWidth(8, 20); // 身份证号码
+        xlsx.setColumnWidth(9, 15); // 手机号码
+        xlsx.setColumnWidth(10, 15); // 民族
+        xlsx.setColumnWidth(11, 10); // 文化程度
+        xlsx.setColumnWidth(12, 10); // 健康状况
+        xlsx.setColumnWidth(13, 14); // 固定电话
+        xlsx.setColumnWidth(14, 11); // 填表时间
+        xlsx.setColumnWidth(15, 10); // 收据编号
+        xlsx.setColumnWidth(16, 25); // 工作单位
+        xlsx.setColumnWidth(17, 10); // 省
+        xlsx.setColumnWidth(18, 12); // 市
+        xlsx.setColumnWidth(19, 12); // 区县
+        xlsx.setColumnWidth(20, 35); // 通讯地址
+        xlsx.setColumnWidth(21, 10); // 邮政编码
+        xlsx.setColumnWidth(22, 11); // 毕业时间
+        xlsx.setColumnWidth(23, 20); // 毕业学校
+        xlsx.setColumnWidth(24, 11); // 工作入职时间一
+        xlsx.setColumnWidth(25, 25); // 工作单位一
+        xlsx.setColumnWidth(26, 10); // 工作入职时间二
+        xlsx.setColumnWidth(27, 25); // 工作单位二
+        xlsx.setColumnWidth(28, 11); // 退休时间
+        xlsx.setColumnWidth(29, 25); // 退休单位
+        xlsx.setColumnWidth(30, 10); // 学佛时间
+        xlsx.setColumnWidth(31, 10); // 学佛时长
+        xlsx.setColumnWidth(32, 20); // 是否深刻了解佛法
+        xlsx.setColumnWidth(33, 25); // 以何因缘接触佛法
+        xlsx.setColumnWidth(34, 13); // 所读经典部数
+        xlsx.setColumnWidth(35, 20); // 认为易学经典
+        xlsx.setColumnWidth(36, 20); // 认为不易学经典
+        xlsx.setColumnWidth(37, 50); // 感触最深的一句话
+        xlsx.setColumnWidth(38, 20); // 家庭三宝成员
+        xlsx.setColumnWidth(39, 10); // 编辑人
+        xlsx.setColumnWidth(40, 10); // 修改人
+        xlsx.setColumnWidth(41, 20); // 学佛小组种类
+        xlsx.setColumnWidth(42, 25); // 学佛小组地址
+
         xlsx.write("A1", "姓名");
         xlsx.write("B1", "性别");
         xlsx.write("C1", "职业");
         xlsx.write("D1", "特长");
         xlsx.write("E1", "法名");
-        xlsx.write("F1", "出生年月");
-        xlsx.write("G1", "身份证号");
-        xlsx.write("H1", "手机号码");
-        xlsx.write("I1", "民族");
-        xlsx.write("J1", "文化程度");
-        xlsx.write("K1", "健康状况");
-        xlsx.write("L1", "固定电话");
-        xlsx.write("M1", "填表时间");
-        xlsx.write("N1", "收据编号");
-        xlsx.write("O1", "工作单位");
-        xlsx.write("P1", "省(直辖市/自治区)");
-        xlsx.write("Q1", "市");
-        xlsx.write("R1", "区/县");
-        xlsx.write("S1", "通讯地址");
-        xlsx.write("T1", "邮政编码");
-        xlsx.write("U1", "毕业时间");
-        xlsx.write("V1", "毕业学校");
-        xlsx.write("W1", "工作入职时间1");
-        xlsx.write("X1", "工作单位1");
-        xlsx.write("Y1", "工作入职时间2");
-        xlsx.write("Z1", "工作入职单位2");
-        xlsx.write("AA1", "退休时间");
-        xlsx.write("AB1", "退休单位");
-        xlsx.write("AC1", "学佛时间");
-        xlsx.write("AD1", "学佛时长");
-        xlsx.write("AE1", "是否深刻理解佛法");
-        xlsx.write("AF1", "以何因缘接触佛法");
-        xlsx.write("AG1", "所读经典部数");
-        xlsx.write("AH1", "认为易学经典");
-        xlsx.write("AI1", "认为不易学经典");
-        xlsx.write("AJ1", "感悟最深的一句话");
-        xlsx.write("AK1", "家庭成员三宝弟子");
-        xlsx.write("AL1", "编辑人");
-        xlsx.write("AM1", "其他");
-        xlsx.write("AN1", "学佛小组种类");
-        xlsx.write("AO1", "学佛小组地址");
-        xlsx.write("AP1", "皈依证编号");
+        xlsx.write("F1", "皈依证编号");
+        xlsx.write("G1", "出生年月");
+        xlsx.write("H1", "身份证号");
+        xlsx.write("I1", "手机号码");
+        xlsx.write("J1", "民族");
+        xlsx.write("K1", "文化程度");
+        xlsx.write("L1", "健康状况");
+        xlsx.write("M1", "固定电话");
+        xlsx.write("N1", "填表时间");
+        xlsx.write("O1", "收据编号");
+        xlsx.write("P1", "工作单位");
+        xlsx.write("Q1", "省(直辖市/自治区)");
+        xlsx.write("R1", "市");
+        xlsx.write("S1", "区/县");
+        xlsx.write("T1", "通讯地址");
+        xlsx.write("U1", "邮政编码");
+        xlsx.write("V1", "毕业时间");
+        xlsx.write("W1", "毕业学校");
+        xlsx.write("X1", "工作入职时间1");
+        xlsx.write("Y1", "工作单位1");
+        xlsx.write("Z1", "工作入职时间2");
+        xlsx.write("AA1", "工作入职单位2");
+        xlsx.write("AB1", "退休时间");
+        xlsx.write("AC1", "退休单位");
+        xlsx.write("AD1", "学佛时间");
+        xlsx.write("AE1", "学佛时长");
+        xlsx.write("AF1", "是否深刻理解佛法");
+        xlsx.write("AG1", "以何因缘接触佛法");
+        xlsx.write("AH1", "所读经典部数");
+        xlsx.write("AI1", "认为易学经典");
+        xlsx.write("AJ1", "认为不易学经典");
+        xlsx.write("AK1", "感悟最深的一句话");
+        xlsx.write("AL1", "家庭成员三宝弟子");
+        xlsx.write("AM1", "编辑人");
+        xlsx.write("AN1", "更改人");
+        xlsx.write("AO1", "学佛小组种类");
+        xlsx.write("AP1", "学佛小组地址");
 
     }
     // excel A-Z, AA-AZ, BA-BZ...
