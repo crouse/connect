@@ -5,7 +5,7 @@
 =======
 Qt
 LIU ZONG YAN
-excel expor: dbzhang800 http://qtxlsx.debao.me
+excel export: dbzhang800 http://qtxlsx.debao.me
 
 #license
 GPL
