@@ -1429,6 +1429,15 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
+  <tabstop>lineEditName</tabstop>
+  <tabstop>lineEditReceipt</tabstop>
+  <tabstop>lineEditCode</tabstop>
+  <tabstop>lineEditGender</tabstop>
+  <tabstop>lineEditJob</tabstop>
+  <tabstop>lineEditHobby</tabstop>
+  <tabstop>lineEditFName</tabstop>
+  <tabstop>lineEditBirthday</tabstop>
+  <tabstop>lineEditID</tabstop>
   <tabstop>lineEditPhoneNum</tabstop>
   <tabstop>lineEditRace</tabstop>
   <tabstop>lineEditDegree</tabstop>
@@ -1446,11 +1455,16 @@
   <tabstop>lineEditFirstJobWorkspace</tabstop>
   <tabstop>lineEditSecondJobDate</tabstop>
   <tabstop>lineEditSecondJobWorkspace</tabstop>
+  <tabstop>lineEditRetirementDate</tabstop>
+  <tabstop>lineEditRetirementWorkspace</tabstop>
+  <tabstop>lineEditLearnBuddhismDate</tabstop>
+  <tabstop>lineEditYearsOfLearningBuddhism</tabstop>
   <tabstop>lineEditBuddhismLevel</tabstop>
   <tabstop>lineEditReasonToLearnDharma</tabstop>
   <tabstop>lineEditReadNumsOfBuddhismBook</tabstop>
   <tabstop>lineEditEasyToLearnBuddhismBook</tabstop>
   <tabstop>lineEditHardToLearnBuddhismBook</tabstop>
+  <tabstop>lineEditMaximOfBuddhism</tabstop>
   <tabstop>lineEditBuddhistDisciplesOfFamily</tabstop>
   <tabstop>lineEditLearnKind</tabstop>
   <tabstop>lineEditLearnAddress</tabstop>
