@@ -1018,6 +1018,7 @@ void Connect::on_actionQueryAnyThing_triggered()
     if (!(ok && !search_text.isEmpty())) return;
 
     QSqlQuery query;
+    search_text = search_text.trimmed();
     QString sql = QString(
                 "select name, phone_num, receipt, code, learn_dharma_address from people where name = '%1' union\
                 select name, phone_num, receipt, code, learn_dharma_address from people where phone_num = '%1' union\
@@ -1066,7 +1067,8 @@ void Connect::hide_search_table()
 
 void Connect::show_search_table()
 {
-    ui->tableView_2->show(); ui->label_2->show();
+    ui->tableView_2->show();
+    ui->label_2->show();
 }
 
 void Connect::on_tableView_2_doubleClicked(const QModelIndex &index)
