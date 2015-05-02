@@ -77,6 +77,8 @@ private slots:
 
     void on_lineEdit_Name_editingFinished();
 
+    void on_lineEditCode_editingFinished();
+
 protected:
     void closeEvent(QCloseEvent *event);
 

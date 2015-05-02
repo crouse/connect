@@ -1339,3 +1339,29 @@ void Connect::set_new_model_view()
     ui->tableView_2->setModel(viewModel);
     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
+
+/* 根据皈依证号，自动判断性别 */
+void Connect::on_lineEditCode_editingFinished()
+{
+    if (ui->lineEditCode->text().isEmpty()) {
+        ui->lineEditCode->setText("不能为空，请在此输入");
+        ui->lineEditCode->setFocus();
+        return;
+    }
+
+    QChar s = ui->lineEditCode->text().at(0).toLower();
+    if (s == 'a') {
+        ui->lineEditCode->setText(ui->lineEditCode->text().toUpper());
+        ui->lineEditGender->setText("男");
+        return;
+    } else if (s == 'b') {
+        ui->lineEditCode->setText(ui->lineEditCode->text().toUpper());
+        ui->lineEditGender->setText("女");
+        return;
+    }
+
+    ui->lineEditCode->setText("号码有误，请重新输入");
+    ui->lineEditCode->selectAll();
+    ui->lineEditCode->setFocus();
+    return;
+}
