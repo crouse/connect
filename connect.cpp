@@ -738,23 +738,81 @@ bool Connect::complete_fields(QString name, QString value)
 
 void Connect::append_items2_tableView()
 {
-    QString name = ui->lineEditName->text();
-    QString phone = ui->lineEditPhoneNum->text();
-    QString receipt = ui->lineEditReceipt->text();
-    QString code = ui->lineEditCode->text();
-    QString learnAddress = ui->lineEditLearnAddress->text();
-    QString personId = ui->lineEditID->text();
-    QString tel = ui->lineEditTelephoneNum->text();
+    if (!ui->actionJoinin->isEnabled()) {
+        QString order = ui->lineEdit_Order->text(); // use receipt field instead
+        QString name = ui->lineEdit_Name->text();
+        QString phone = ui->lineEdit_Phone->text();
+        QString contractWay = ui->lineEdit_ContractWay->text();
+        QString kinds = ui->lineEditLearnKind->text();
+        QString gender = ui->lineEdit_Gender->text();
+        QString birth = ui->lineEdit_Birthday->text();
+        QString province = ui->lineEdit_Province->text();
+        QString city = ui->lineEdit_City->text();
+        QString district = ui->lineEdit_District->text();
+        QString address = ui->lineEdit_Address->text();
+        QString if_apply_place = ui->lineEdit_ApplyPlace->text();
+        QString notes = ui->lineEdit_Note->text();
 
-    QList <QStandardItem*> standardItemList;
-    QStandardItem *nameItem = new QStandardItem(name);
-    QStandardItem *phoneItem = new QStandardItem(phone);
-    QStandardItem *receiptItem = new QStandardItem(receipt);
-    QStandardItem *codeItem = new QStandardItem(code);
-    QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
-    QStandardItem *personIdItem = new QStandardItem(personId);
-    QStandardItem *telItem = new QStandardItem(tel);
-    viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem << personIdItem << telItem);
+        QList <QStandardItem*> standardItemList;
+        QStandardItem *orderItem = new QStandardItem(order);
+        QStandardItem *nameItem = new QStandardItem(name);
+        QStandardItem *phoneItem = new QStandardItem(phone);
+        QStandardItem *contractWayItem = new QStandardItem(contractWay);
+        QStandardItem *kindsItem = new QStandardItem(kinds);
+        QStandardItem *genderItem = new QStandardItem(gender);
+        QStandardItem *birthItem = new QStandardItem(birth);
+        QStandardItem *provinceItem = new QStandardItem(province);
+        QStandardItem *cityItem = new QStandardItem(city);
+        QStandardItem *districtItem = new QStandardItem(district);
+        QStandardItem *addressItem = new QStandardItem(address);
+        QStandardItem *if_apply_placeItem = new QStandardItem(if_apply_place);
+        QStandardItem *notesItem = new QStandardItem(notes);
+
+        viewModel->appendRow(
+                    standardItemList
+                    << orderItem
+                    << nameItem
+                    << phoneItem
+                    << contractWayItem
+                    << kindsItem
+                    << genderItem
+                    << birthItem
+                    << provinceItem
+                    << cityItem
+                    << districtItem
+                    << addressItem
+                    << if_apply_placeItem
+                    << notesItem
+                    );
+    } else {
+        QString name = ui->lineEditName->text();
+        QString phone = ui->lineEditPhoneNum->text();
+        QString receipt = ui->lineEditReceipt->text();
+        QString code = ui->lineEditCode->text();
+        QString learnAddress = ui->lineEditLearnAddress->text();
+        QString personId = ui->lineEditID->text();
+        QString tel = ui->lineEditTelephoneNum->text();
+
+        QList <QStandardItem*> standardItemList;
+        QStandardItem *nameItem = new QStandardItem(name);
+        QStandardItem *phoneItem = new QStandardItem(phone);
+        QStandardItem *receiptItem = new QStandardItem(receipt);
+        QStandardItem *codeItem = new QStandardItem(code);
+        QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
+        QStandardItem *personIdItem = new QStandardItem(personId);
+        QStandardItem *telItem = new QStandardItem(tel);
+
+        viewModel->appendRow(
+                    standardItemList
+                    << nameItem
+                    << phoneItem
+                    << receiptItem
+                    << codeItem
+                    << learnAddressItem
+                    << personIdItem
+                    << telItem
+                    );
+    }
 }
 
 void Connect::closeEvent(QCloseEvent *event)
@@ -1241,6 +1299,7 @@ void Connect::on_actionJoinin_triggered()
     ui->fgroupWidget->show();
     ui->joinWidget->hide();
     ui->actionJoinin->setDisabled(true);
+    set_new_model_view();
 }
 
 void Connect::on_lineEdit_Name_returnPressed()
@@ -1254,4 +1313,29 @@ void Connect::on_lineEdit_Name_editingFinished()
     qDebug() << "on line edit finished";
     qDebug() << ui->lineEdit_Name->text();
     complete_fields("name", ui->lineEdit_Name->text());
+}
+
+void Connect::set_new_model_view()
+{
+    viewModel->clear();
+    viewModel = new QStandardItemModel();
+    viewModel->setHorizontalHeaderItem(0, new QStandardItem("序号"));
+    viewModel->setHorizontalHeaderItem(1, new QStandardItem("姓名"));
+    viewModel->setHorizontalHeaderItem(2, new QStandardItem("手机"));
+    viewModel->setHorizontalHeaderItem(3, new QStandardItem("其他联系方式"));
+    viewModel->setHorizontalHeaderItem(4, new QStandardItem("小组种类"));
+    viewModel->setHorizontalHeaderItem(5, new QStandardItem("性别"));
+    viewModel->setHorizontalHeaderItem(6, new QStandardItem("生日"));
+    viewModel->setHorizontalHeaderItem(7, new QStandardItem("省"));
+    viewModel->setHorizontalHeaderItem(8, new QStandardItem("市"));
+    viewModel->setHorizontalHeaderItem(9, new QStandardItem("区(县)"));
+    viewModel->setHorizontalHeaderItem(10, new QStandardItem("街道(村)"));
+    viewModel->setHorizontalHeaderItem(11, new QStandardItem("是否提供场地"));
+    viewModel->setHorizontalHeaderItem(12, new QStandardItem("备注"));
+
+    ui->tableView->setModel(viewModel);
+    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    ui->tableView_2->setModel(viewModel);
+    ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
