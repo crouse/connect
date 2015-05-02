@@ -73,15 +73,6 @@ Connect::Connect(QWidget *parent) :
         reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
 
-        /*
-        // 家庭成员三宝弟子
-        QStringList family_list;
-        family_list << " 1. 父亲" << " 2. 母亲" << " 3. 兄弟" << " 4. 姐妹" << " 5. 妻子" << " 6. 孩子";
-        QCompleter *family_completer = new QCompleter(family_list, this);
-        family_completer->setCaseSensitivity(Qt::CaseInsensitive);
-        ui->lineEditBuddhistDisciplesOfFamily->setCompleter(family_completer);
-        */
-
         // 学佛小组种类
         QStringList learn_kinds_list;
         learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周日山上/平常山下" << " 5. 周日山上/京外"
@@ -128,8 +119,10 @@ Connect::Connect(QWidget *parent) :
         QRegExp regExpPhoneNum("1[3|5|7|8|][0-9]{9}"); // 判断输入是否为手机号，只允许输入正常手机号
         ui->lineEditPhoneNum->setValidator(new QRegExpValidator(regExpPhoneNum, this));
 
+        /*
         QRegExp regExpTel("\\d{3}-\\d{8}|\\d{4}-\\d{7}");
         ui->lineEditTelephoneNum->setValidator(new QRegExpValidator(regExpTel, this));
+        */
 
         QRegExp regExpBirthday("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
         ui->lineEditBirthday->setValidator(new QRegExpValidator(regExpBirthday, this));
@@ -180,8 +173,11 @@ Connect::~Connect()
 
 bool Connect::modify_or_not()
 {
-    QMessageBox::StandardButton ask = QMessageBox::question(this, "connect", "你确定更改此行内容么? 如果更改请按 Yes，否则按 Cancel，更改后请保存\n",
-                                                            QMessageBox::Cancel|QMessageBox::Yes);
+    QMessageBox::StandardButton ask
+            = QMessageBox::question(this,
+                                    "connect",
+                                    "你确定更改此行内容么? 如果更改请按 Yes，否则按 Cancel，更改后请保存\n",
+                                    QMessageBox::Cancel|QMessageBox::Yes);
     if (ask == QMessageBox::Yes)
         return true;
     else
@@ -238,9 +234,9 @@ void Connect::on_pushButtonOK_clicked()
     validate_input_values();
     if (update_database()) {
         append_items2_tableView();
+        clear_lineEdits();
+        ui->lineEditName->setFocus();
     }
-    clear_lineEdits();
-    ui->lineEditName->setFocus();
 }
 
 /* user defined functions */
@@ -248,6 +244,7 @@ bool Connect::validate_input_values()
 {
     //[1] valid ID card
     if (ui->lineEditID->text().isEmpty()) {
+        qDebug() << "ID empty";
     } else {
         if (ui->lineEditID->text().length() != 18) {
             QMessageBox::information(this, "", "身份证号必须是18位得组合");
@@ -326,8 +323,6 @@ bool Connect::update_database()
                           );
         }
 
-        qDebug() << "others" << ui->lineEditOthers->text();
-
         query.bindValue(":receipt", ui->lineEdit_Order->text());
         query.bindValue(":name", ui->lineEdit_Name->text());
         query.bindValue(":gender", ui->lineEdit_Gender->text());
@@ -400,11 +395,6 @@ bool Connect::update_database()
                       `code` = :code \
                 WHERE `id` = :dbid; "
                 );
-                /*
-                 *  `others` = :others ,\
-                    `learn_dharma_kinds` = :learn_dharma_kinds ,\
-                    `learn_dharma_address` = :learn_dharma_address ,\
-                 * */
     } else {
         query.prepare(
                     "INSERT INTO `people`\
@@ -544,8 +534,24 @@ bool Connect::update_database()
     return true;
 }
 
-bool Connect::clear_lineEdits()
+bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
 {
+    if (!ui->actionJoinin->isEnabled()) {
+        ui->lineEdit_Address->clear();
+        ui->lineEdit_ApplyPlace->clear();
+        ui->lineEdit_Birthday->clear();
+        ui->lineEdit_City->clear();
+        ui->lineEdit_ContractWay->clear();
+        ui->lineEdit_District->clear();
+        ui->lineEdit_Gender->clear();
+        ui->lineEdit_Name->clear();
+        ui->lineEdit_Order->clear(); // receipt field
+        ui->lineEdit_Note->clear();
+        ui->lineEdit_Phone->clear();
+        ui->lineEdit_Province->clear();
+        return true;
+    }
+
     ui->lineEditName->clear();
     ui->lineEditGender->clear();
     ui->lineEditJob->clear();
