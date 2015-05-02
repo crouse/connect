@@ -207,10 +207,17 @@ void Connect::on_lineEditReceipt_editingFinished()
 
 bool Connect::check_lineEdit_items()
 {
-    bool name = ui->lineEditName->text().isEmpty();
-    // 这个不好说，有时候就是空的，所以允许空
-    //bool receipt = ui->lineEditReceipt->text().isEmpty();
-    bool editor = ui->lineEditor->text().isEmpty();
+    bool name;
+    bool editor;
+
+    if (!ui->actionJoinin->isEnabled()) {
+        name = ui->lineEdit_Name->text().isEmpty();
+        editor = ui->lineEditOthers->text().isEmpty();
+        qDebug() << "check items";
+    } else {
+        name = ui->lineEditName->text().isEmpty();
+        editor = ui->lineEditor->text().isEmpty();
+    }
 
     if (name || editor) return false;
     else return true;
@@ -264,8 +271,85 @@ bool Connect::validate_input_values()
 
 bool Connect::update_database()
 {
-    QSqlQuery query;
     qDebug() << "dbid = " << dbid;
+    QSqlQuery query;
+
+    if (!ui->actionJoinin->isEnabled()) {
+        if (dbid != 0) {
+            query.prepare("UPDATE people set receipt = :receipt,"
+                          "name = :name"
+                          "gender = :gender"
+                          "birthday = :birthday"
+                          "phone_num = :phone_num"
+                          "telephone_num_num = :telephone_num"
+                          "learn_dharma_kinds = :learn_dharma_kinds"
+                          "province = :province"
+                          "city = :city"
+                          "district = :district"
+                          "address = :address"
+                          "if_apply_learn_place = :if_apply_learn_place"
+                          "notes = :notes"
+                          "others = :others"
+                          );
+        } else {
+            query.prepare("INSERT into people ("
+                          "receipt,"
+                          "name,"
+                          "gender,"
+                          "birthday,"
+                          "phone_num,"
+                          "telephone_num,"
+                          "learn_dharma_kinds,"
+                          "province,"
+                          "city,"
+                          "district,"
+                          "address,"
+                          "if_apply_learn_place,"
+                          "notes,"
+                          "others)"
+                          "values ("
+                          ":receipt,"
+                          ":name,"
+                          ":gender,"
+                          ":birthday,"
+                          ":phone_num,"
+                          ":telephone_num,"
+                          ":learn_dharma_kinds,"
+                          ":province,"
+                          ":city,"
+                          ":district,"
+                          ":address,"
+                          ":if_apply_learn_place,"
+                          ":notes,"
+                          ":others)"
+                          );
+        }
+
+        query.bindValue(":receipt", ui->lineEditReceipt->text());
+        query.bindValue(":name", ui->lineEdit_Name->text());
+        query.bindValue(":gender", ui->lineEdit_Gender->text());
+        query.bindValue(":birthday", ui->lineEdit_Birthday->text());
+        query.bindValue(":phone_num", ui->lineEdit_Phone->text());
+        query.bindValue(":telephone_num", ui->lineEdit_ContractWay->text());
+        query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text());
+        query.bindValue(":province", ui->lineEdit_Province->text());
+        query.bindValue(":city", ui->lineEdit_District->text());
+        query.bindValue(":district", ui->lineEdit_District->text());
+        query.bindValue(":address", ui->lineEdit_Address->text());
+        query.bindValue(":if_apply_learn_place", ui->lineEdit_ApplyPlace->text());
+        query.bindValue(":notes", ui->lineEdit_Note->text());
+        query.bindValue(":others", ui->lineEditOthers->text());
+
+        if (!query.exec()) {
+            QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
+            db.close();
+            return false;
+        }
+
+        query.clear();
+        return true;
+    }
+
     if (dbid != 0) {
         query.prepare("\
                       UPDATE `people` \
@@ -504,6 +588,47 @@ bool Connect::clear_lineEdits()
 
 bool Connect::complete_fields(QString name, QString value)
 {
+    // 学佛小组录入
+    if (!ui->actionJoinin->isEnabled()) {
+        QSqlQuery query;
+        query.prepare("SELECT receipt, name, gender, birthday, phone_num,"
+                      "telephone_num, learn_dharma_kinds, province, city,"
+                      "district, address, if_apply_learn_place, notes,"
+                      "others, id from people where name = :value");
+        query.bindValue(":value", value);
+        query.exec();
+
+        qDebug() << query.executedQuery();
+
+        if (query.size() == 0) {
+            QMessageBox::information(this, "", QString("数据库中无数据，请直接录入"));
+            return true;
+        }
+
+        if (query.size() > 1) {
+            // tableView2 choose mode [tbd]
+            return true;
+        }
+
+        while(query.next()) {
+            ui->lineEdit_Order->setText(query.value(0).toString());
+            ui->lineEdit_Name->setText(query.value(1).toString());
+            ui->lineEdit_Gender->setText(query.value(2).toString());
+            ui->lineEdit_Birthday->setText(query.value(3).toString());
+            ui->lineEdit_Phone->setText(query.value(4).toString());
+            ui->lineEdit_ContractWay->setText(query.value(5).toString());
+            ui->lineEditLearnKind->setText(query.value(6).toString());
+            ui->lineEdit_Province->setText(query.value(7).toString());
+            ui->lineEdit_City->setText(query.value(8).toString());
+            ui->lineEdit_District->setText(query.value(9).toString());
+            ui->lineEdit_Address->setText(query.value(10).toString());
+            ui->lineEdit_ApplyPlace->setText(query.value(11).toString());
+            ui->lineEdit_Note->setText(query.value(12).toString());
+            dbid = query.value(13).toInt();
+        }
+        return true;
+    }
+
     qDebug() << "complete_fields" << "name:" << name << "value:" << value;
     // 1. 从本地数据库查询是否有此记录，如果有记录，补全所有选项
     // 2. 从服务器数据库查询是否有记录，如果有记录，补全所有选项
@@ -934,7 +1059,9 @@ bool Connect::init_db()
                 others                           varchar(128), \
                 learn_dharma_kinds               varchar(64),  \
                 learn_dharma_address             varchar(128), \
-                code                             varchar(64) unique \
+                code                             varchar(64) unique, \
+                if_apply_learn_place             varchar(10), \
+                notes                            varchar(128)\
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
     query.exec(createTableSql);
     query.clear();
@@ -1103,4 +1230,17 @@ void Connect::on_actionJoinin_triggered()
     ui->fgroupWidget->show();
     ui->joinWidget->hide();
     ui->actionJoinin->setDisabled(true);
+}
+
+void Connect::on_lineEdit_Name_returnPressed()
+{
+    qDebug() << "on line edit return pressed";
+    complete_fields("name", ui->lineEdit_Name->text());
+}
+
+void Connect::on_lineEdit_Name_editingFinished()
+{
+    qDebug() << "on line edit finished";
+    qDebug() << ui->lineEdit_Name->text();
+    complete_fields("name", ui->lineEdit_Name->text());
 }

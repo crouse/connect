@@ -72,6 +72,10 @@ private slots:
 
     void on_actionJoinin_triggered();
 
+    void on_lineEdit_Name_returnPressed();
+
+    void on_lineEdit_Name_editingFinished();
+
 protected:
     void closeEvent(QCloseEvent *event);
 

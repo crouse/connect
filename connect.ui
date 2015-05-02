@@ -1317,7 +1317,7 @@
             <string notr="true"/>
            </property>
            <property name="placeholderText">
-            <string>变更人：</string>
+            <string>编辑人：</string>
            </property>
           </widget>
          </item>
