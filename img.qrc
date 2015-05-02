@@ -17,5 +17,6 @@
         <file>img/else.png</file>
         <file>img/query2.png</file>
         <file>img/sql.png</file>
+        <file>img/group.png</file>
     </qresource>
 </RCC>

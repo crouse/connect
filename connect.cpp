@@ -218,7 +218,11 @@ bool Connect::check_lineEdit_items()
 
 void Connect::on_pushButtonOK_clicked()
 {
-    if (!test_if_connected()) return;
+    if (!test_if_connected()) {
+        qDebug() << "database is not connected! please connect again!";
+        return;
+    }
+
     if (!check_lineEdit_items()) {
         QMessageBox::information(this, "", "请至少填写姓名、编辑人");
         return;
@@ -304,12 +308,14 @@ bool Connect::update_database()
                       `maxim` = :maxim ,\
                       `buddhist_disciples_of_family` = :buddhist_disciples_of_family ,\
                       `editor` = :editor ,\
-                      `others` = :others ,\
-                      `learn_dharma_kinds` = :learn_dharma_kinds ,\
-                      `learn_dharma_address` = :learn_dharma_address ,\
                       `code` = :code \
                 WHERE `id` = :dbid; "
                 );
+                /*
+                 *  `others` = :others ,\
+                    `learn_dharma_kinds` = :learn_dharma_kinds ,\
+                    `learn_dharma_address` = :learn_dharma_address ,\
+                 * */
     } else {
         query.prepare(
                     "INSERT INTO `people`\
@@ -351,9 +357,6 @@ bool Connect::update_database()
                         `maxim`,\
                         `buddhist_disciples_of_family`,\
                         `editor`,\
-                        `others`,\
-                        `learn_dharma_kinds`,\
-                        `learn_dharma_address`,\
                         `code`)\
                     VALUES\
                     (   :name,\
@@ -394,9 +397,6 @@ bool Connect::update_database()
                         :maxim,\
                         :buddhist_disciples_of_family,\
                         :editor,\
-                        :others,\
-                        :learn_dharma_kinds,\
-                        :learn_dharma_address,\
                         :code);"
                 );
     }
@@ -439,9 +439,6 @@ bool Connect::update_database()
     query.bindValue(":maxim", ui->lineEditMaximOfBuddhism->text());
     query.bindValue(":buddhist_disciples_of_family", ui->lineEditBuddhistDisciplesOfFamily->text());
     query.bindValue(":editor", ui->lineEditor->text());
-    query.bindValue(":others", ui->lineEditOthers->text());
-    query.bindValue(":learn_dharma_kinds", ui->lineEditLearnKind->text().section(' ', -1));
-    query.bindValue(":learn_dharma_address", ui->lineEditLearnAddress->text());
     query.bindValue(":code", ui->lineEditCode->text());
     query.bindValue(":dbid", dbid);
     dbid = 0;
@@ -510,7 +507,6 @@ bool Connect::complete_fields(QString name, QString value)
     qDebug() << "complete_fields" << "name:" << name << "value:" << value;
     // 1. 从本地数据库查询是否有此记录，如果有记录，补全所有选项
     // 2. 从服务器数据库查询是否有记录，如果有记录，补全所有选项
-    int count = 0;
     qDebug() << name << value;
     QSqlQuery query;
     QString sql = QString(
@@ -553,17 +549,13 @@ bool Connect::complete_fields(QString name, QString value)
                 maxim,\
                 buddhist_disciples_of_family,\
                 editor,\
-                others,\
-                learn_dharma_kinds,\
-                learn_dharma_address,\
                 code,\
                 id\
                 from people where %1 = '%2'"
             ).arg(name).arg(value);
     query.exec(sql);
     while(query.next()) {
-        count++;
-        dbid = query.value(42).toInt();
+        dbid = query.value(39).toInt();
         ui->lineEditName->setText(query.value(0).toString());
         ui->lineEditGender->setText(query.value(1).toString());
         ui->lineEditJob->setText(query.value(2).toString());
@@ -602,20 +594,8 @@ bool Connect::complete_fields(QString name, QString value)
         ui->lineEditMaximOfBuddhism->setText(query.value(35).toString());
         ui->lineEditBuddhistDisciplesOfFamily->setText(query.value(36).toString());
         ui->lineEditor->setText(query.value(37).toString());
-        if (!query.value(38).toString().isEmpty()) {
-            qDebug() << "other";
-            ui->lineEditOthers->setText(query.value(38).toString());
-        }
-        ui->lineEditLearnKind->setText(query.value(39).toString());
-        ui->lineEditLearnAddress->setText(query.value(40).toString());
-        ui->lineEditCode->setText(query.value(41).toString());
+        ui->lineEditCode->setText(query.value(38).toString());
     }
-    qDebug() << "query count: " << count;
-    if (count >1) {
-        QMessageBox::information(this, "", "数据库中包含多条同样的数据，填充采用的是随机记录，如果不对，请使用收据编号查询");
-        ui->lineEditReceipt->setFocus();
-    }
-
     query.clear();
     return true;
 }
@@ -1118,13 +1098,9 @@ void Connect::hide_menu_and_button()
     }
 }
 
-
-
-
-
-
-
-
-
-
-
+void Connect::on_actionJoinin_triggered()
+{
+    ui->fgroupWidget->show();
+    ui->joinWidget->hide();
+    ui->actionJoinin->setDisabled(true);
+}

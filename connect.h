@@ -70,6 +70,8 @@ private slots:
 
     void on_actionDbBack_triggered();
 
+    void on_actionJoinin_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event);
 

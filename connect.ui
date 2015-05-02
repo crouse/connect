@@ -1602,6 +1602,7 @@
    <addaction name="actionSearch"/>
    <addaction name="actionQueryAnyThing"/>
    <addaction name="actionDbBack"/>
+   <addaction name="actionJoinin"/>
   </widget>
   <action name="action">
    <property name="icon">
@@ -1649,6 +1650,18 @@
    </property>
    <property name="toolTip">
     <string>下载当前数据库文件</string>
+   </property>
+  </action>
+  <action name="actionJoinin">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/image/img/group.png</normaloff>:/image/img/group.png</iconset>
+   </property>
+   <property name="text">
+    <string>学佛小组录入</string>
+   </property>
+   <property name="toolTip">
+    <string>学佛小组录入</string>
    </property>
   </action>
  </widget>
