@@ -277,19 +277,20 @@ bool Connect::update_database()
     if (!ui->actionJoinin->isEnabled()) {
         if (dbid != 0) {
             query.prepare("UPDATE people set receipt = :receipt,"
-                          "name = :name"
-                          "gender = :gender"
-                          "birthday = :birthday"
-                          "phone_num = :phone_num"
-                          "telephone_num_num = :telephone_num"
-                          "learn_dharma_kinds = :learn_dharma_kinds"
-                          "province = :province"
-                          "city = :city"
-                          "district = :district"
-                          "address = :address"
-                          "if_apply_learn_place = :if_apply_learn_place"
-                          "notes = :notes"
-                          "others = :others"
+                          "name = :name,"
+                          "gender = :gender,"
+                          "birthday = :birthday,"
+                          "phone_num = :phone_num,"
+                          "telephone_num = :telephone_num,"
+                          "learn_dharma_kinds = :learn_dharma_kinds,"
+                          "province = :province,"
+                          "city = :city,"
+                          "district = :district,"
+                          "address = :address,"
+                          "if_apply_learn_place = :if_apply_learn_place,"
+                          "notes = :notes,"
+                          "others = :others "
+                          "where id = :dbid"
                           );
         } else {
             query.prepare("INSERT into people ("
@@ -325,7 +326,9 @@ bool Connect::update_database()
                           );
         }
 
-        query.bindValue(":receipt", ui->lineEditReceipt->text());
+        qDebug() << "others" << ui->lineEditOthers->text();
+
+        query.bindValue(":receipt", ui->lineEdit_Order->text());
         query.bindValue(":name", ui->lineEdit_Name->text());
         query.bindValue(":gender", ui->lineEdit_Gender->text());
         query.bindValue(":birthday", ui->lineEdit_Birthday->text());
@@ -339,10 +342,12 @@ bool Connect::update_database()
         query.bindValue(":if_apply_learn_place", ui->lineEdit_ApplyPlace->text());
         query.bindValue(":notes", ui->lineEdit_Note->text());
         query.bindValue(":others", ui->lineEditOthers->text());
+        query.bindValue(":dbid", QString("%1").arg(dbid));
 
         if (!query.exec()) {
             QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
-            db.close();
+            qDebug() << query.executedQuery();
+            //db.close();
             return false;
         }
 
@@ -530,7 +535,7 @@ bool Connect::update_database()
     if (!rt) {
         // 输出错误到屏幕！[tbd] 这个得考虑到输入重复问题，下面的错误用户未必理解，所以得考虑到
         QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
-        db.close();
+        //db.close();
         return false;
     }
 
@@ -591,14 +596,13 @@ bool Connect::complete_fields(QString name, QString value)
     // 学佛小组录入
     if (!ui->actionJoinin->isEnabled()) {
         QSqlQuery query;
-        query.prepare("SELECT receipt, name, gender, birthday, phone_num,"
+        QString sql = QString("SELECT receipt, name, gender, birthday, phone_num,"
                       "telephone_num, learn_dharma_kinds, province, city,"
                       "district, address, if_apply_learn_place, notes,"
-                      "others, id from people where name = :value");
-        query.bindValue(":value", value);
-        query.exec();
+                      "others, id from people where %1 = '%2'").arg(name, value);
+        query.exec(sql);
 
-        qDebug() << query.executedQuery();
+        qDebug() << "complete_fields size " << query.size();
 
         if (query.size() == 0) {
             QMessageBox::information(this, "", QString("数据库中无数据，请直接录入"));
@@ -624,7 +628,8 @@ bool Connect::complete_fields(QString name, QString value)
             ui->lineEdit_Address->setText(query.value(10).toString());
             ui->lineEdit_ApplyPlace->setText(query.value(11).toString());
             ui->lineEdit_Note->setText(query.value(12).toString());
-            dbid = query.value(13).toInt();
+            ui->lineEditOthers->setText(query.value(13).toString());
+            dbid = query.value(14).toInt();
         }
         return true;
     }
@@ -754,7 +759,7 @@ void Connect::closeEvent(QCloseEvent *event)
         event->ignore();
         qDebug() << "ignore close event";
     } else {
-        db.close();
+        //db.close();
         qDebug() << "db connection is closed";
     }
 }
