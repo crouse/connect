@@ -22,8 +22,8 @@ Connect::Connect(QWidget *parent) :
     if_query_is_set = 0;
     if_connected = false;
     dbid = 0;
-
     hide_search_table();
+    ui->fgroupWidget->hide();
 
     //completor
     {
