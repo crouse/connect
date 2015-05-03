@@ -42,6 +42,7 @@ public:
     void set_new_model_view();
     bool create_table();
     bool admin_init_all();
+    bool append_model_data(int c, QString where);
 private:
     QLabel *status_label;
     QSqlDatabase db;

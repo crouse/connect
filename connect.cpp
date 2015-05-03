@@ -1037,6 +1037,18 @@ void Connect::on_pushButton_clicked()
 bool Connect::init_and_append_items2_tableView()
 {
     QSqlQuery query;
+
+    if (!ui->actionJoinin->isEnabled()) {
+        QString others = ui->lineEditOthers->text();
+        if (others.isEmpty()) {
+            append_model_data(0, "");
+        } else {
+            QString where = QString(" WHERE others = '%1' ").arg(others);
+            append_model_data(0, where);
+        }
+       return true;
+    }
+
     QString editor = ui->lineEditor->text();
 
     if (editor.isEmpty()) {
@@ -1244,6 +1256,175 @@ void Connect::on_action_triggered()
     }
     get_local_ip();
     status_label->setText(QString(" Local Address: [%1], Server Address: [%2]").arg(local_ip, server_ip));
+}
+
+/*[tidy plan] */
+bool Connect::append_model_data(int c, QString where)
+{
+    QSqlQuery query;
+
+    if (!ui->actionJoinin->isEnabled()) {
+        QString sql = QString(
+                    " SELECT "
+                    "     `receipt`, "
+                    "     `name`, "
+                    "     `phone_num`, "
+                    "     `telephone_num`, "
+                    "     `learn_dharma_kinds`, "
+                    "     `gender`, "
+                    "     `birthday`, "
+                    "     `province`, "
+                    "     `city`, "
+                    "     `district`, "
+                    "     `address`, "
+                    "     `if_apply_learn_place`, "
+                    "     `notes`, "
+                    "     `id` "
+                    " FROM "
+                    "     `people` "
+                    ) + where;
+
+        query.exec(sql);
+        qDebug() << sql;
+
+        if (query.lastError().isValid()) {
+            QMessageBox::critical(
+                        this,
+                        "数据库错误",
+                        query.lastError().text()
+                        );
+            return false;
+        }
+
+        set_new_model_view();
+        while(query.next()) {
+            QString order = query.value(0).toString();
+            QString name = query.value(1).toString();
+            QString phone = query.value(2).toString();
+            QString tel = query.value(3).toString();
+            QString kinds = query.value(4).toString();
+            QString gender = query.value(5).toString();
+            QString birth = query.value(6).toString();
+            QString province = query.value(7).toString();
+            QString city = query.value(8).toString();
+            QString district = query.value(9).toString();
+            QString address = query.value(10).toString();
+            QString if_apply = query.value(11).toString();
+            QString notes = query.value(12).toString();
+
+            QList <QStandardItem*> standardItemList;
+            QStandardItem *orderItem = new QStandardItem(order);
+            QStandardItem *nameItem = new QStandardItem(name);
+            QStandardItem *phoneItem = new QStandardItem(phone);
+            QStandardItem *telItem= new QStandardItem(tel);
+            QStandardItem *kindsItem = new QStandardItem(kinds);
+            QStandardItem *genderItem = new QStandardItem(gender);
+            QStandardItem *birthItem = new QStandardItem(birth);
+            QStandardItem *provinceItem = new QStandardItem(province);
+            QStandardItem *cityItem = new QStandardItem(city);
+            QStandardItem *districtItem = new QStandardItem(district);
+            QStandardItem *addressItem = new QStandardItem(address);
+            QStandardItem *if_applyItem = new QStandardItem(if_apply);
+            QStandardItem *notesItem = new QStandardItem(notes);
+
+            if (c == 0) {
+                viewModel->appendRow(standardItemList
+                                     << orderItem
+                                     << nameItem
+                                     << phoneItem
+                                     << telItem
+                                     << kindsItem
+                                     << genderItem
+                                     << birthItem
+                                     << provinceItem
+                                     << cityItem
+                                     << districtItem
+                                     << addressItem
+                                     << if_applyItem
+                                     << notesItem
+                                     );
+            } else {
+                viewModel_search->appendRow(standardItemList
+                                            << orderItem
+                                            << nameItem
+                                            << phoneItem
+                                            << telItem
+                                            << kindsItem
+                                            << genderItem
+                                            << birthItem
+                                            << provinceItem
+                                            << cityItem
+                                            << districtItem
+                                            << addressItem
+                                            << if_applyItem
+                                            << notesItem
+                                            );
+
+            }
+        }
+
+        query.clear();
+
+        return true;
+    }
+
+    QString sql = QString(
+                " SELECT "
+                "   `name`, "
+                "   `phone_num`, "
+                "   `receipt`, "
+                "   `code`, "
+                "   `learn_dharma_address` "
+                " FROM "
+                "   `people` "
+                " WHERE "
+                ) + where;
+
+    query.exec(sql);
+
+    if (query.lastError().isValid()) {
+        QMessageBox::critical(this, "数据库错误", query.lastError().text());
+        return false;
+    }
+
+    set_old_model_view();
+
+    while(query.next()) {
+        QString name = query.value(0).toString();
+        QString phone = query.value(1).toString();
+        QString receipt = query.value(2).toString();
+        QString code = query.value(3).toString();
+        QString learn_address = query.value(4).toString();
+
+        QList <QStandardItem*> standardItemList;
+        QStandardItem *nameItem = new QStandardItem(name);
+        QStandardItem *phoneItem = new QStandardItem(phone);
+        QStandardItem *receiptItem = new QStandardItem(receipt);
+        QStandardItem *codeItem = new QStandardItem(code);
+        QStandardItem *learnAddressItem = new QStandardItem(learn_address);
+
+        if (c == 0) {
+            viewModel->appendRow(standardItemList
+                                 << nameItem
+                                 << phoneItem
+                                 << receiptItem
+                                 << codeItem
+                                 << learnAddressItem
+                                 );
+        } else {
+            viewModel_search->appendRow(standardItemList
+                                        << nameItem
+                                        << phoneItem
+                                        << receiptItem
+                                        << codeItem
+                                        << learnAddressItem
+                                        );
+
+        }
+    }
+
+    query.clear();
+    return true;
 }
 
 void Connect::on_actionQueryAnyThing_triggered()
