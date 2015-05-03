@@ -1404,21 +1404,21 @@ bool Connect::append_model_data(int c, QString where)
         QStandardItem *learnAddressItem = new QStandardItem(learn_address);
 
         if (c == 0) {
-            viewModel->appendRow(standardItemList
-                                 << nameItem
-                                 << phoneItem
-                                 << receiptItem
-                                 << codeItem
-                                 << learnAddressItem
-                                 );
+        viewModel->appendRow(standardItemList
+                                    << nameItem
+                                    << phoneItem
+                                    << receiptItem
+                                    << codeItem
+                                    << learnAddressItem
+                                    );
         } else {
-            viewModel_search->appendRow(standardItemList
-                                        << nameItem
-                                        << phoneItem
-                                        << receiptItem
-                                        << codeItem
-                                        << learnAddressItem
-                                        );
+         viewModel_search->appendRow(standardItemList
+                                    << nameItem
+                                    << phoneItem
+                                    << receiptItem
+                                    << codeItem
+                                    << learnAddressItem
+                                    );
 
         }
     }
