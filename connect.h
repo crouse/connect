@@ -38,7 +38,10 @@ public:
     void hide_menu_and_button();
     void show_search_table();
     bool test_if_connected();
+    void set_old_model_view();
     void set_new_model_view();
+    bool create_table();
+    bool admin_init_all();
 private:
     QLabel *status_label;
     QSqlDatabase db;

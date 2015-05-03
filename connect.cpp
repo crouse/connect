@@ -190,7 +190,7 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
     if (!ui->actionJoinin->isEnabled()) {
         order = 0;
     } else {
-        order = 1;
+        order = 2; // 第二列是 receipt
     }
 
     QString receipt = index.sibling(index.row(), order).data().toString();
@@ -294,7 +294,8 @@ bool Connect::update_database()
                           "address = :address,"
                           "if_apply_learn_place = :if_apply_learn_place,"
                           "notes = :notes,"
-                          "others = :others "
+                          "others = :others, "
+                          "learn_dharma_address = :learn_dharma_address "
                           "where id = :dbid"
                           );
         } else {
@@ -312,7 +313,9 @@ bool Connect::update_database()
                           "address,"
                           "if_apply_learn_place,"
                           "notes,"
-                          "others)"
+                          "others,"
+                          "learn_dharma_address"
+                          ")"
                           "values ("
                           ":receipt,"
                           ":name,"
@@ -327,7 +330,8 @@ bool Connect::update_database()
                           ":address,"
                           ":if_apply_learn_place,"
                           ":notes,"
-                          ":others)"
+                          ":others,"
+                          ":learn_dharma_address)"
                           );
         }
 
@@ -345,6 +349,7 @@ bool Connect::update_database()
         query.bindValue(":if_apply_learn_place", ui->lineEdit_ApplyPlace->text());
         query.bindValue(":notes", ui->lineEdit_Note->text());
         query.bindValue(":others", ui->lineEditOthers->text());
+        query.bindValue(":learn_dharma_address", ui->lineEditLearnAddress->text());
         query.bindValue(":dbid", QString("%1").arg(dbid));
 
         if (!query.exec()) {
@@ -558,6 +563,7 @@ bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
         ui->lineEdit_Phone->clear();
         ui->lineEdit_Province->clear();
         ui->lineEditLearnKind->clear();
+        ui->lineEditLearnAddress->clear();
         return true;
     }
 
@@ -574,8 +580,6 @@ bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
     ui->lineEditTelephoneNum->clear();
     ui->lineEditRace->clear();
     ui->lineEditProvince->clear();
-    ui->lineEditLearnKind->clear();
-    ui->lineEditLearnAddress->clear();
     ui->lineEditCode->clear();
     ui->lineEditCity->clear();
     //ui->lineEditTime->clear();
@@ -601,7 +605,6 @@ bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
     ui->lineEditHardToLearnBuddhismBook->clear();
     ui->lineEditMaximOfBuddhism->clear();
     ui->lineEditBuddhistDisciplesOfFamily->clear();
-    //ui->lineEditOthers->clear();
     return true;
 }
 
@@ -612,15 +615,14 @@ bool Connect::complete_fields(QString name, QString value)
     if (!ui->actionJoinin->isEnabled()) {
         QSqlQuery query;
         QString sql = QString("SELECT receipt, name, gender, birthday, phone_num,"
-                      "telephone_num, learn_dharma_kinds, province, city,"
-                      "district, address, if_apply_learn_place, notes,"
-                      "others, id from people where %1 = '%2'").arg(name, value);
+                              "telephone_num, learn_dharma_kinds, province, city,"
+                              "district, address, if_apply_learn_place, notes,"
+                              "others, id, learn_dharma_address from people where %1 = '%2'"
+                              ).arg(name, value);
         query.exec(sql);
 
-        qDebug() << "complete_fields size " << query.size();
-
         if (query.size() == 0) {
-            QMessageBox::information(this, "", QString("数据库中无数据，请直接录入"));
+            ui->lineEdit_Order->setFocus();
             return true;
         }
 
@@ -645,6 +647,7 @@ bool Connect::complete_fields(QString name, QString value)
             ui->lineEdit_Note->setText(query.value(12).toString());
             ui->lineEditOthers->setText(query.value(13).toString());
             dbid = query.value(14).toInt();
+            ui->lineEditLearnAddress->setText(query.value(15).toString());
         }
         return true;
     }
@@ -1034,24 +1037,48 @@ void Connect::on_pushButton_clicked()
 bool Connect::init_and_append_items2_tableView()
 {
     QSqlQuery query;
-    QString sql;
     QString editor = ui->lineEditor->text();
+
     if (editor.isEmpty()) {
-        sql = QString("select name, phone_num, receipt, code, learn_dharma_address, personnel_id, telephone_num from people order by receipt");
+        query.prepare(
+                    "SELECT "
+                    "   `name`, "
+                    "   `phone_num`, "
+                    "   `receipt`, "
+                    "   `code`, "
+                    "   `learn_dharma_address`, "
+                    "   `personnel_id`, "
+                    "   `telephone_num` "
+                    "FROM "
+                    "   `people` "
+                    "ORDER BY "
+                    "   `receipt` "
+                    );
     } else {
-        sql = QString("select name, phone_num, receipt, code, learn_dharma_address, personnel_id, telephone_num from people where editor = '%1' order by receipt").arg(editor);
+         query.prepare(
+                    "SELECT "
+                    "   `name`, "
+                    "   `phone_num`, "
+                    "   `receipt`,"
+                    "   `code`, "
+                    "   `learn_dharma_address`, "
+                    "   `personnel_id`, "
+                    "   `telephone_num` "
+                    "FROM "
+                    "   `people` "
+                    "WHERE "
+                    "   `editor` = :editor "
+                    "ORDER BY "
+                    "   `receipt` "
+                    );
+         query.bindValue(":editor", editor);
     }
 
-    query.exec(sql);
+    query.exec();
 
-    viewModel->clear();
-    viewModel->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
-    viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
-    viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
-    viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
-    viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
-    viewModel->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("身份证号码")));
-    viewModel->setHorizontalHeaderItem(6, new QStandardItem(QObject::trUtf8("固定电话")));
+    qDebug() << query.lastQuery();
+
+    set_old_model_view(); // 清除所有行，重新设置标题
 
     while(query.next()) {
         QString name = query.value(0).toString();
@@ -1070,7 +1097,18 @@ bool Connect::init_and_append_items2_tableView()
         QStandardItem *learnAddressItem = new QStandardItem(learn_address);
         QStandardItem *personnelIDItem = new QStandardItem(personId);
         QStandardItem *telItem = new QStandardItem(tel);
-        viewModel->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem << personnelIDItem << telItem);
+
+
+        viewModel->appendRow(
+                    standardItemList
+                    << nameItem
+                    << phoneItem
+                    << receiptItem
+                    << codeItem
+                    << learnAddressItem
+                    << personnelIDItem
+                    << telItem
+                    );
     }
 
     query.clear();
@@ -1091,58 +1129,84 @@ bool Connect::init_db()
     }
 
     if_connected = true;
+    create_table();
+    return true;
+}
+
+bool Connect::create_table()
+{
+    QString  people =
+            "CREATE TABLE IF NOT EXISTS `people` ("
+            "  `id` int(11) NOT NULL AUTO_INCREMENT,"
+            "  `name` varchar(32) DEFAULT NULL,"
+            "  `gender` varchar(10) DEFAULT NULL,"
+            "  `job` varchar(32) DEFAULT NULL,"
+            "  `hobby` varchar(64) DEFAULT NULL,"
+            "  `fname` varchar(32) DEFAULT NULL,"
+            "  `birthday` varchar(32) DEFAULT NULL,"
+            "  `personnel_id` varchar(32) DEFAULT NULL,"
+            "  `phone_num` varchar(20) DEFAULT NULL,"
+            "  `race` varchar(20) DEFAULT NULL,"
+            "  `degree` varchar(32) DEFAULT NULL,"
+            "  `health` varchar(32) DEFAULT NULL,"
+            "  `telephone_num` varchar(20) DEFAULT NULL,"
+            "  `edit_time` varchar(32) DEFAULT NULL,"
+            "  `receipt` varchar(32) DEFAULT NULL,"
+            "  `workplace` varchar(64) DEFAULT NULL,"
+            "  `province` varchar(64) DEFAULT NULL,"
+            "  `city` varchar(64) DEFAULT NULL,"
+            "  `district` varchar(64) DEFAULT NULL,"
+            "  `address` varchar(64) DEFAULT NULL,"
+            "  `postcode` varchar(64) DEFAULT NULL,"
+            "  `graduate_time` varchar(32) DEFAULT NULL,"
+            "  `graduate_school` varchar(64) DEFAULT NULL,"
+            "  `first_job_entry_time` varchar(64) DEFAULT NULL,"
+            "  `first_job_workplace` varchar(64) DEFAULT NULL,"
+            "  `second_job_entry_time` varchar(32) DEFAULT NULL,"
+            "  `second_job_workplace` varchar(64) DEFAULT NULL,"
+            "  `retirement_date` varchar(32) DEFAULT NULL,"
+            "  `retirement_workplace` varchar(64) DEFAULT NULL,"
+            "  `year2start_learning_buddhism` varchar(32) DEFAULT NULL,"
+            "  `years_of_learning_buddhism` varchar(10) DEFAULT NULL,"
+            "  `deep_understanding_of_dharma` varchar(64) DEFAULT NULL,"
+            "  `reason2learning_dharma` varchar(128) DEFAULT NULL,"
+            "  `nums_of_buddhism_book` varchar(10) DEFAULT NULL,"
+            "  `easy2learn_buddhism_book` varchar(128) DEFAULT NULL,"
+            "  `hard2read` varchar(128) DEFAULT NULL,"
+            "  `maxim` varchar(128) DEFAULT NULL,"
+            "  `buddhist_disciples_of_family` varchar(128) DEFAULT NULL,"
+            "  `editor` varchar(128) DEFAULT NULL,"
+            "  `others` varchar(128) DEFAULT NULL,"
+            "  `learn_dharma_kinds` varchar(64) DEFAULT NULL,"
+            "  `learn_dharma_address` varchar(128) DEFAULT NULL,"
+            "  `code` varchar(64) DEFAULT NULL,"
+            "  `if_apply_learn_place` varchar(10) DEFAULT '否',"
+            "  `notes` varchar(128) DEFAULT NULL,"
+            "  PRIMARY KEY (`id`),"
+            "  UNIQUE KEY `receipt` (`receipt`),"
+            "  UNIQUE KEY `code` (`code`)"
+            ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8";
 
     QSqlQuery query;
-    QString createTableSql = "                             \
-            create table if not exists people (            \
-                id int(11) primary key not null auto_increment,\
-                name                             varchar(32),  \
-                gender                           varchar(10),  \
-                job                              varchar(32),  \
-                hobby                            varchar(64),  \
-                fname                            varchar(32),  \
-                birthday                         varchar(32),  \
-                personnel_id                     varchar(32),  \
-                phone_num                        varchar(20),  \
-                race                             varchar(20),  \
-                degree                           varchar(32),  \
-                health                           varchar(32),  \
-                telephone_num                    varchar(20),  \
-                edit_time                        varchar(32),  \
-                receipt                          varchar(32) unique,  \
-                workplace                        varchar(64),  \
-                province                         varchar(64),  \
-                city                             varchar(64),  \
-                district                         varchar(64),  \
-                address                          varchar(64),  \
-                postcode                         varchar(64),  \
-                graduate_time                    varchar(32),  \
-                graduate_school                  varchar(64),  \
-                first_job_entry_time             varchar(64),  \
-                first_job_workplace              varchar(64),  \
-                second_job_entry_time            varchar(32),  \
-                second_job_workplace             varchar(64),  \
-                retirement_date                  varchar(32),  \
-                retirement_workplace             varchar(64),  \
-                year2start_learning_buddhism     varchar(32),  \
-                years_of_learning_buddhism       varchar(10),  \
-                deep_understanding_of_dharma     varchar(64),  \
-                reason2learning_dharma           varchar(128), \
-                nums_of_buddhism_book            varchar(10),  \
-                easy2learn_buddhism_book         varchar(128), \
-                hard2read                        varchar(128), \
-                maxim                            varchar(128), \
-                buddhist_disciples_of_family     varchar(128), \
-                editor                           varchar(128), \
-                others                           varchar(128), \
-                learn_dharma_kinds               varchar(64),  \
-                learn_dharma_address             varchar(128), \
-                code                             varchar(64) unique, \
-                if_apply_learn_place             varchar(10), \
-                notes                            varchar(128)\
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-    query.exec(createTableSql);
+
+    QString admin =
+            "CREATE TABLE IF NOT EXISTS `admin` ("
+            "  `stat_name` varchar(31) DEFAULT NULL,"
+            "  `stat` int(11) DEFAULT NULL"
+            ") ENGINE=InnoDB DEFAULT CHARSET=utf8";
+
+    query.exec(people);
+    query.exec(admin);
+
+    if (query.lastError().isValid()) {
+        qDebug() << query.lastError().text();
+        QMessageBox::critical(this, "数据库错误", query.lastError().text());
+        query.clear();
+        return false;
+    }
+
     query.clear();
+
     return true;
 }
 
@@ -1186,45 +1250,134 @@ void Connect::on_actionQueryAnyThing_triggered()
 {
     if (!test_if_connected()) return;
     bool ok;
-/*
-    if (!ui->pushButtonDatabase->isChecked()) {
-        if (!db_port_test()) {
-            QMessageBox::critical(this, "无法连接数据库", "请在编辑菜单设置正确的数据库地址以及端口. 然后点击 连接 按钮");
-            return;
-        } else {
-            init_db();
-            ui->pushButtonDatabase->setText("已连接");
-            ui->pushButtonDatabase->setDisabled(true);
-        }
-    }
+    QString text = QString("请输入姓名、手机号、皈依号进行查询，输入后按确定，或者点击 OK");
+    QString search_text = QInputDialog::getText(this, "查询窗口", text, QLineEdit::Normal, "", &ok );
 
-*/
-    QString search_text = QInputDialog::getText(this, "查询窗口", "请输入姓名、手机号、皈依号进行查询，输入后按确定，或者点击 OK", QLineEdit::Normal, "", &ok);
     if (!(ok && !search_text.isEmpty())) return;
 
     QSqlQuery query;
     search_text = search_text.trimmed();
-    QString sql = QString(
-                "select name, phone_num, receipt, code, learn_dharma_address from people where name = '%1' union\
-                select name, phone_num, receipt, code, learn_dharma_address from people where phone_num = '%1' union\
-            select name, phone_num, receipt, code, learn_dharma_address from people where receipt = '%1' union\
-            select name, phone_num, receipt, code, learn_dharma_address from people where code = '%1'"
-            ).arg(search_text);
-    query.exec(sql);
-    qDebug() << sql;
 
-    viewModel_search->clear();
-    viewModel_search->setHorizontalHeaderItem(0, new QStandardItem(QObject::trUtf8("姓名")));
-    viewModel_search->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
-    viewModel_search->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
-    viewModel_search->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
-    viewModel_search->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
+    if (!ui->actionJoinin->isEnabled()) {
+        query.prepare(
+                    " SELECT "
+                    "     `receipt`, "
+                    "     `name`, "
+                    "     `phone_num`, "
+                    "     `telephone_num`, "
+                    "     `learn_dharma_kinds`, "
+                    "     `gender`, "
+                    "     `birthday`, "
+                    "     `province`, "
+                    "     `city`, "
+                    "     `district`, "
+                    "     `address`, "
+                    "     `if_apply_learn_place`, "
+                    "     `notes`, "
+                    "     `id` "
+                    " FROM "
+                    "     `people` "
+                    " WHERE "
+                    "     `name` = :abc "
+                    " OR "
+                    "   `phone_num` = :abc "
+                    );
 
-    qDebug() << query.lastError();
+        query.bindValue(":abc", search_text);
+        query.exec();
+
+        if (query.lastError().isValid()) {
+            QMessageBox::critical(
+                        this,
+                        "数据库错误",
+                        query.lastError().text()
+                        );
+            return;
+        }
+
+        set_new_model_view();
+        while(query.next()) {
+            QString order = query.value(0).toString();
+            QString name = query.value(1).toString();
+            QString phone = query.value(2).toString();
+            QString tel = query.value(3).toString();
+            QString kinds = query.value(4).toString();
+            QString gender = query.value(5).toString();
+            QString birth = query.value(6).toString();
+            QString province = query.value(7).toString();
+            QString city = query.value(8).toString();
+            QString district = query.value(9).toString();
+            QString address = query.value(10).toString();
+            QString if_apply = query.value(11).toString();
+            QString notes = query.value(12).toString();
+
+            QList <QStandardItem*> standardItemList;
+            QStandardItem *orderItem = new QStandardItem(order);
+            QStandardItem *nameItem = new QStandardItem(name);
+            QStandardItem *phoneItem = new QStandardItem(phone);
+            QStandardItem *telItem= new QStandardItem(tel);
+            QStandardItem *kindsItem = new QStandardItem(kinds);
+            QStandardItem *genderItem = new QStandardItem(gender);
+            QStandardItem *birthItem = new QStandardItem(birth);
+            QStandardItem *provinceItem = new QStandardItem(province);
+            QStandardItem *cityItem = new QStandardItem(city);
+            QStandardItem *districtItem = new QStandardItem(district);
+            QStandardItem *addressItem = new QStandardItem(address);
+            QStandardItem *if_applyItem = new QStandardItem(if_apply);
+            QStandardItem *notesItem = new QStandardItem(notes);
+
+            viewModel_search->appendRow(standardItemList
+                                        << orderItem
+                                        << nameItem
+                                        << phoneItem
+                                        << telItem
+                                        << kindsItem
+                                        << genderItem
+                                        << birthItem
+                                        << provinceItem
+                                        << cityItem
+                                        << districtItem
+                                        << addressItem
+                                        << if_applyItem
+                                        << notesItem
+                                        );
+        }
+
+        show_search_table();
+        query.clear();
+
+        return;
+    }
+
+    query.prepare(
+                " SELECT "
+                "   `name`, "
+                "   `phone_num`, "
+                "   `receipt`, "
+                "   `code`, "
+                "   `learn_dharma_address` "
+                " FROM "
+                "   `people` "
+                " WHERE "
+                "   `name` = :abc "
+                " OR "
+                "   `phone_num` = :abc "
+                " OR "
+                "   `receipt` = :abc "
+                " OR "
+                "   `code` = :abc "
+                );
+    query.bindValue(":abc", search_text);
+    query.exec();
+
+    if (query.lastError().isValid()) {
+        QMessageBox::critical(this, "数据库错误", query.lastError().text());
+        return;
+    }
+
 
     while(query.next()) {
         QString name = query.value(0).toString();
-        qDebug() << name;
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
@@ -1236,7 +1389,14 @@ void Connect::on_actionQueryAnyThing_triggered()
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
         QStandardItem *learnAddressItem = new QStandardItem(learn_address);
-        viewModel_search->appendRow(standardItemList << nameItem << phoneItem << receiptItem << codeItem << learnAddressItem);
+
+        viewModel_search->appendRow(standardItemList
+                                    << nameItem
+                                    << phoneItem
+                                    << receiptItem
+                                    << codeItem
+                                    << learnAddressItem
+                                    );
     }
 
     show_search_table();
@@ -1258,7 +1418,14 @@ void Connect::show_search_table()
 
 void Connect::on_tableView_2_doubleClicked(const QModelIndex &index)
 {
-    QString receipt = index.sibling(index.row(), 2).data().toString();
+    int num;
+    if(!ui->actionJoinin->isEnabled()) {
+        num = 0;
+    } else {
+        num = 2;
+    }
+
+    QString receipt = index.sibling(index.row(), num).data().toString();
     if (modify_or_not()) {
         complete_fields("receipt", receipt);
         hide_search_table();
@@ -1320,9 +1487,34 @@ void Connect::on_lineEdit_Name_returnPressed()
 
 void Connect::on_lineEdit_Name_editingFinished()
 {
-    qDebug() << "on line edit finished";
-    qDebug() << ui->lineEdit_Name->text();
     complete_fields("name", ui->lineEdit_Name->text());
+}
+
+void Connect::set_old_model_view()
+{
+    viewModel->clear();
+    viewModel = new QStandardItemModel();
+    viewModel->setHorizontalHeaderItem(0, new QStandardItem("姓名"));
+    viewModel->setHorizontalHeaderItem(1, new QStandardItem("手机"));
+    viewModel->setHorizontalHeaderItem(2, new QStandardItem("收据编号"));
+    viewModel->setHorizontalHeaderItem(3, new QStandardItem("皈依证号"));
+    viewModel->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
+    viewModel->setHorizontalHeaderItem(5, new QStandardItem("身份证号码"));
+    viewModel->setHorizontalHeaderItem(6, new QStandardItem("固定电话"));
+
+    ui->tableView->setModel(viewModel);
+    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    viewModel_search->clear();
+    viewModel_search = new QStandardItemModel();
+    viewModel_search->setHorizontalHeaderItem(0, new QStandardItem("姓名"));
+    viewModel_search->setHorizontalHeaderItem(1, new QStandardItem("手机"));
+    viewModel_search ->setHorizontalHeaderItem(2, new QStandardItem("收据编号"));
+    viewModel_search->setHorizontalHeaderItem(3, new QStandardItem("皈依证号"));
+    viewModel_search->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
+
+    ui->tableView_2->setModel(viewModel_search);
+    ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 void Connect::set_new_model_view()
@@ -1346,7 +1538,23 @@ void Connect::set_new_model_view()
     ui->tableView->setModel(viewModel);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    ui->tableView_2->setModel(viewModel);
+    viewModel_search->clear();
+    viewModel_search = new QStandardItemModel();
+    viewModel_search->setHorizontalHeaderItem(0, new QStandardItem("序号"));
+    viewModel_search->setHorizontalHeaderItem(1, new QStandardItem("姓名"));
+    viewModel_search->setHorizontalHeaderItem(2, new QStandardItem("手机"));
+    viewModel_search->setHorizontalHeaderItem(3, new QStandardItem("其他联系方式"));
+    viewModel_search->setHorizontalHeaderItem(4, new QStandardItem("小组种类"));
+    viewModel_search->setHorizontalHeaderItem(5, new QStandardItem("性别"));
+    viewModel_search->setHorizontalHeaderItem(6, new QStandardItem("生日"));
+    viewModel_search->setHorizontalHeaderItem(7, new QStandardItem("省"));
+    viewModel_search->setHorizontalHeaderItem(8, new QStandardItem("市"));
+    viewModel_search->setHorizontalHeaderItem(9, new QStandardItem("区(县)"));
+    viewModel_search->setHorizontalHeaderItem(10, new QStandardItem("街道(村)"));
+    viewModel_search->setHorizontalHeaderItem(11, new QStandardItem("是否提供场地"));
+    viewModel_search->setHorizontalHeaderItem(12, new QStandardItem("备注"));
+
+    ui->tableView_2->setModel(viewModel_search);
     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
@@ -1373,4 +1581,10 @@ void Connect::on_lineEditCode_editingFinished()
     ui->lineEditCode->setText("号码有误，请重新输入");
     ui->lineEditCode->selectAll();
     ui->lineEditCode->setFocus();
+}
+
+bool Connect::admin_init_all()
+{
+    // init db, create table, truncate table, save table
+    return true;
 }
