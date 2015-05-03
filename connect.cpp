@@ -16,7 +16,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.1.5";
+    server_ip = "192.168.31.5";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
@@ -186,7 +186,15 @@ bool Connect::modify_or_not()
 
 void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    QString receipt = index.sibling(index.row(), 2).data().toString();
+    int order;
+    if (!ui->actionJoinin->isEnabled()) {
+        order = 0;
+    } else {
+        order = 1;
+    }
+
+    QString receipt = index.sibling(index.row(), order).data().toString();
+
     if (modify_or_not()) {
         complete_fields("receipt", receipt);
         viewModel->removeRow(index.row());
@@ -549,6 +557,7 @@ bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
         ui->lineEdit_Note->clear();
         ui->lineEdit_Phone->clear();
         ui->lineEdit_Province->clear();
+        ui->lineEditLearnKind->clear();
         return true;
     }
 
@@ -1300,6 +1309,7 @@ void Connect::on_actionJoinin_triggered()
     ui->joinWidget->hide();
     ui->actionJoinin->setDisabled(true);
     set_new_model_view();
+    ui->lineEdit_ApplyPlace->setText("否");
 }
 
 void Connect::on_lineEdit_Name_returnPressed()
@@ -1363,5 +1373,4 @@ void Connect::on_lineEditCode_editingFinished()
     ui->lineEditCode->setText("号码有误，请重新输入");
     ui->lineEditCode->selectAll();
     ui->lineEditCode->setFocus();
-    return;
 }
