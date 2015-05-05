@@ -853,6 +853,82 @@ void Connect::get_local_ip()
     }
 }
 
+void Connect::excel(QString fileName) //[new]
+{
+#define FIELDS_COUNT 12
+    QXlsx::Document xlsx;
+    QSqlQuery query;
+    query.prepare(
+                " SELECT"
+                "   `name`,"
+                "   `gender`,"
+                "   `birthday`,"
+                "   `phone_num`,"
+                "   `telephone_num`,"
+                "   `learn_dharma_kinds`,"
+                "   `province`,"
+                "   `city`,"
+                "   `district`,"
+                "   `address`,"
+                "   `if_apply_learn_place`,"
+                "   `notes`"
+                " FROM "
+                "   `people`"
+                " WHERE"
+                "   `learn_dharma_kinds` IS NOT NULL "
+                );
+    query.exec();
+
+    QString names[] = {
+        "姓名",
+        "性别",
+        "出生年月",
+        "手机号码",
+        "其他联系方式",
+        "学佛小组种类",
+        "省",
+        "市",
+        "区(县)",
+        "详细地址",
+        "是否提供场地",
+        "备注"
+    };
+
+    int lens[] = {
+        10,
+        5,
+        11,
+        15,
+        16,
+        20,
+        10,
+        12,
+        12,
+        35,
+        12,
+        50
+    };
+
+    char start = 'A';
+    for(int i = 0; i < FIELDS_COUNT; i++) {
+        xlsx.setColumnWidth(i+1, lens[i]);
+    }
+
+    for(int i = 0; i < FIELDS_COUNT; i++) {
+        xlsx.write(QString("%1%2").arg(char(start+i)).arg("1"), names[i]);
+    }
+
+    int j = 2;
+    while(query.next()) {
+        for(int i = 0; i < FIELDS_COUNT; i++) {
+            xlsx.write(QString("%1%2").arg(char(start + i)).arg(j), query.value(i).toString());
+        }
+        j++;
+    }
+
+    xlsx.saveAs(fileName);
+}
+
 void Connect::save_excel(QString fileName)
 {
     int i = 2;
@@ -944,10 +1020,6 @@ void Connect::save_excel(QString fileName)
         xlsx.setColumnWidth(36, 20); // 认为不易学经典
         xlsx.setColumnWidth(37, 50); // 感触最深的一句话
         xlsx.setColumnWidth(38, 20); // 家庭三宝成员
-        xlsx.setColumnWidth(39, 10); // 编辑人
-        xlsx.setColumnWidth(40, 10); // 修改人
-        xlsx.setColumnWidth(41, 20); // 学佛小组种类
-        xlsx.setColumnWidth(42, 25); // 学佛小组地址
 
         xlsx.write("A1", "姓名");
         xlsx.write("B1", "性别");
@@ -987,10 +1059,6 @@ void Connect::save_excel(QString fileName)
         xlsx.write("AJ1", "认为不易学经典");
         xlsx.write("AK1", "感悟最深的一句话");
         xlsx.write("AL1", "家庭成员三宝弟子");
-        xlsx.write("AM1", "编辑人");
-        xlsx.write("AN1", "更改人");
-        xlsx.write("AO1", "学佛小组种类");
-        xlsx.write("AP1", "学佛小组地址");
 
     }
     // excel A-Z, AA-AZ, BA-BZ...
@@ -998,7 +1066,7 @@ void Connect::save_excel(QString fileName)
     while(query.next()) {
         char start = 'A';
         char ne = 'A';
-        for(j = 0; j < 42; j++) {
+        for(j = 0; j < 38; j++) {
             if (j < 26) {
                 xlsx.write(QString("%1%2").arg(start).arg(i), query.value(j).toString());
                 start++;
@@ -1018,12 +1086,12 @@ void Connect::on_pushButtonExport_clicked()
     if (!test_if_connected()) return;
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, "打开保存文件路径", "", "xlsx (*.xlsx)");
-    if (!fileName.isNull()) {
-        qDebug() << "save file" << fileName;
+    if (fileName.isNull()) return;
+
+    if (!ui->actionJoinin->isEnabled())
+        excel(fileName);
+    else
         save_excel(fileName);
-    } else {
-        return;
-    }
 }
 
 
@@ -1556,7 +1624,7 @@ void Connect::on_actionQueryAnyThing_triggered()
         return;
     }
 
-
+    set_old_model_view();
     while(query.next()) {
         QString name = query.value(0).toString();
         QString phone = query.value(1).toString();
