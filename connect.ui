@@ -1387,6 +1387,9 @@
           <property name="mouseTracking">
            <bool>true</bool>
           </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::AdjustIgnored</enum>
           </property>
@@ -1701,6 +1704,14 @@
    </property>
    <property name="toolTip">
     <string>学佛小组录入</string>
+   </property>
+  </action>
+  <action name="actionCheck">
+   <property name="text">
+    <string>校对正确</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;检查成功标记&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>

@@ -43,11 +43,13 @@ public:
     bool create_table();
     bool admin_init_all();
     bool append_model_data(int c, QString where);
+    bool update_table(QString upsql);
 private:
     QLabel *status_label;
     QSqlDatabase db;
     QString local_ip;
     QString server_ip;
+    QString gsql;
     int dbid;
     int if_query_is_set;
     bool if_connected;
@@ -83,6 +85,10 @@ private slots:
     void on_lineEdit_Name_editingFinished();
 
     void on_lineEditCode_editingFinished();
+
+    void on_tableView_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionCheck_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);

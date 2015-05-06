@@ -1262,6 +1262,7 @@ bool Connect::create_table()
             "  `code` varchar(64) DEFAULT NULL,"
             "  `if_apply_learn_place` varchar(10) DEFAULT '否',"
             "  `notes` varchar(128) DEFAULT NULL,"
+            "  `mark` tinyint(1) NOT NULL DEFAULT '0',"
             "  PRIMARY KEY (`id`),"
             "  UNIQUE KEY `receipt` (`receipt`),"
             "  UNIQUE KEY `code` (`code`)"
@@ -1836,4 +1837,46 @@ bool Connect::admin_init_all()
 {
     // init db, create table, truncate table, save table
     return true;
+}
+
+bool Connect::update_table(QString upsql)
+{
+    QSqlQuery query;
+    query.exec(upsql);
+    if (query.lastError().isValid()) {
+        query.clear();
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    query.clear();
+    return true;
+}
+
+void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
+{
+    int col;
+    if (!ui->actionJoinin->isEnabled())
+        col = 0;
+    else
+        col = 2;
+
+    QMenu *popMenu = new QMenu(this);
+    int row = ui->tableView->verticalHeader()->logicalIndexAt(pos);
+    QString id = viewModel->index(row, col).data().toString();
+    gsql = QString(
+                " UPDATE "
+                "   `people` "
+                " SET"
+                "   `mark` = 1 "
+                " WHERE"
+                "   `receipt` = '%1' "
+                ).arg(id);
+    popMenu->addAction(ui->actionCheck);
+    popMenu->exec(QCursor::pos());
+}
+
+void Connect::on_actionCheck_triggered()
+{
+    update_table(gsql);
+    qDebug() << gsql;
 }
