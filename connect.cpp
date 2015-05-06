@@ -1306,7 +1306,7 @@ void Connect::on_pushButtonDatabase_pressed()
 
     if (!db.isOpen() && db_port_test()) {
         if (init_db()) {
-            ui->pushButtonDatabase->setText("已连接");
+            ui->pushButtonDatabase->setText("已连");
             ui->pushButtonDatabase->setDisabled(true);
         }
     } else {
