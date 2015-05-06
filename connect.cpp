@@ -1111,7 +1111,7 @@ bool Connect::init_and_append_items2_tableView()
         if (others.isEmpty()) {
             append_model_data(0, "");
         } else {
-            QString where = QString(" WHERE others = '%1' ").arg(others);
+            QString where = QString(" WHERE `others` = '%1' AND `mark` = 0").arg(others);
             append_model_data(0, where);
         }
        return true;
@@ -1121,22 +1121,22 @@ bool Connect::init_and_append_items2_tableView()
 
     if (editor.isEmpty()) {
         query.prepare(
-                    "SELECT "
-                    "   `name`, "
-                    "   `phone_num`, "
-                    "   `receipt`, "
-                    "   `code`, "
-                    "   `learn_dharma_address`, "
-                    "   `personnel_id`, "
-                    "   `telephone_num` "
-                    "FROM "
-                    "   `people` "
-                    "ORDER BY "
-                    "   `receipt` "
+                    " SELECT "
+                    "    `name`, "
+                    "    `phone_num`, "
+                    "    `receipt`, "
+                    "    `code`, "
+                    "    `learn_dharma_address`, "
+                    "    `personnel_id`, "
+                    "    `telephone_num` "
+                    " FROM "
+                    "    `people` "
+                    " ORDER BY "
+                    "    `receipt` DESC "
                     );
     } else {
          query.prepare(
-                    "SELECT "
+                    " SELECT "
                     "   `name`, "
                     "   `phone_num`, "
                     "   `receipt`,"
@@ -1144,12 +1144,13 @@ bool Connect::init_and_append_items2_tableView()
                     "   `learn_dharma_address`, "
                     "   `personnel_id`, "
                     "   `telephone_num` "
-                    "FROM "
+                    " FROM "
                     "   `people` "
-                    "WHERE "
+                    " WHERE "
                     "   `editor` = :editor "
-                    "ORDER BY "
-                    "   `receipt` "
+                    "    AND `mark` = 0 "
+                    " ORDER BY "
+                    "    `receipt` "
                     );
          query.bindValue(":editor", editor);
     }
