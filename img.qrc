@@ -18,5 +18,6 @@
         <file>img/query2.png</file>
         <file>img/sql.png</file>
         <file>img/group.png</file>
+        <file>img/data-delete.png</file>
     </qresource>
 </RCC>

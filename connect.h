@@ -50,6 +50,7 @@ private:
     QString local_ip;
     QString server_ip;
     QString gsql;
+    int grow;
     int dbid;
     int if_query_is_set;
     bool if_connected;
@@ -89,6 +90,8 @@ private slots:
     void on_tableView_customContextMenuRequested(const QPoint &pos);
 
     void on_actionCheck_triggered();
+
+    void on_actionInitDb_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);

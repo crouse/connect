@@ -1645,6 +1645,7 @@
    <addaction name="actionQueryAnyThing"/>
    <addaction name="actionDbBack"/>
    <addaction name="actionJoinin"/>
+   <addaction name="actionInitDb"/>
   </widget>
   <action name="action">
    <property name="icon">
@@ -1712,6 +1713,15 @@
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;检查成功标记&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionInitDb">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/image/img/data-delete.png</normaloff>:/image/img/data-delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>初始化数据库</string>
    </property>
   </action>
  </widget>

@@ -11,6 +11,8 @@
 #include <QInputDialog>
 #include <QTcpSocket>
 
+#define IP_TAIL_MAX 20
+
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Connect)
@@ -161,6 +163,11 @@ Connect::Connect(QWidget *parent) :
 
     // set local ip at status bar
     get_local_ip();
+
+    if (local_ip.section(".", -1).toInt() > IP_TAIL_MAX) {
+        ui->actionInitDb->setDisabled(true);
+    }
+
     status_label->setStyleSheet("font-size:9px");
     status_label->setText(QString(" Local Address: [%1], Server Default Address: [%2]").arg(local_ip, server_ip));
     statusBar()->addWidget(status_label);
@@ -1714,7 +1721,7 @@ void Connect::on_actionDbBack_triggered()
 void Connect::hide_menu_and_button()
 {
     get_local_ip();
-    if (local_ip.section('.', -1).toInt() > 5) {
+    if (local_ip.section('.', -1).toInt() > IP_TAIL_MAX) {
         ui->pushButtonExport->hide();
         ui->pushButton->hide();
         ui->actionDbBack->setDisabled(true);
@@ -1837,6 +1844,7 @@ void Connect::on_lineEditCode_editingFinished()
 bool Connect::admin_init_all()
 {
     // init db, create table, truncate table, save table
+    update_table("TRUNCATE `people`");
     return true;
 }
 
@@ -1853,6 +1861,7 @@ bool Connect::update_table(QString upsql)
     return true;
 }
 
+/* Table view mouse right click menu functions */
 void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
 {
     int col;
@@ -1861,8 +1870,11 @@ void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
     else
         col = 2;
 
-    QMenu *popMenu = new QMenu(this);
     int row = ui->tableView->verticalHeader()->logicalIndexAt(pos);
+    if (row < 0) return;
+    grow = row;
+
+    QMenu *popMenu = new QMenu(this);
     QString id = viewModel->index(row, col).data().toString();
     gsql = QString(
                 " UPDATE "
@@ -1872,6 +1884,7 @@ void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
                 " WHERE"
                 "   `receipt` = '%1' "
                 ).arg(id);
+
     popMenu->addAction(ui->actionCheck);
     popMenu->exec(QCursor::pos());
 }
@@ -1879,5 +1892,21 @@ void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
 void Connect::on_actionCheck_triggered()
 {
     update_table(gsql);
-    qDebug() << gsql;
+    viewModel->removeRow(grow);
+    grow = -1; // init to no used value
+}
+
+void Connect::on_actionInitDb_triggered()
+{
+    if (!test_if_connected()) return;
+    QMessageBox::StandardButton ask
+            = QMessageBox::question(this,
+                                    "connect",
+                                    "<font color=\"red\">危险!!!</font> 你确定初始化删除所有数据么? 如果确定请按 Yes，否则按 Cancel\n",
+                                    QMessageBox::Cancel|QMessageBox::Yes);
+    if (ask == QMessageBox::Yes) {
+        admin_init_all();
+        return;
+    }
+    return;
 }
