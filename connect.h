@@ -38,12 +38,18 @@ public:
     void hide_menu_and_button();
     void show_search_table();
     bool test_if_connected();
-    void set_old_model_view();
     void set_new_model_view();
+    void set_new_first_model();
+    void set_new_second_model();
+
+    void set_old_first_model();
+    void set_old_second_model();
+    void set_old_model_view();
     bool create_table();
     bool admin_init_all();
     bool append_model_data(int c, QString where);
     bool update_table(QString upsql);
+    void query_by_name_or_phone(QString search_text);
 private:
     QLabel *status_label;
     QSqlDatabase db;
