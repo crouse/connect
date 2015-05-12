@@ -1731,7 +1731,7 @@ void Connect::hide_menu_and_button()
     get_local_ip();
     if (local_ip.section('.', -1).toInt() > IP_TAIL_MAX) {
         ui->pushButtonExport->hide();
-        ui->pushButton->hide();
+        //ui->pushButton->hide();
         ui->actionDbBack->setDisabled(true);
     }
 }
