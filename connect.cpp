@@ -18,7 +18,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.5";
+    server_ip = "192.168.31.1";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
@@ -1209,8 +1209,8 @@ bool Connect::init_db()
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(server_ip);
     db.setDatabaseName("connect");
-    db.setUserName("lei");
-    db.setPassword("123456");
+    db.setUserName("connect");
+    db.setPassword("connect");
     if(!db.open()) {
         QMessageBox::critical(this, "数据库错误", db.lastError().text());
         return false;
@@ -1327,7 +1327,7 @@ void Connect::on_pushButtonDatabase_pressed()
 void Connect::on_action_triggered()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.1.5", &ok);
+    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.31.1", &ok);
     if (ok && !text.isEmpty()) {
         server_ip = text;
     }
