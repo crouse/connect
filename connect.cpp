@@ -651,7 +651,7 @@ bool Connect::complete_fields(QString name, QString value)
             ui->lineEdit_Address->setText(query.value(10).toString());
             ui->lineEdit_ApplyPlace->setText(query.value(11).toString());
             ui->lineEdit_Note->setText(query.value(12).toString());
-            ui->lineEditOthers->setText(query.value(13).toString());
+            //ui->lineEditOthers->setText(query.value(13).toString());
             dbid = query.value(14).toInt();
             ui->lineEditLearnAddress->setText(query.value(15).toString());
         }
@@ -1738,6 +1738,21 @@ void Connect::hide_menu_and_button()
 
 void Connect::on_actionJoinin_triggered()
 {
+    int stat;
+    if (local_ip.section('.', -1).toInt() > IP_TAIL_MAX) {
+        QSqlQuery query;
+        query.prepare("select stat from admin where stat_name = 'xuefoxiaozu'");
+        query.exec();
+        query.next();
+        stat = query.value(0).toInt();
+        if (stat == 0) {
+            QMessageBox::information(this, "学佛小组录入", "管理员未允许学佛小组录入，请联系管理员，管理员点击后方可录入。");
+            return;
+        }
+    }
+
+    // 更新状态表，允许所有使用者录入学佛小组信息
+    update_table("update `admin` set `stat` = 1 where `stat_name` = 'xuefoxiaozu'");
     ui->fgroupWidget->show();
     ui->joinWidget->hide();
     ui->actionJoinin->setDisabled(true);
@@ -1871,6 +1886,9 @@ bool Connect::admin_init_all()
 {
     // init db, create table, truncate table, save table
     update_table("TRUNCATE `people`");
+    update_table("drop table if exists `admin`");
+    update_table("create table if not exists `admin` (`stat_name` varchar(32), `stat` int)");
+    update_table("insert into `admin` (`stat_name`, `stat`) values ('xuefoxiaozu', 0)");
     return true;
 }
 
