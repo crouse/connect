@@ -1457,6 +1457,7 @@ bool Connect::append_model_data(int c, QString where)
                 " WHERE "
                 ) + where;
 
+    qDebug() << sql;
     query.exec(sql);
 
     if (query.lastError().isValid()) {
@@ -1753,6 +1754,7 @@ void Connect::on_actionJoinin_triggered()
 
     // 更新状态表，允许所有使用者录入学佛小组信息
     update_table("update `admin` set `stat` = 1 where `stat_name` = 'xuefoxiaozu'");
+    update_table("update people set mark = 0");
     ui->fgroupWidget->show();
     ui->joinWidget->hide();
     ui->actionJoinin->setDisabled(true);
@@ -1963,6 +1965,22 @@ void Connect::on_actionInitDb_triggered()
 void Connect::on_actionAbort_triggered()
 {
    // 在编辑模式下点击 放弃编辑 清空数据状态标记，还原数据到显示表格
-    dbid = 0;
+    QString edit_name;
+    QString where;
+    if (!ui->actionJoinin->isEnabled()) {
+        edit_name = ui->lineEditOthers->text();
+        qDebug() << "Here we are!";
+        where = QString(" WHERE `others` = '%1'").arg(edit_name);
+    } else {
+        qDebug() << "We are here";
+        edit_name = ui->lineEditor->text();
+        where = QString(" `editor` = '%1' and mark = 0").arg(edit_name);
+        edit_name = ui->lineEditor->text();
+    }
+
     clear_lineEdits();
+    if (!edit_name.isEmpty()) {
+        append_model_data(0, where);
+    }
+    dbid = 0;
 }
