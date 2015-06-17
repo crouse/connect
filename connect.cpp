@@ -11,7 +11,7 @@
 #include <QInputDialog>
 #include <QTcpSocket>
 
-#define IP_TAIL_MAX 20
+#define IP_TAIL_MAX 50
 
 Connect::Connect(QWidget *parent) :
     QMainWindow(parent),
@@ -1908,6 +1908,11 @@ bool Connect::update_table(QString upsql)
 /* Table view mouse right click menu functions */
 void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
 {
+    // IP 不是管理员段的没有权限执行下面
+    if (local_ip.section(".", -1).toInt() > IP_TAIL_MAX) {
+        return;
+    }
+
     int col;
     if (!ui->actionJoinin->isEnabled())
         col = 0;
@@ -1953,4 +1958,11 @@ void Connect::on_actionInitDb_triggered()
         return;
     }
     return;
+}
+
+void Connect::on_actionAbort_triggered()
+{
+   // 在编辑模式下点击 放弃编辑 清空数据状态标记，还原数据到显示表格
+    dbid = 0;
+    clear_lineEdits();
 }

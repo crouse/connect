@@ -1652,6 +1652,7 @@
    <addaction name="actionDbBack"/>
    <addaction name="actionJoinin"/>
    <addaction name="actionInitDb"/>
+   <addaction name="actionAbort"/>
   </widget>
   <action name="action">
    <property name="icon">
@@ -1728,6 +1729,11 @@
    </property>
    <property name="text">
     <string>初始化数据库</string>
+   </property>
+  </action>
+  <action name="actionAbort">
+   <property name="text">
+    <string>放弃更改</string>
    </property>
   </action>
  </widget>

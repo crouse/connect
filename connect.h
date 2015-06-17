@@ -99,6 +99,8 @@ private slots:
 
     void on_actionInitDb_triggered();
 
+    void on_actionAbort_triggered();
+
 protected:
     void closeEvent(QCloseEvent *event);
 
