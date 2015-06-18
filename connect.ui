@@ -1732,6 +1732,10 @@
    </property>
   </action>
   <action name="actionAbort">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/image/img/undo.png</normaloff>:/image/img/undo.png</iconset>
+   </property>
    <property name="text">
     <string>放弃更改</string>
    </property>
