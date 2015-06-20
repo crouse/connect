@@ -1114,7 +1114,7 @@ bool Connect::init_and_append_items2_tableView()
     QSqlQuery query;
 
     if (!ui->actionJoinin->isEnabled()) {
-        QString others = ui->lineEditOthers->text();
+        QString others = ui->lineEditOthers->text().trimmed();
         if (others.isEmpty()) {
             append_model_data(0, "");
         } else {
@@ -1124,7 +1124,7 @@ bool Connect::init_and_append_items2_tableView()
        return true;
     }
 
-    QString editor = ui->lineEditor->text();
+    QString editor = ui->lineEditor->text().trimmed();
 
     if (editor.isEmpty()) {
         query.prepare(
