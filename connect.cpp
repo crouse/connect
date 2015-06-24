@@ -624,6 +624,7 @@ bool Connect::complete_fields(QString name, QString value)
                               "others, id, learn_dharma_address from people where %1 = '%2'"
                               ).arg(name, value);
         query.exec(sql);
+        qDebug() << sql;
 
         if (query.size() == 0) {
             ui->lineEdit_Order->setFocus();
@@ -1983,4 +1984,9 @@ void Connect::on_actionAbort_triggered()
         append_model_data(0, where);
     }
     dbid = 0;
+}
+
+void Connect::on_lineEdit_Phone_editingFinished()
+{
+    complete_fields("phone_num", ui->lineEdit_Phone->text());
 }

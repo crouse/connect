@@ -101,6 +101,8 @@ private slots:
 
     void on_actionAbort_triggered();
 
+    void on_lineEdit_Phone_editingFinished();
+
 protected:
     void closeEvent(QCloseEvent *event);
 
