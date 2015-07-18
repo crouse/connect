@@ -1390,8 +1390,17 @@
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
+          <property name="acceptDrops">
+           <bool>true</bool>
+          </property>
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::AdjustIgnored</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+          </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
           </property>
           <property name="dragDropMode">
            <enum>QAbstractItemView::NoDragDrop</enum>
