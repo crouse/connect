@@ -280,7 +280,7 @@ bool Connect::validate_input_values()
 
 bool Connect::update_database()
 {
-    qDebug() << "dbid = " << dbid;
+    qDebug() << "xxx dbid = " << dbid;
     QSqlQuery query;
 
     if (!ui->actionJoinin->isEnabled()) {
@@ -357,9 +357,9 @@ bool Connect::update_database()
         query.bindValue(":dbid", QString("%1").arg(dbid));
 
         if (!query.exec()) {
-            QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
+            QString error_msg = query.lastError().text();
+            QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + error_msg);
             qDebug() << query.executedQuery();
-            //db.close();
             return false;
         }
 
@@ -541,14 +541,54 @@ bool Connect::update_database()
     bool rt = query.exec();
     if (!rt) {
         // 输出错误到屏幕！[tbd] 这个得考虑到输入重复问题，下面的错误用户未必理解，所以得考虑到
-        QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + query.lastError().text());
-        //db.close();
+        QString code = ui->lineEditCode->text();
+        QString error_msg = query.lastError().text();
+        if (error_msg.contains("Duplicate")) {
+            QString message = query_duplicate(code);
+            QMessageBox::information(this, "", message);
+        } else {
+            QMessageBox::information(this, "", QString("数据库错误，请联系开发运维人员：") + error_msg);
+        }
         return false;
     }
 
     query.clear();
 
     return true;
+}
+
+QString Connect::query_duplicate(QString code)
+{
+
+    QSqlQuery query;
+    query.prepare(
+                " SELECT "
+                "     `editor`, "
+                "     `name` "
+                " FROM "
+                "     `people` "
+                " WHERE "
+                "     `code` = :code"
+                );
+
+    query.bindValue(":code", code);
+    query.exec();
+
+    if (query.lastError().isValid()) {
+        QMessageBox::critical(
+                    this,
+                    "数据库错误",
+                    query.lastError().text()
+                    );
+        return "error";
+    }
+
+    query.next();
+
+    return QString("确认一下您输入的皈依证号是否正确，如果正确，请找编辑人: [%1] 告诉他编辑的皈依号为: [%2] 皈依人名为: [%3] 的皈依号录入错误，请他改正后方可录入。")
+            .arg(query.value(0).toString())
+            .arg(code)
+            .arg(query.value(1).toString());
 }
 
 bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
@@ -1107,6 +1147,7 @@ void Connect::on_pushButton_clicked()
 {
     if (!test_if_connected()) return;
     init_and_append_items2_tableView();
+    qDebug() << "dbid" << dbid;
 }
 
 
@@ -1864,8 +1905,7 @@ void Connect::set_new_model_view()
 void Connect::on_lineEditCode_editingFinished()
 {
     if (ui->lineEditCode->text().isEmpty()) {
-        ui->lineEditCode->setText("不能为空，请在此输入");
-        ui->lineEditCode->setFocus();
+        ui->lineEditCode->setText("皈依证不能为空，请在此输入");
         return;
     }
 

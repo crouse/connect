@@ -50,6 +50,7 @@ public:
     bool append_model_data(int c, QString where);
     bool update_table(QString upsql);
     void query_by_name_or_phone(QString search_text);
+    QString query_duplicate(QString code);
 private:
     QLabel *status_label;
     QSqlDatabase db;
