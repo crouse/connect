@@ -26,6 +26,7 @@ Connect::Connect(QWidget *parent) :
     dbid = 0;
     hide_search_table();
     ui->fgroupWidget->hide();
+    ui->lineEditRace->setText("汉族");
 
     //completor
     {
@@ -77,8 +78,9 @@ Connect::Connect(QWidget *parent) :
 
         // 学佛小组种类
         QStringList learn_kinds_list;
-        learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周日山上/平常山下" << " 5. 周日山上/京外"
-                   << " 6. 平常上下/京外" << " 7. 周日山上/平常山下/京外";
+        learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周末山上/平常山下" << " 5. 周末山上/京外"
+                   << " 6. 平常上下/京外" << " 7. 周末山上/平常山下/京外" << "8. 周末山上/外语" << "9. 周末山上/平常山下/外语"
+                   << "10. 平常山下/外语";
         QCompleter *learn_kinds_completer = new QCompleter(learn_kinds_list, this);
         ui->lineEditLearnKind->setCompleter(learn_kinds_completer);
     }
@@ -622,7 +624,7 @@ bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
     ui->lineEditDegree->clear();
     ui->lineEditHealth->clear();
     ui->lineEditTelephoneNum->clear();
-    ui->lineEditRace->clear();
+    ui->lineEditRace->setText("汉族");
     ui->lineEditProvince->clear();
     ui->lineEditCode->clear();
     ui->lineEditCity->clear();
