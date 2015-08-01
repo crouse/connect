@@ -64,6 +64,7 @@ private:
     void get_local_ip();
     void save_excel(QString fileName);
     void excel(QString fileName);
+    void excelen(QString fileName);
 
 private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);

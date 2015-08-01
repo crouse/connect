@@ -82,7 +82,7 @@ Connect::Connect(QWidget *parent) :
         QStringList learn_kinds_list;
         learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周末山上/平常山下" << " 5. 周末山上/京外"
                    << " 6. 平常上下/京外" << " 7. 周末山上/平常山下/京外" << " 8. 周末山上/外语" << " 9. 周末山上/平常山下/外语"
-                   << " 10. 平常山下/外语";
+                   << " 10. 平常山下/外语" << "11. 没填写";
         QCompleter *learn_kinds_completer = new QCompleter(learn_kinds_list, this);
         learn_kinds_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditLearnKind->setCompleter(learn_kinds_completer);
@@ -934,6 +934,82 @@ void Connect::get_local_ip()
     }
 }
 
+void Connect::excelen(QString fileName) //[new]
+{
+#define FIELDS_COUNT 12
+    QXlsx::Document xlsx;
+    QSqlQuery query;
+    query.prepare(
+                " SELECT"
+                "   `name`,"
+                "   `gender`,"
+                "   `birthday`,"
+                "   `phone_num`,"
+                "   `telephone_num`,"
+                "   `learn_dharma_kinds`,"
+                "   `province`,"
+                "   `city`,"
+                "   `district`,"
+                "   `address`,"
+                "   `if_apply_learn_place`,"
+                "   `notes`"
+                " FROM "
+                "   `people`"
+                " WHERE"
+                "   `learn_dharma_kinds` IS NOT NULL "
+                " AND learn_dharma_kinds like '%外语%' "
+                );
+    query.exec();
+
+    QString names[] = {
+        "姓名",
+        "性别",
+        "出生年月",
+        "手机号码",
+        "其他联系方式",
+        "学佛小组种类",
+        "省",
+        "市",
+        "区(县)",
+        "详细地址",
+        "是否提供场地",
+        "备注"
+    };
+
+    int lens[] = {
+        10,
+        5,
+        11,
+        15,
+        16,
+        20,
+        10,
+        12,
+        12,
+        35,
+        12,
+        50
+    };
+
+    char start = 'A';
+    for(int i = 0; i < FIELDS_COUNT; i++) {
+        xlsx.setColumnWidth(i+1, lens[i]);
+    }
+
+    for(int i = 0; i < FIELDS_COUNT; i++) {
+        xlsx.write(QString("%1%2").arg(char(start+i)).arg("1"), names[i]);
+    }
+
+    int j = 2;
+    while(query.next()) {
+        for(int i = 0; i < FIELDS_COUNT; i++) {
+            xlsx.write(QString("%1%2").arg(char(start + i)).arg(j), query.value(i).toString());
+        }
+        j++;
+    }
+
+    xlsx.saveAs(fileName);
+}
 void Connect::excel(QString fileName) //[new]
 {
 #define FIELDS_COUNT 12
@@ -1167,11 +1243,13 @@ void Connect::on_pushButtonExport_clicked()
     if (!test_if_connected()) return;
     QString fileName;
     fileName = QFileDialog::getSaveFileName(this, "打开保存文件路径", "", "xlsx (*.xlsx)");
+    QString fileName_en = fileName.section('.', 0,0) + QString(".en.xlsx");
     if (fileName.isNull()) return;
 
-    if (!ui->actionJoinin->isEnabled())
+    if (!ui->actionJoinin->isEnabled()) {
         excel(fileName);
-    else
+        excelen(fileName_en);
+    } else
         save_excel(fileName);
 }
 
