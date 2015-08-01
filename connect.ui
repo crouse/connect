@@ -1155,7 +1155,7 @@
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;编辑人，也就是输入记录的人的姓名，嘿嘿。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">background-color: rgb(255, 204, 102);</string>
              </property>
              <property name="placeholderText">
               <string>编辑人：</string>
@@ -1572,7 +1572,7 @@
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;编辑人&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="styleSheet">
-            <string notr="true"/>
+            <string notr="true">background-color: rgb(255, 204, 102);</string>
            </property>
            <property name="placeholderText">
             <string>编辑人：</string>
