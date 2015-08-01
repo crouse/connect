@@ -84,6 +84,9 @@
              <property name="placeholderText">
               <string notr="true">姓名：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -107,6 +110,9 @@
              </property>
              <property name="placeholderText">
               <string>收据编号：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -132,6 +138,9 @@
              <property name="placeholderText">
               <string>皈依证编号：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -155,6 +164,9 @@
              </property>
              <property name="placeholderText">
               <string>性别（男/女):</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -180,6 +192,9 @@
              <property name="placeholderText">
               <string>职业：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -203,6 +218,9 @@
              </property>
              <property name="placeholderText">
               <string>特长：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -228,6 +246,9 @@
              <property name="placeholderText">
               <string>法名：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -251,6 +272,9 @@
              </property>
              <property name="placeholderText">
               <string>出生年月：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -295,7 +319,7 @@
               <string>身份证号:</string>
              </property>
              <property name="clearButtonEnabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -333,6 +357,9 @@
              <property name="placeholderText">
               <string>手机号码：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -356,6 +383,9 @@
              </property>
              <property name="placeholderText">
               <string>民族：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -381,6 +411,9 @@
              <property name="placeholderText">
               <string>文化程度：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -404,6 +437,9 @@
              </property>
              <property name="placeholderText">
               <string>健康状况：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -433,6 +469,9 @@
              <property name="placeholderText">
               <string>固定电话：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -456,6 +495,9 @@
              </property>
              <property name="placeholderText">
               <string>工作单位：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -481,6 +523,9 @@
              <property name="placeholderText">
               <string>省：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -504,6 +549,9 @@
              </property>
              <property name="placeholderText">
               <string>市：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -529,6 +577,9 @@
              <property name="placeholderText">
               <string>区县：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -552,6 +603,9 @@
              </property>
              <property name="placeholderText">
               <string>街道(村)地址：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -577,6 +631,9 @@
              <property name="placeholderText">
               <string>邮政编号：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -600,6 +657,9 @@
              </property>
              <property name="placeholderText">
               <string>毕业时间：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -625,6 +685,9 @@
              <property name="placeholderText">
               <string>毕业学校：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -648,6 +711,9 @@
              </property>
              <property name="placeholderText">
               <string>工作入职时间一：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -673,6 +739,9 @@
              <property name="placeholderText">
               <string>工作单位一：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -697,6 +766,9 @@
              <property name="placeholderText">
               <string>工作入职时间二：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -720,6 +792,9 @@
              </property>
              <property name="placeholderText">
               <string>工作单位二：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -749,6 +824,9 @@
              <property name="placeholderText">
               <string>退休时间：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -772,6 +850,9 @@
              </property>
              <property name="placeholderText">
               <string>退休单位：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -800,6 +881,9 @@
              <property name="placeholderText">
               <string>学佛起始时间：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -823,6 +907,9 @@
              </property>
              <property name="placeholderText">
               <string>学佛时长(年)：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -848,6 +935,9 @@
              <property name="placeholderText">
               <string>是否深刻理解佛法：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -871,6 +961,9 @@
              </property>
              <property name="placeholderText">
               <string>以何因缘接触佛法：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -896,6 +989,9 @@
              <property name="placeholderText">
               <string>所读经典部数：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -919,6 +1015,9 @@
              </property>
              <property name="placeholderText">
               <string>认为易学经典：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -947,6 +1046,9 @@
              <property name="placeholderText">
               <string>认为难学经典：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -970,6 +1072,9 @@
              </property>
              <property name="placeholderText">
               <string>感悟最深得一句话：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -995,6 +1100,9 @@
              <property name="placeholderText">
               <string>家庭成员三宝弟子：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -1019,6 +1127,9 @@
              <property name="placeholderText">
               <string>编辑人：</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -1042,6 +1153,9 @@
              </property>
              <property name="placeholderText">
               <string>填表时间：</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1073,6 +1187,9 @@
            <property name="placeholderText">
             <string>姓名:</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1093,6 +1210,9 @@
            </property>
            <property name="placeholderText">
             <string>序号:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1115,6 +1235,9 @@
            <property name="placeholderText">
             <string>性别:</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1135,6 +1258,9 @@
            </property>
            <property name="placeholderText">
             <string>生日:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1157,6 +1283,9 @@
            <property name="placeholderText">
             <string>手机:</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1177,6 +1306,9 @@
            </property>
            <property name="placeholderText">
             <string>其他联系方式:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1202,6 +1334,9 @@
            <property name="placeholderText">
             <string>学佛小组种类：</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1222,6 +1357,9 @@
            </property>
            <property name="placeholderText">
             <string>省:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1244,6 +1382,9 @@
            <property name="placeholderText">
             <string>市:</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1264,6 +1405,9 @@
            </property>
            <property name="placeholderText">
             <string>区县:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1286,6 +1430,9 @@
            <property name="placeholderText">
             <string>街道(村)：</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1306,6 +1453,9 @@
            </property>
            <property name="placeholderText">
             <string>是否提供场地:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1331,6 +1481,9 @@
            <property name="placeholderText">
             <string>学佛小组地址：</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -1351,6 +1504,9 @@
            </property>
            <property name="placeholderText">
             <string>备注:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1375,6 +1531,9 @@
            </property>
            <property name="placeholderText">
             <string>编辑人：</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
