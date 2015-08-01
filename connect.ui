@@ -108,6 +108,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>收据编号：</string>
              </property>
@@ -270,6 +273,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>出生年月：</string>
              </property>
@@ -304,7 +310,7 @@
               <string notr="true"/>
              </property>
              <property name="inputMethodHints">
-              <set>Qt::ImhLatinOnly</set>
+              <set>Qt::ImhExclusiveInputMask</set>
              </property>
              <property name="inputMask">
               <string/>
@@ -343,7 +349,7 @@
               <string notr="true"/>
              </property>
              <property name="inputMethodHints">
-              <set>Qt::ImhNone</set>
+              <set>Qt::ImhExclusiveInputMask</set>
              </property>
              <property name="inputMask">
               <string/>
@@ -465,6 +471,9 @@
              </property>
              <property name="styleSheet">
               <string notr="true"/>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
              </property>
              <property name="placeholderText">
               <string>固定电话：</string>
@@ -628,6 +637,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>邮政编号：</string>
              </property>
@@ -654,6 +666,9 @@
              </property>
              <property name="styleSheet">
               <string notr="true"/>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
              </property>
              <property name="placeholderText">
               <string>毕业时间：</string>
@@ -709,6 +724,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>工作入职时间一：</string>
              </property>
@@ -762,6 +780,9 @@
              </property>
              <property name="styleSheet">
               <string notr="true"/>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
              </property>
              <property name="placeholderText">
               <string>工作入职时间二：</string>
@@ -821,6 +842,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>退休时间：</string>
              </property>
@@ -878,6 +902,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>学佛起始时间：</string>
              </property>
@@ -904,6 +931,9 @@
              </property>
              <property name="styleSheet">
               <string notr="true"/>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
              </property>
              <property name="placeholderText">
               <string>学佛时长(年)：</string>
@@ -1151,6 +1181,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>填表时间：</string>
              </property>
@@ -1208,6 +1241,9 @@
            <property name="toolTip">
             <string>序号，手写编号</string>
            </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhExclusiveInputMask</set>
+           </property>
            <property name="placeholderText">
             <string>序号:</string>
            </property>
@@ -1256,6 +1292,9 @@
            <property name="toolTip">
             <string>生日</string>
            </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhExclusiveInputMask</set>
+           </property>
            <property name="placeholderText">
             <string>生日:</string>
            </property>
@@ -1279,6 +1318,9 @@
            </property>
            <property name="toolTip">
             <string>手机号</string>
+           </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhExclusiveInputMask</set>
            </property>
            <property name="placeholderText">
             <string>手机:</string>
