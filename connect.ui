@@ -138,6 +138,9 @@
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhExclusiveInputMask</set>
+             </property>
              <property name="placeholderText">
               <string>皈依证编号：</string>
              </property>
