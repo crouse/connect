@@ -1202,6 +1202,7 @@ bool Connect::init_and_append_items2_tableView()
     }
 
     QString editor = ui->lineEditor->text().trimmed();
+    qDebug() << "editor: " << editor;
 
     if (editor.isEmpty()) {
         query.prepare(
@@ -1230,9 +1231,9 @@ bool Connect::init_and_append_items2_tableView()
                     "   `code`, "
                     "   `personnel_id`, "
                     "   `telephone_num`, "
-                    "   `province,` "
-                    "   `city,` "
-                    "   `district,` "
+                    "   `province`, "
+                    "   `city`, "
+                    "   `district`, "
                     "   `address` "
                     " FROM "
                     "   `people` "
@@ -1253,6 +1254,7 @@ bool Connect::init_and_append_items2_tableView()
 
     while(query.next()) {
         QString name = query.value(0).toString();
+        qDebug() << "NAME: " << name;
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
@@ -2099,6 +2101,7 @@ void Connect::on_actionInitDb_triggered()
 void Connect::on_actionAbort_triggered()
 {
    // 在编辑模式下点击 放弃编辑 清空数据状态标记，还原数据到显示表格
+    dbid = 0;
     QString edit_name;
     QString where;
     if (!ui->actionJoinin->isEnabled()) {
@@ -2116,7 +2119,6 @@ void Connect::on_actionAbort_triggered()
     if (!edit_name.isEmpty()) {
         append_model_data(0, where);
     }
-    dbid = 0;
 }
 
 void Connect::on_lineEdit_Phone_editingFinished()
