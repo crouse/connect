@@ -97,6 +97,10 @@ Connect::Connect(QWidget *parent) :
         viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
         viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("身份证号码")));
         viewModel->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("固定电话")));
+        viewModel->setHorizontalHeaderItem(6, new QStandardItem(QObject::trUtf8("省")));
+        viewModel->setHorizontalHeaderItem(7, new QStandardItem(QObject::trUtf8("市")));
+        viewModel->setHorizontalHeaderItem(8, new QStandardItem(QObject::trUtf8("区/县")));
+        viewModel->setHorizontalHeaderItem(9, new QStandardItem(QObject::trUtf8("街道")));
         ui->tableView->setModel(viewModel);
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -108,6 +112,14 @@ Connect::Connect(QWidget *parent) :
         viewModel_search->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
         viewModel_search ->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
         viewModel_search->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
+        viewModel_search->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("身份证号码")));
+        viewModel_search->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("固定电话")));
+        viewModel_search->setHorizontalHeaderItem(6, new QStandardItem(QObject::trUtf8("省")));
+        viewModel_search->setHorizontalHeaderItem(7, new QStandardItem(QObject::trUtf8("市")));
+        viewModel_search->setHorizontalHeaderItem(8, new QStandardItem(QObject::trUtf8("区/县")));
+        viewModel_search->setHorizontalHeaderItem(9, new QStandardItem(QObject::trUtf8("街道")));
+
+
         ui->tableView_2->setModel(viewModel_search);
         ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -862,18 +874,25 @@ void Connect::append_items2_tableView()
         QString phone = ui->lineEditPhoneNum->text();
         QString receipt = ui->lineEditReceipt->text();
         QString code = ui->lineEditCode->text();
-        //QString learnAddress = ui->lineEditLearnAddress->text();
         QString personId = ui->lineEditID->text();
         QString tel = ui->lineEditTelephoneNum->text();
+        QString province = ui->lineEditProvince->text();
+        QString city = ui->lineEditCity->text();
+        QString district = ui->lineEditDistrict->text();
+        QString address = ui->lineEditAddress->text();
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
-        //QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
         QStandardItem *personIdItem = new QStandardItem(personId);
         QStandardItem *telItem = new QStandardItem(tel);
+        QStandardItem *provinceItem = new QStandardItem(province);
+        QStandardItem *cityItem = new QStandardItem(city);
+        QStandardItem *districtItem = new QStandardItem(district);
+        QStandardItem *addressItem = new QStandardItem(address);
+
 
         viewModel->appendRow(
                     standardItemList
@@ -881,9 +900,12 @@ void Connect::append_items2_tableView()
                     << phoneItem
                     << receiptItem
                     << codeItem
-                    //<< learnAddressItem
                     << personIdItem
                     << telItem
+                    << provinceItem
+                    << cityItem
+                    << districtItem
+                    << addressItem
                     );
     }
 }
@@ -1188,9 +1210,12 @@ bool Connect::init_and_append_items2_tableView()
                     "    `phone_num`, "
                     "    `receipt`, "
                     "    `code`, "
-                    "    `learn_dharma_address`, "
                     "    `personnel_id`, "
-                    "    `telephone_num` "
+                    "    `telephone_num`, "
+                    "    `province`, "
+                    "    `city`, "
+                    "    `district`, "
+                    "    `address` "
                     " FROM "
                     "    `people` "
                     " ORDER BY "
@@ -1203,9 +1228,12 @@ bool Connect::init_and_append_items2_tableView()
                     "   `phone_num`, "
                     "   `receipt`,"
                     "   `code`, "
-                    "   `learn_dharma_address`, "
                     "   `personnel_id`, "
-                    "   `telephone_num` "
+                    "   `telephone_num`, "
+                    "   `province,` "
+                    "   `city,` "
+                    "   `district,` "
+                    "   `address` "
                     " FROM "
                     "   `people` "
                     " WHERE "
@@ -1228,18 +1256,25 @@ bool Connect::init_and_append_items2_tableView()
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
-        //QString learn_address = query.value(4).toString();
-        QString personId = query.value(5).toString();
-        QString tel = query.value(6).toString();
+        QString personId = query.value(4).toString();
+        QString tel = query.value(5).toString();
+        QString province = query.value(6).toString();
+        QString city = query.value(7).toString();
+        QString district = query.value(8).toString();
+        QString address = query.value(9).toString();
+        qDebug() << "city: " << city << "district: " << district;
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
-        //QStandardItem *learnAddressItem = new QStandardItem(learn_address);
         QStandardItem *personnelIDItem = new QStandardItem(personId);
         QStandardItem *telItem = new QStandardItem(tel);
+        QStandardItem *provinceItem = new QStandardItem(province);
+        QStandardItem *cityItem = new QStandardItem(city);
+        QStandardItem *districtItem = new QStandardItem(district);
+        QStandardItem *addressItem = new QStandardItem(address);
 
 
         viewModel->appendRow(
@@ -1248,9 +1283,12 @@ bool Connect::init_and_append_items2_tableView()
                     << phoneItem
                     << receiptItem
                     << codeItem
-                    //<< learnAddressItem
                     << personnelIDItem
                     << telItem
+                    << provinceItem
+                    << cityItem
+                    << districtItem
+                    << addressItem
                     );
     }
 
@@ -1507,7 +1545,10 @@ bool Connect::append_model_data(int c, QString where)
                 "   `phone_num`, "
                 "   `receipt`, "
                 "   `code`, "
-                "   `learn_dharma_address` "
+                "   `province`, "
+                "   `city`, "
+                "   `district`, "
+                "   `address` "
                 " FROM "
                 "   `people` "
                 " WHERE "
@@ -1528,14 +1569,20 @@ bool Connect::append_model_data(int c, QString where)
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
-        QString learn_address = query.value(4).toString();
+        QString province = query.value(4).toString();
+        QString city = query.value(5).toString();
+        QString district = query.value(6).toString();
+        QString address = query.value(7).toString();
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
-        QStandardItem *learnAddressItem = new QStandardItem(learn_address);
+        QStandardItem *provinceItem = new QStandardItem(province);
+        QStandardItem *cityItem = new QStandardItem(city);
+        QStandardItem *districtItem = new QStandardItem(district);
+        QStandardItem *addressItem = new QStandardItem(address);
 
         if (c == 0) {
         viewModel->appendRow(standardItemList
@@ -1543,7 +1590,10 @@ bool Connect::append_model_data(int c, QString where)
                                     << phoneItem
                                     << receiptItem
                                     << codeItem
-                                    << learnAddressItem
+                                    << provinceItem
+                                    << cityItem
+                                    << districtItem
+                                    << addressItem
                                     );
         } else {
          viewModel_search->appendRow(standardItemList
@@ -1551,7 +1601,10 @@ bool Connect::append_model_data(int c, QString where)
                                     << phoneItem
                                     << receiptItem
                                     << codeItem
-                                    << learnAddressItem
+                                    << provinceItem
+                                    << cityItem
+                                    << districtItem
+                                    << addressItem
                                     );
 
         }
@@ -1678,7 +1731,12 @@ void Connect::on_actionQueryAnyThing_triggered()
                 "   `phone_num`, "
                 "   `receipt`, "
                 "   `code`, "
-                "   `learn_dharma_address` "
+                "   `personnel_id`, "
+                "   `telephone_num`, "
+                "   `province`, "
+                "   `city`, "
+                "   `district`, "
+                "   `address` "
                 " FROM "
                 "   `people` "
                 " WHERE "
@@ -1704,21 +1762,36 @@ void Connect::on_actionQueryAnyThing_triggered()
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
-        QString learn_address = query.value(4).toString();
+        QString personnel_id = query.value(4).toString();
+        QString telephone_num = query.value(5).toString();
+        QString province = query.value(6).toString();
+        QString city = query.value(7).toString();
+        QString district = query.value(8).toString();
+        QString address = query.value(9).toString();
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
-        QStandardItem *learnAddressItem = new QStandardItem(learn_address);
+        QStandardItem *personnel_idItem = new QStandardItem(personnel_id);
+        QStandardItem *telephone_numItem = new QStandardItem(telephone_num);
+        QStandardItem *provinceItem = new QStandardItem(province);
+        QStandardItem *cityItem = new QStandardItem(city);
+        QStandardItem *districtItem = new QStandardItem(district);
+        QStandardItem *addressItem = new QStandardItem(address);
 
         viewModel_search->appendRow(standardItemList
                                     << nameItem
                                     << phoneItem
                                     << receiptItem
                                     << codeItem
-                                    << learnAddressItem
+                                    << personnel_idItem
+                                    << telephone_numItem
+                                    << provinceItem
+                                    << cityItem
+                                    << districtItem
+                                    << addressItem
                                     );
     }
 
@@ -1835,9 +1908,12 @@ void Connect::set_old_first_model()
     viewModel->setHorizontalHeaderItem(1, new QStandardItem("手机"));
     viewModel->setHorizontalHeaderItem(2, new QStandardItem("收据编号"));
     viewModel->setHorizontalHeaderItem(3, new QStandardItem("皈依证号"));
-    //viewModel->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
     viewModel->setHorizontalHeaderItem(4, new QStandardItem("身份证号码"));
     viewModel->setHorizontalHeaderItem(5, new QStandardItem("固定电话"));
+    viewModel->setHorizontalHeaderItem(6, new QStandardItem("省"));
+    viewModel->setHorizontalHeaderItem(7, new QStandardItem("市"));
+    viewModel->setHorizontalHeaderItem(8, new QStandardItem("区/县"));
+    viewModel->setHorizontalHeaderItem(9, new QStandardItem("村/街道"));
 
     ui->tableView->setModel(viewModel);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -1851,8 +1927,13 @@ void Connect::set_old_second_model()
     viewModel_search->setHorizontalHeaderItem(1, new QStandardItem("手机"));
     viewModel_search ->setHorizontalHeaderItem(2, new QStandardItem("收据编号"));
     viewModel_search->setHorizontalHeaderItem(3, new QStandardItem("皈依证号"));
-    //viewModel_search->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
 
+    viewModel_search->setHorizontalHeaderItem(4, new QStandardItem("身份证号码"));
+    viewModel_search->setHorizontalHeaderItem(5, new QStandardItem("固定电话"));
+    viewModel_search->setHorizontalHeaderItem(6, new QStandardItem("省"));
+    viewModel_search->setHorizontalHeaderItem(7, new QStandardItem("市"));
+    viewModel_search->setHorizontalHeaderItem(8, new QStandardItem("区/县"));
+    viewModel_search->setHorizontalHeaderItem(9, new QStandardItem("村/街道"));
     ui->tableView_2->setModel(viewModel_search);
     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
