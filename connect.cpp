@@ -227,9 +227,7 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 void Connect::on_lineEditReceipt_editingFinished()
 {
     if (!test_if_connected()) return;
-    if (ui->actionSearch->isChecked()) {
-        complete_fields("receipt", ui->lineEditReceipt->text());
-    }
+    complete_fields("receipt", ui->lineEditReceipt->text());
 }
 
 bool Connect::check_lineEdit_items()
@@ -1182,6 +1180,7 @@ void Connect::on_pushButton_clicked()
 {
     if (!test_if_connected()) return;
     init_and_append_items2_tableView();
+    ui->tableView_2->hide();
     qDebug() << "dbid" << dbid;
 }
 

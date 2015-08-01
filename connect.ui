@@ -1669,7 +1669,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action"/>
-   <addaction name="actionSearch"/>
    <addaction name="actionQueryAnyThing"/>
    <addaction name="actionDbBack"/>
    <addaction name="actionJoinin"/>
@@ -1683,18 +1682,6 @@
    </property>
    <property name="text">
     <string>更改服务器地址</string>
-   </property>
-  </action>
-  <action name="actionSearch">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="img.qrc">
-     <normaloff>:/image/img/else.png</normaloff>:/image/img/else.png</iconset>
-   </property>
-   <property name="text">
-    <string>自动补全</string>
    </property>
   </action>
   <action name="actionQueryAnyThing">
