@@ -20,5 +20,8 @@
         <file>img/group.png</file>
         <file>img/data-delete.png</file>
         <file>img/undo.png</file>
+        <file>img/id-card.png</file>
+        <file>img/phone.png</file>
+        <file>img/profile.png</file>
     </qresource>
 </RCC>

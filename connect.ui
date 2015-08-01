@@ -273,11 +273,29 @@
              <property name="whatsThis">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhLatinOnly</set>
+             </property>
+             <property name="inputMask">
+              <string/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
+             </property>
              <property name="placeholderText">
-              <string>身份证号：</string>
+              <string>身份证号:</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -1366,19 +1384,13 @@
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <family>KaiTi</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>录入结果：</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QTableView" name="tableView">
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <family>STKaiti</family>
@@ -1394,16 +1406,22 @@
            <bool>true</bool>
           </property>
           <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustIgnored</enum>
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
           </property>
           <property name="editTriggers">
            <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
           </property>
           <property name="dragEnabled">
-           <bool>true</bool>
+           <bool>false</bool>
+          </property>
+          <property name="dragDropOverwriteMode">
+           <bool>false</bool>
           </property>
           <property name="dragDropMode">
            <enum>QAbstractItemView::NoDragDrop</enum>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
           </property>
           <property name="showGrid">
            <bool>true</bool>
@@ -1411,18 +1429,9 @@
           <property name="gridStyle">
            <enum>Qt::SolidLine</enum>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="font">
-           <font>
-            <family>KaiTi</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>查询结果：</string>
-          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>100</number>
+          </attribute>
          </widget>
         </item>
         <item>
@@ -1627,7 +1636,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(231, 231, 231);</string>
+   </property>
+  </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="font">
     <font>

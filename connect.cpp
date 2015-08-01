@@ -18,7 +18,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.1";
+    server_ip = "192.168.31.5";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
@@ -52,36 +52,39 @@ Connect::Connect(QWidget *parent) :
 
         // 文化程度
         QStringList degree_list;
-        degree_list << " 1. 小学" << " 2. 初中" << " 3. 高中" << " 4. 大学专科" << " 5. 大学本科" << " 6. 硕士" << " 7. 博士" << " 8. 博士后";
+        degree_list << "小学" << "初中" << "高中" << "高中中专" << "大学专科" << "大学本科" << "硕士" << "博士" << "博士后";
         QCompleter *degree_completer = new QCompleter(degree_list, this);
+        degree_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditDegree->setCompleter(degree_completer);
 
         // 健康状况
         QStringList health_list;
         health_list << " 1. 良好" << " 2. 一般" << " 3. 欠佳" << " 4. 重病";
         QCompleter *health_completer = new QCompleter(health_list, this);
+        health_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditHealth->setCompleter(health_completer);
 
         // 是否深刻了解佛法
         QStringList knowledge_list;
         knowledge_list << " 1. 完全不了解" << " 2. 不深刻" << " 3. 比较深刻";
         QCompleter *knowledge_completer = new QCompleter(knowledge_list, this);
-        knowledge_completer->setCaseSensitivity(Qt::CaseInsensitive);
+        knowledge_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditBuddhismLevel->setCompleter(knowledge_completer);
 
         // 以何因缘了解佛法
         QStringList reason_list;
         reason_list << " 1. 由法师(居士)引导学佛" << " 2. 由读佛教经典领悟学佛" << " 3. 由经历启发学佛";
         QCompleter *reason_completer = new QCompleter(reason_list, this);
-        reason_completer->setCaseSensitivity(Qt::CaseInsensitive);
+        reason_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditReasonToLearnDharma->setCompleter(reason_completer);
 
         // 学佛小组种类
         QStringList learn_kinds_list;
         learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周末山上/平常山下" << " 5. 周末山上/京外"
-                   << " 6. 平常上下/京外" << " 7. 周末山上/平常山下/京外" << "8. 周末山上/外语" << "9. 周末山上/平常山下/外语"
-                   << "10. 平常山下/外语";
+                   << " 6. 平常上下/京外" << " 7. 周末山上/平常山下/京外" << " 8. 周末山上/外语" << " 9. 周末山上/平常山下/外语"
+                   << " 10. 平常山下/外语";
         QCompleter *learn_kinds_completer = new QCompleter(learn_kinds_list, this);
+        learn_kinds_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditLearnKind->setCompleter(learn_kinds_completer);
     }
 
@@ -92,9 +95,8 @@ Connect::Connect(QWidget *parent) :
         viewModel->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
         viewModel->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
         viewModel->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
-        viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
-        viewModel->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("身份证号码")));
-        viewModel->setHorizontalHeaderItem(6, new QStandardItem(QObject::trUtf8("固定电话")));
+        viewModel->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("身份证号码")));
+        viewModel->setHorizontalHeaderItem(5, new QStandardItem(QObject::trUtf8("固定电话")));
         ui->tableView->setModel(viewModel);
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -106,7 +108,6 @@ Connect::Connect(QWidget *parent) :
         viewModel_search->setHorizontalHeaderItem(1, new QStandardItem(QObject::trUtf8("手机")));
         viewModel_search ->setHorizontalHeaderItem(2, new QStandardItem(QObject::trUtf8("收据编号")));
         viewModel_search->setHorizontalHeaderItem(3, new QStandardItem(QObject::trUtf8("皈依证号")));
-        viewModel_search->setHorizontalHeaderItem(4, new QStandardItem(QObject::trUtf8("学佛小组地址")));
         ui->tableView_2->setModel(viewModel_search);
         ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     }
@@ -143,14 +144,18 @@ Connect::Connect(QWidget *parent) :
         QRegExp regExpRetirementDate("^(19|20)\\d{2}.(1[0-2]|0?[1-9]).(0?[1-9]|[1-2][0-9]|3[0-1])$");
         ui->lineEditRetirementDate->setValidator(new QRegExpValidator(regExpRetirementDate, this));
 
+        /* 去掉对身份证的校验
         QRegExp regExpID("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])((\\d{4})|\\d{3}[Xx])$");
         ui->lineEditID->setValidator(new QRegExpValidator(regExpID, this));
+        */
 
         QRegExp regExpYearsOfLearningBuhddhism("^[1-9]\\d?$");
         ui->lineEditYearsOfLearningBuddhism->setValidator(new QRegExpValidator(regExpYearsOfLearningBuhddhism, this));
 
+        /* 去掉对邮编的校验
         QRegExp regExpPostcode("^[1-9][0-9]{5}$");
         ui->lineEditPostcode->setValidator(new QRegExpValidator(regExpPostcode, this));
+        */
         /* set validators [above] */
     }
 
@@ -455,7 +460,10 @@ bool Connect::update_database()
                         `maxim`,\
                         `buddhist_disciples_of_family`,\
                         `editor`,\
-                        `code`)\
+                        `code`,\
+                         `ipaddress`\
+                              )\
+                                \
                     VALUES\
                     (   :name,\
                         :gender,\
@@ -495,7 +503,9 @@ bool Connect::update_database()
                         :maxim,\
                         :buddhist_disciples_of_family,\
                         :editor,\
-                        :code);"
+                        :code,\
+                        :ipaddress\
+                        );"
                 );
     }
 
@@ -539,6 +549,7 @@ bool Connect::update_database()
     query.bindValue(":editor", ui->lineEditor->text());
     query.bindValue(":code", ui->lineEditCode->text());
     query.bindValue(":dbid", dbid);
+    query.bindValue(":ipaddress", local_ip);
     dbid = 0;
     bool rt = query.exec();
     if (!rt) {
@@ -851,7 +862,7 @@ void Connect::append_items2_tableView()
         QString phone = ui->lineEditPhoneNum->text();
         QString receipt = ui->lineEditReceipt->text();
         QString code = ui->lineEditCode->text();
-        QString learnAddress = ui->lineEditLearnAddress->text();
+        //QString learnAddress = ui->lineEditLearnAddress->text();
         QString personId = ui->lineEditID->text();
         QString tel = ui->lineEditTelephoneNum->text();
 
@@ -860,7 +871,7 @@ void Connect::append_items2_tableView()
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
-        QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
+        //QStandardItem *learnAddressItem = new QStandardItem(learnAddress);
         QStandardItem *personIdItem = new QStandardItem(personId);
         QStandardItem *telItem = new QStandardItem(tel);
 
@@ -870,7 +881,7 @@ void Connect::append_items2_tableView()
                     << phoneItem
                     << receiptItem
                     << codeItem
-                    << learnAddressItem
+                    //<< learnAddressItem
                     << personIdItem
                     << telItem
                     );
@@ -1217,7 +1228,7 @@ bool Connect::init_and_append_items2_tableView()
         QString phone = query.value(1).toString();
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
-        QString learn_address = query.value(4).toString();
+        //QString learn_address = query.value(4).toString();
         QString personId = query.value(5).toString();
         QString tel = query.value(6).toString();
 
@@ -1226,7 +1237,7 @@ bool Connect::init_and_append_items2_tableView()
         QStandardItem *phoneItem = new QStandardItem(phone);
         QStandardItem *receiptItem = new QStandardItem(receipt);
         QStandardItem *codeItem = new QStandardItem(code);
-        QStandardItem *learnAddressItem = new QStandardItem(learn_address);
+        //QStandardItem *learnAddressItem = new QStandardItem(learn_address);
         QStandardItem *personnelIDItem = new QStandardItem(personId);
         QStandardItem *telItem = new QStandardItem(tel);
 
@@ -1237,7 +1248,7 @@ bool Connect::init_and_append_items2_tableView()
                     << phoneItem
                     << receiptItem
                     << codeItem
-                    << learnAddressItem
+                    //<< learnAddressItem
                     << personnelIDItem
                     << telItem
                     );
@@ -1315,6 +1326,7 @@ bool Connect::create_table()
             "  `if_apply_learn_place` varchar(10) DEFAULT '否',"
             "  `notes` varchar(128) DEFAULT NULL,"
             "  `mark` tinyint(1) NOT NULL DEFAULT '0',"
+            "   `ipaddress` varchar(32) DEFAULT NULL,"
             "  PRIMARY KEY (`id`),"
             "  UNIQUE KEY `receipt` (`receipt`),"
             "  UNIQUE KEY `code` (`code`)"
@@ -1718,13 +1730,11 @@ void Connect::on_actionQueryAnyThing_triggered()
 void Connect::hide_search_table()
 {
     ui->tableView_2->hide();
-    ui->label_2->hide();
 }
 
 void Connect::show_search_table()
 {
     ui->tableView_2->show();
-    ui->label_2->show();
 }
 
 void Connect::on_tableView_2_doubleClicked(const QModelIndex &index)
@@ -1825,9 +1835,9 @@ void Connect::set_old_first_model()
     viewModel->setHorizontalHeaderItem(1, new QStandardItem("手机"));
     viewModel->setHorizontalHeaderItem(2, new QStandardItem("收据编号"));
     viewModel->setHorizontalHeaderItem(3, new QStandardItem("皈依证号"));
-    viewModel->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
-    viewModel->setHorizontalHeaderItem(5, new QStandardItem("身份证号码"));
-    viewModel->setHorizontalHeaderItem(6, new QStandardItem("固定电话"));
+    //viewModel->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
+    viewModel->setHorizontalHeaderItem(4, new QStandardItem("身份证号码"));
+    viewModel->setHorizontalHeaderItem(5, new QStandardItem("固定电话"));
 
     ui->tableView->setModel(viewModel);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -1841,7 +1851,7 @@ void Connect::set_old_second_model()
     viewModel_search->setHorizontalHeaderItem(1, new QStandardItem("手机"));
     viewModel_search ->setHorizontalHeaderItem(2, new QStandardItem("收据编号"));
     viewModel_search->setHorizontalHeaderItem(3, new QStandardItem("皈依证号"));
-    viewModel_search->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
+    //viewModel_search->setHorizontalHeaderItem(4, new QStandardItem("学佛小组地址"));
 
     ui->tableView_2->setModel(viewModel_search);
     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
