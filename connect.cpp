@@ -264,6 +264,11 @@ void Connect::on_pushButtonOK_clicked()
     if (update_database()) {
         append_items2_tableView();
         clear_lineEdits();
+    }
+
+    if (!ui->actionJoinin->isEnabled()) {
+        ui->lineEdit_Name->setFocus();
+    } else {
         ui->lineEditName->setFocus();
     }
 }
