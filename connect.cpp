@@ -18,7 +18,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.5";
+    server_ip = "192.168.31.1";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
@@ -829,7 +829,8 @@ void Connect::append_items2_tableView()
     if (!ui->actionJoinin->isEnabled()) {
         QString order = ui->lineEdit_Order->text(); // use receipt field instead
         QString name = ui->lineEdit_Name->text();
-        QString phone = ui->lineEdit_Phone->text();
+        QString num = ui->lineEdit_Phone->text();
+        QString phone = QString("%1 %2 %3").arg(num.mid(0, 3)).arg(num.mid(3, 4)).arg(num.mid(7, 4));
         QString contractWay = ui->lineEdit_ContractWay->text();
         QString kinds = ui->lineEditLearnKind->text();
         QString gender = ui->lineEdit_Gender->text();
@@ -874,10 +875,12 @@ void Connect::append_items2_tableView()
                     );
     } else {
         QString name = ui->lineEditName->text();
-        QString phone = ui->lineEditPhoneNum->text();
+        QString num = ui->lineEditPhoneNum->text();
+        QString phone = QString("%1 %2 %3").arg(num.mid(0, 3)).arg(num.mid(3, 4)).arg(num.mid(7, 4));
         QString receipt = ui->lineEditReceipt->text();
         QString code = ui->lineEditCode->text();
-        QString personId = ui->lineEditID->text();
+        QString personnel_id = ui->lineEditID->text();
+        QString personId = QString("%1 %2 %3 %4 %5").arg(personnel_id.mid(0, 3)).arg(personnel_id.mid(3, 3)).arg(personnel_id.mid(6, 4)).arg(personnel_id.mid(10, 4)).arg(personnel_id.mid(14, 4));
         QString tel = ui->lineEditTelephoneNum->text();
         QString province = ui->lineEditProvince->text();
         QString city = ui->lineEditCity->text();
@@ -1337,16 +1340,17 @@ bool Connect::init_and_append_items2_tableView()
     while(query.next()) {
         QString name = query.value(0).toString();
         qDebug() << "NAME: " << name;
-        QString phone = query.value(1).toString();
+        QString num = query.value(1).toString();
+        QString phone = QString("%1 %2 %3").arg(num.mid(0, 3)).arg(num.mid(3, 4)).arg(num.mid(7, 4));
         QString receipt = query.value(2).toString();
         QString code = query.value(3).toString();
-        QString personId = query.value(4).toString();
+        QString person = query.value(4).toString();
+        QString personId = QString("%1 %2 %3 %4 %5").arg(person.mid(0, 3)).arg(person.mid(3, 3)).arg(person.mid(6, 4)).arg(person.mid(10, 4)).arg(person.mid(14, 4));
         QString tel = query.value(5).toString();
         QString province = query.value(6).toString();
         QString city = query.value(7).toString();
         QString district = query.value(8).toString();
         QString address = query.value(9).toString();
-        qDebug() << "city: " << city << "district: " << district;
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
