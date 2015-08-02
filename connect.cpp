@@ -27,6 +27,8 @@ Connect::Connect(QWidget *parent) :
     hide_search_table();
     ui->fgroupWidget->hide();
     ui->lineEditRace->setText("汉族");
+    ui->lineEditProvince->setText("北京市");
+    ui->lineEditCity->setText("北京市");
 
     //completor
     {
@@ -651,11 +653,12 @@ bool Connect::clear_lineEdits() // [fixed xuefoxiaozu]
     ui->lineEditHealth->clear();
     ui->lineEditTelephoneNum->clear();
     ui->lineEditRace->setText("汉族");
-    ui->lineEditProvince->clear();
+    //ui->lineEditProvince->clear();
+    ui->lineEditProvince->setText("北京市");
     ui->lineEditCode->clear();
-    ui->lineEditCity->clear();
-    //ui->lineEditTime->clear();
+    //ui->lineEditCity->clear();
     ui->lineEditReceipt->clear();
+    ui->lineEditCity->setText("北京市");
     ui->lineEditWorkPlace->clear();
     ui->lineEditDistrict->clear();
     ui->lineEditAddress->clear();
