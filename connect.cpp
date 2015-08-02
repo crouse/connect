@@ -695,7 +695,7 @@ bool Connect::complete_fields(QString name, QString value)
         qDebug() << sql;
 
         if (query.size() == 0) {
-            ui->lineEdit_Order->setFocus();
+            //ui->lineEdit_Order->setFocus();
             return true;
         }
 
