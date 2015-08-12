@@ -31,6 +31,7 @@ public:
     bool complete_fields(QString name, QString value);
     void append_items2_tableView();
     bool init_and_append_items2_tableView();
+    bool init_and_append_items2_tableView_check();
     bool init_db();
     bool db_port_test();
     bool modify_or_not();
@@ -104,6 +105,10 @@ private slots:
     void on_actionAbort_triggered();
 
     void on_lineEdit_Phone_editingFinished();
+
+    void on_actionRevision_triggered();
+
+    void on_lineEditQuery_returnPressed();
 
 protected:
     void closeEvent(QCloseEvent *event);

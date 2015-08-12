@@ -230,7 +230,7 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 void Connect::on_lineEditReceipt_editingFinished()
 {
     if (!test_if_connected()) return;
-    complete_fields("receipt", ui->lineEditReceipt->text());
+    complete_fields("receipt", ui->lineEditReceipt->text().toUpper());
 }
 
 bool Connect::check_lineEdit_items()
@@ -540,7 +540,7 @@ bool Connect::update_database()
     query.bindValue(":health", ui->lineEditHealth->text().section(' ', -1));
     query.bindValue(":telephone_num", ui->lineEditTelephoneNum->text());
     query.bindValue(":edit_time", ui->lineEditTime->text());
-    query.bindValue(":receipt", ui->lineEditReceipt->text());
+    query.bindValue(":receipt", ui->lineEditReceipt->text().toUpper());
     query.bindValue(":workplace", ui->lineEditWorkPlace->text());
     query.bindValue(":province", ui->lineEditProvince->text());
     query.bindValue(":city", ui->lineEditCity->text());
@@ -797,7 +797,7 @@ bool Connect::complete_fields(QString name, QString value)
         ui->lineEditHealth->setText(query.value(10).toString());
         ui->lineEditTelephoneNum->setText(query.value(11).toString());
         ui->lineEditTime->setText(query.value(12).toString());
-        ui->lineEditReceipt->setText(query.value(13).toString());
+        ui->lineEditReceipt->setText(query.value(13).toString().toUpper());
         ui->lineEditWorkPlace->setText(query.value(14).toString());
         ui->lineEditProvince->setText(query.value(15).toString());
         ui->lineEditCity->setText(query.value(16).toString());
@@ -881,7 +881,7 @@ void Connect::append_items2_tableView()
         QString name = ui->lineEditName->text();
         QString num = ui->lineEditPhoneNum->text();
         QString phone = QString("%1 %2 %3").arg(num.mid(0, 3)).arg(num.mid(3, 4)).arg(num.mid(7, 4));
-        QString receipt = ui->lineEditReceipt->text();
+        QString receipt = ui->lineEditReceipt->text().toUpper();
         QString code = ui->lineEditCode->text();
         QString personnel_id = ui->lineEditID->text();
         QString personId = QString("%1 %2 %3 %4 %5").arg(personnel_id.mid(0, 3)).arg(personnel_id.mid(3, 3)).arg(personnel_id.mid(6, 4)).arg(personnel_id.mid(10, 4)).arg(personnel_id.mid(14, 4));
@@ -1274,6 +1274,95 @@ void Connect::on_pushButton_clicked()
     qDebug() << "dbid" << dbid;
 }
 
+bool Connect::init_and_append_items2_tableView_check()
+{
+    QString receipt = ui->lineEditQuery->text().trimmed().toUpper();
+    QSqlQuery query;
+
+    if (!ui->actionJoinin->isEnabled()) {
+        QString others = ui->lineEditOthers->text().trimmed();
+        if (others.isEmpty()) {
+            append_model_data(0, "");
+        } else {
+            QString where = QString(" WHERE `others` = (select others from people where receipt = '%1') AND `mark` = 0").arg(receipt);
+            append_model_data(0, where);
+        }
+       return true;
+    }
+
+    query.prepare(
+                " SELECT "
+                "    `name`, "
+                "    `phone_num`, "
+                "    `receipt`, "
+                "    `code`, "
+                "    `personnel_id`, "
+                "    `telephone_num`, "
+                "    `province`, "
+                "    `city`, "
+                "    `district`, "
+                "    `address` "
+                " FROM "
+                "    `people` "
+                " WHERE editor = (select editor from people where receipt = :receipt)"
+                " ORDER BY "
+                "    `receipt` DESC "
+                );
+
+    query.bindValue(":receipt", receipt);
+
+    query.exec();
+
+    qDebug() << query.lastQuery();
+
+    set_old_model_view(); // 清除所有行，重新设置标题
+
+    while(query.next()) {
+        QString name = query.value(0).toString();
+        qDebug() << "NAME: " << name;
+        QString num = query.value(1).toString();
+        QString phone = QString("%1 %2 %3").arg(num.mid(0, 3)).arg(num.mid(3, 4)).arg(num.mid(7, 4));
+        QString receipt = query.value(2).toString();
+        QString code = query.value(3).toString();
+        QString person = query.value(4).toString();
+        QString personId = QString("%1 %2 %3 %4 %5").arg(person.mid(0, 3)).arg(person.mid(3, 3)).arg(person.mid(6, 4)).arg(person.mid(10, 4)).arg(person.mid(14, 4));
+        QString tel = query.value(5).toString();
+        QString province = query.value(6).toString();
+        QString city = query.value(7).toString();
+        QString district = query.value(8).toString();
+        QString address = query.value(9).toString();
+
+        QList <QStandardItem*> standardItemList;
+        QStandardItem *nameItem = new QStandardItem(name);
+        QStandardItem *phoneItem = new QStandardItem(phone);
+        QStandardItem *receiptItem = new QStandardItem(receipt);
+        QStandardItem *codeItem = new QStandardItem(code);
+        QStandardItem *personnelIDItem = new QStandardItem(personId);
+        QStandardItem *telItem = new QStandardItem(tel);
+        QStandardItem *provinceItem = new QStandardItem(province);
+        QStandardItem *cityItem = new QStandardItem(city);
+        QStandardItem *districtItem = new QStandardItem(district);
+        QStandardItem *addressItem = new QStandardItem(address);
+
+
+        viewModel->appendRow(
+                    standardItemList
+                    << nameItem
+                    << phoneItem
+                    << receiptItem
+                    << codeItem
+                    << personnelIDItem
+                    << telItem
+                    << provinceItem
+                    << cityItem
+                    << districtItem
+                    << addressItem
+                    );
+    }
+
+    query.clear();
+    return true;
+}
 
 bool Connect::init_and_append_items2_tableView()
 {
@@ -1387,6 +1476,7 @@ bool Connect::init_and_append_items2_tableView()
     query.clear();
     return true;
 }
+
 
 bool Connect::init_db()
 {
@@ -2214,4 +2304,18 @@ void Connect::on_actionAbort_triggered()
 void Connect::on_lineEdit_Phone_editingFinished()
 {
     complete_fields("phone_num", ui->lineEdit_Phone->text());
+}
+
+void Connect::on_actionRevision_triggered()
+{
+    if (ui->lineEditQuery->isHidden()) {
+        ui->lineEditQuery->show();
+    } else {
+        ui->lineEditQuery->hide();
+    }
+}
+
+void Connect::on_lineEditQuery_returnPressed()
+{
+    init_and_append_items2_tableView_check();
 }

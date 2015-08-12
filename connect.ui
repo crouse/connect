@@ -1588,7 +1588,17 @@
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QLineEdit" name="lineEditQuery"/>
+         <widget class="QLineEdit" name="lineEditQuery">
+          <property name="toolTip">
+           <string>用来查询编辑人编辑的皈依信息，只需要查一个皈依者的信息即可</string>
+          </property>
+          <property name="placeholderText">
+           <string>收据号: （可以查找编辑人编辑的所有未校对的皈依信息）ENTER 查询</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QTableView" name="tableView">
@@ -1881,6 +1891,7 @@
    <addaction name="actionJoinin"/>
    <addaction name="actionInitDb"/>
    <addaction name="actionAbort"/>
+   <addaction name="actionRevision"/>
   </widget>
   <action name="action">
    <property name="icon">
@@ -1954,6 +1965,18 @@
    </property>
    <property name="text">
     <string>放弃更改</string>
+   </property>
+  </action>
+  <action name="actionRevision">
+   <property name="icon">
+    <iconset resource="img.qrc">
+     <normaloff>:/image/img/sure.png</normaloff>:/image/img/sure.png</iconset>
+   </property>
+   <property name="text">
+    <string>校对</string>
+   </property>
+   <property name="toolTip">
+    <string>用来校对内容是否正确</string>
    </property>
   </action>
  </widget>
