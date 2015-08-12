@@ -1304,7 +1304,7 @@ bool Connect::init_and_append_items2_tableView_check()
                 "    `address` "
                 " FROM "
                 "    `people` "
-                " WHERE editor = (select editor from people where receipt = :receipt)"
+                " WHERE editor = (select editor from people where receipt = :receipt) and `mark` = 0 "
                 " ORDER BY "
                 "    `receipt` DESC "
                 );
@@ -2310,6 +2310,7 @@ void Connect::on_actionRevision_triggered()
 {
     if (ui->lineEditQuery->isHidden()) {
         ui->lineEditQuery->show();
+        ui->lineEditQuery->setFocus();
     } else {
         ui->lineEditQuery->hide();
     }
@@ -2318,4 +2319,5 @@ void Connect::on_actionRevision_triggered()
 void Connect::on_lineEditQuery_returnPressed()
 {
     init_and_append_items2_tableView_check();
+    ui->lineEditQuery->hide();
 }
