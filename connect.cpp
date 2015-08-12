@@ -29,6 +29,7 @@ Connect::Connect(QWidget *parent) :
     ui->lineEditRace->setText("汉族");
     ui->lineEditProvince->setText("北京市");
     ui->lineEditCity->setText("北京市");
+    ui->lineEditQuery->hide();
 
     //completor
     {
