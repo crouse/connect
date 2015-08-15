@@ -968,7 +968,7 @@ void Connect::excelen(QString fileName) //[new]
                 " FROM "
                 "   `people`"
                 " WHERE"
-                "   `learn_dharma_kinds` IS NOT NULL "
+                "   `others` IS NOT NULL "
                 " AND learn_dharma_kinds like '%外语%' "
                 );
     query.exec();
@@ -1044,7 +1044,7 @@ void Connect::excel(QString fileName) //[new]
                 " FROM "
                 "   `people`"
                 " WHERE"
-                "   `learn_dharma_kinds` IS NOT NULL "
+                "   `others` IS NOT NULL "
                 );
     query.exec();
 
