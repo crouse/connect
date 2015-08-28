@@ -277,7 +277,7 @@
               <string notr="true"/>
              </property>
              <property name="inputMethodHints">
-              <set>Qt::ImhExclusiveInputMask</set>
+              <set>Qt::ImhDialableCharactersOnly|Qt::ImhDigitsOnly|Qt::ImhEmailCharactersOnly|Qt::ImhFormattedNumbersOnly|Qt::ImhLatinOnly|Qt::ImhLowercaseOnly|Qt::ImhUppercaseOnly|Qt::ImhUrlCharactersOnly</set>
              </property>
              <property name="placeholderText">
               <string>出生年月：</string>
@@ -1374,7 +1374,7 @@
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;学佛小组种类&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="styleSheet">
-            <string notr="true"/>
+            <string notr="true">background-color: rgb(255, 204, 102);</string>
            </property>
            <property name="placeholderText">
             <string>学佛小组种类：</string>

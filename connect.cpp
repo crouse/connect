@@ -18,7 +18,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.1";
+    server_ip = "192.168.31.5";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
@@ -30,6 +30,7 @@ Connect::Connect(QWidget *parent) :
     ui->lineEditProvince->setText("北京市");
     ui->lineEditCity->setText("北京市");
     ui->lineEditQuery->hide();
+    //ui->labelEditor->hide();
 
     //completor
     {
@@ -1301,7 +1302,8 @@ bool Connect::init_and_append_items2_tableView_check()
                 "    `province`, "
                 "    `city`, "
                 "    `district`, "
-                "    `address` "
+                "    `address`, "
+                "    `editor` "
                 " FROM "
                 "    `people` "
                 " WHERE editor = (select editor from people where receipt = :receipt) and `mark` = 0 "
@@ -1317,6 +1319,8 @@ bool Connect::init_and_append_items2_tableView_check()
 
     set_old_model_view(); // 清除所有行，重新设置标题
 
+    QString editor = NULL;
+
     while(query.next()) {
         QString name = query.value(0).toString();
         qDebug() << "NAME: " << name;
@@ -1331,6 +1335,7 @@ bool Connect::init_and_append_items2_tableView_check()
         QString city = query.value(7).toString();
         QString district = query.value(8).toString();
         QString address = query.value(9).toString();
+        editor = query.value(10).toString();
 
         QList <QStandardItem*> standardItemList;
         QStandardItem *nameItem = new QStandardItem(name);
@@ -1360,6 +1365,8 @@ bool Connect::init_and_append_items2_tableView_check()
                     );
     }
 
+    QString message = QString("<strong><i>当前校对的编辑人姓名: <font color=red>%1</font></i></strong>").arg(editor);
+    status_label->setText(message);
     query.clear();
     return true;
 }
