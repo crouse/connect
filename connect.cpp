@@ -1548,7 +1548,6 @@ bool Connect::create_table()
             "  `mark` tinyint(1) NOT NULL DEFAULT '0',"
             "   `ipaddress` varchar(32) DEFAULT NULL,"
             "  PRIMARY KEY (`id`),"
-            "  UNIQUE KEY `receipt` (`receipt`),"
             "  UNIQUE KEY `code` (`code`)"
             ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8";
 
