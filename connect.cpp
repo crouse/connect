@@ -18,7 +18,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.1";
+    server_ip = "192.168.31.5";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
@@ -311,7 +311,7 @@ bool Connect::update_database()
 
     if (!ui->actionJoinin->isEnabled()) {
         if (dbid != 0) {
-            query.prepare("UPDATE people set receipt = :receipt,"
+            query.prepare("UPDATE zen_person set receipt = :receipt,"
                           "name = :name,"
                           "gender = :gender,"
                           "birthday = :birthday,"
@@ -329,7 +329,7 @@ bool Connect::update_database()
                           "where id = :dbid"
                           );
         } else {
-            query.prepare("INSERT into people ("
+            query.prepare("INSERT into zen_person ("
                           "receipt,"
                           "name,"
                           "gender,"
@@ -395,7 +395,7 @@ bool Connect::update_database()
 
     if (dbid != 0) {
         query.prepare("\
-                      UPDATE `people` \
+                      UPDATE `zen_person` \
                       SET \
                       `name` = :name ,\
                       `gender` = :gender ,\
@@ -440,7 +440,7 @@ bool Connect::update_database()
                 );
     } else {
         query.prepare(
-                    "INSERT INTO `people`\
+                    "INSERT INTO `zen_person`\
                     (   `name`,\
                         `gender`,\
                         `job`,\
@@ -598,7 +598,7 @@ QString Connect::query_duplicate(QString code)
                 "     `editor`, "
                 "     `name` "
                 " FROM "
-                "     `people` "
+                "     `zen_person` "
                 " WHERE "
                 "     `code` = :code"
                 );
@@ -694,7 +694,7 @@ bool Connect::complete_fields(QString name, QString value)
         QString sql = QString("SELECT receipt, name, gender, birthday, phone_num,"
                               "telephone_num, learn_dharma_kinds, province, city,"
                               "district, address, if_apply_learn_place, notes,"
-                              "others, id, learn_dharma_address from people where %1 = '%2'"
+                              "others, id, learn_dharma_address from zen_person where %1 = '%2'"
                               ).arg(name, value);
         query.exec(sql);
         qDebug() << sql;
@@ -776,7 +776,7 @@ bool Connect::complete_fields(QString name, QString value)
                "    code, "
                "    id "
                " FROM "
-               "    people "
+               "    zen_person "
                " WHERE "
                "    %1 = '%2'"
             ).arg(name).arg(value);
@@ -967,7 +967,7 @@ void Connect::excelen(QString fileName) //[new]
                 "   `if_apply_learn_place`,"
                 "   `notes`"
                 " FROM "
-                "   `people`"
+                "   `zen_person`"
                 " WHERE"
                 "   `others` IS NOT NULL "
                 " AND learn_dharma_kinds like '%外语%' "
@@ -1043,7 +1043,7 @@ void Connect::excel(QString fileName) //[new]
                 "   `if_apply_learn_place`,"
                 "   `notes`"
                 " FROM "
-                "   `people`"
+                "   `zen_person`"
                 " WHERE"
                 "   `others` IS NOT NULL "
                 );
@@ -1148,7 +1148,7 @@ void Connect::save_excel(QString fileName)
                others,\
                learn_dharma_kinds,\
                learn_dharma_address\
-               from people order by receipt");
+               from zen_person order by receipt");
 
 
     {
@@ -1285,7 +1285,7 @@ bool Connect::init_and_append_items2_tableView_check()
         if (others.isEmpty()) {
             append_model_data(0, "");
         } else {
-            QString where = QString(" WHERE `others` = (select others from people where receipt = '%1') AND `mark` = 0").arg(receipt);
+            QString where = QString(" WHERE `others` = (select others from zen_person where receipt = '%1') AND `mark` = 0").arg(receipt);
             append_model_data(0, where);
         }
        return true;
@@ -1305,8 +1305,8 @@ bool Connect::init_and_append_items2_tableView_check()
                 "    `address`, "
                 "    `editor` "
                 " FROM "
-                "    `people` "
-                " WHERE editor = (select editor from people where receipt = :receipt) and `mark` = 0 "
+                "    `zen_person` "
+                " WHERE editor = (select editor from zen_person where receipt = :receipt) and `mark` = 0 "
                 " ORDER BY "
                 "    `receipt` DESC "
                 );
@@ -1403,7 +1403,7 @@ bool Connect::init_and_append_items2_tableView()
                     "    `district`, "
                     "    `address` "
                     " FROM "
-                    "    `people` "
+                    "    `zen_person` "
                     " ORDER BY "
                     "    `receipt` DESC "
                     );
@@ -1421,7 +1421,7 @@ bool Connect::init_and_append_items2_tableView()
                     "   `district`, "
                     "   `address` "
                     " FROM "
-                    "   `people` "
+                    "   `zen_person` "
                     " WHERE "
                     "   `editor` = :editor "
                     "    AND `mark` = 0 "
@@ -1505,8 +1505,8 @@ bool Connect::init_db()
 
 bool Connect::create_table()
 {
-    QString  people =
-            "CREATE TABLE IF NOT EXISTS `people` ("
+    QString  zen_person =
+            "CREATE TABLE IF NOT EXISTS `zen_person` ("
             "  `id` int(11) NOT NULL AUTO_INCREMENT,"
             "  `name` varchar(32) DEFAULT NULL,"
             "  `gender` varchar(10) DEFAULT NULL,"
@@ -1553,7 +1553,8 @@ bool Connect::create_table()
             "  `if_apply_learn_place` varchar(10) DEFAULT '否',"
             "  `notes` varchar(128) DEFAULT NULL,"
             "  `mark` tinyint(1) NOT NULL DEFAULT '0',"
-            "   `ipaddress` varchar(32) DEFAULT NULL,"
+            "  `ipaddress` varchar(32) DEFAULT NULL,"
+            "  `comes` tinyint NOT NULL DEFAULT '0' comment '来自手机或者笔记本录入, 0: 笔记本, 1: 手机',"
             "  PRIMARY KEY (`id`),"
             "  UNIQUE KEY `code` (`code`)"
             ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8";
@@ -1566,7 +1567,7 @@ bool Connect::create_table()
             "  `stat` int(11) DEFAULT NULL"
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8";
 
-    query.exec(people);
+    query.exec(zen_person);
     query.exec(admin);
 
     if (query.lastError().isValid()) {
@@ -1640,7 +1641,7 @@ bool Connect::append_model_data(int c, QString where)
                     "     `notes`, "
                     "     `id` "
                     " FROM "
-                    "     `people` "
+                    "     `zen_person` "
                     ) + where;
 
         query.exec(sql);
@@ -1738,7 +1739,7 @@ bool Connect::append_model_data(int c, QString where)
                 "   `district`, "
                 "   `address` "
                 " FROM "
-                "   `people` "
+                "   `zen_person` "
                 " WHERE "
                 ) + where;
 
@@ -1822,7 +1823,7 @@ void Connect::query_by_name_or_phone(QString search_text)
                 "     `notes`, "
                 "     `id` "
                 " FROM "
-                "     `people` "
+                "     `zen_person` "
                 " WHERE "
                 "     `name` = :abc "
                 " OR "
@@ -1926,7 +1927,7 @@ void Connect::on_actionQueryAnyThing_triggered()
                 "   `district`, "
                 "   `address` "
                 " FROM "
-                "   `people` "
+                "   `zen_person` "
                 " WHERE "
                 "   `name` = :abc "
                 " OR "
@@ -2031,8 +2032,8 @@ void Connect::on_actionDbBack_triggered()
     QString current_dt = dt.currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
     qDebug() << current_dt;
 
-    QString new_table_name = QString("people_%1").arg(current_dt);
-    QString sql = QString("create table %1 as select * from people;").arg(new_table_name);
+    QString new_table_name = QString("zen_person_%1").arg(current_dt);
+    QString sql = QString("create table %1 as select * from zen_person;").arg(new_table_name);
     QSqlQuery query;
     retcode = query.exec(sql);
     qDebug() << retcode;
@@ -2069,7 +2070,7 @@ void Connect::on_actionJoinin_triggered()
 
     // 更新状态表，允许所有使用者录入学佛小组信息
     update_table("update `admin` set `stat` = 1 where `stat_name` = 'xuefoxiaozu'");
-    update_table("update people set mark = 0");
+    update_table("update zen_person set mark = 0");
     ui->fgroupWidget->show();
     ui->joinWidget->hide();
     ui->actionJoinin->setDisabled(true);
@@ -2209,7 +2210,7 @@ void Connect::on_lineEditCode_editingFinished()
 bool Connect::admin_init_all()
 {
     // init db, create table, truncate table, save table
-    update_table("TRUNCATE `people`");
+    update_table("TRUNCATE `zen_person`");
     update_table("drop table if exists `admin`");
     update_table("create table if not exists `admin` (`stat_name` varchar(32), `stat` int)");
     update_table("insert into `admin` (`stat_name`, `stat`) values ('xuefoxiaozu', 0)");
@@ -2251,7 +2252,7 @@ void Connect::on_tableView_customContextMenuRequested(const QPoint &pos)
     QString id = viewModel->index(row, col).data().toString();
     gsql = QString(
                 " UPDATE "
-                "   `people` "
+                "   `zen_person` "
                 " SET"
                 "   `mark` = 1 "
                 " WHERE"
