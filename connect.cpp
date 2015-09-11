@@ -1610,7 +1610,7 @@ void Connect::on_pushButtonDatabase_pressed()
 void Connect::on_action_triggered()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.31.1", &ok);
+    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.31.5", &ok);
     if (ok && !text.isEmpty()) {
         server_ip = text;
     }
