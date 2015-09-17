@@ -231,6 +231,7 @@ void Connect::on_tableView_doubleClicked(const QModelIndex &index)
 void Connect::on_lineEditReceipt_editingFinished()
 {
     if (!test_if_connected()) return;
+    if (ui->lineEditReceipt->text().isEmpty()) return;
     complete_fields("receipt", ui->lineEditReceipt->text().toUpper());
 }
 
@@ -2187,7 +2188,6 @@ void Connect::set_new_model_view()
 void Connect::on_lineEditCode_editingFinished()
 {
     if (ui->lineEditCode->text().isEmpty()) {
-        ui->lineEditCode->setText("皈依证不能为空，请在此输入");
         return;
     }
 
@@ -2328,3 +2328,12 @@ void Connect::on_lineEditQuery_returnPressed()
     init_and_append_items2_tableView_check();
     ui->lineEditQuery->hide();
 }
+
+void Connect::on_lineEditName_editingFinished()
+{
+    int len = ui->lineEditName->text().size();
+    QString fname = QString("贤%1").arg(ui->lineEditName->text()[len-1]);
+    ui->lineEditFName->setText(fname);
+}
+
+

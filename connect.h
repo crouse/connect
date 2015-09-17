@@ -110,6 +110,8 @@ private slots:
 
     void on_lineEditQuery_returnPressed();
 
+    void on_lineEditName_editingFinished();
+
 protected:
     void closeEvent(QCloseEvent *event);
 
