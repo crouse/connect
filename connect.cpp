@@ -18,7 +18,7 @@ Connect::Connect(QWidget *parent) :
     ui(new Ui::Connect)
 {
     // 默认变量
-    server_ip = "192.168.31.5";
+    server_ip = "192.168.1.5";
     ui->setupUi(this);
     status_label = new QLabel;
     if_query_is_set = 0;
