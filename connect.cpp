@@ -1272,7 +1272,7 @@ void Connect::on_pushButton_clicked()
 {
     if (!test_if_connected()) return;
     init_and_append_items2_tableView();
-    ui->tableView_2->hide();
+    // ui->tableView_2->hide();
     qDebug() << "dbid" << dbid;
 }
 
