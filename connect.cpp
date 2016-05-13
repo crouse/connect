@@ -84,9 +84,7 @@ Connect::Connect(QWidget *parent) :
 
         // 学佛小组种类
         QStringList learn_kinds_list;
-        learn_kinds_list << " 1. 周日山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 周末山上/平常山下" << " 5. 周末山上/京外"
-                   << " 6. 平常上下/京外" << " 7. 周末山上/平常山下/京外" << " 8. 周末山上/外语" << " 9. 周末山上/平常山下/外语"
-                   << " 10. 平常山下/外语" << "11. 没填写";
+        learn_kinds_list << " 1. 周末山上 " << " 2. 平常山下" << " 3. 京外" << " 4. 境外" << " 5. 外语";
         QCompleter *learn_kinds_completer = new QCompleter(learn_kinds_list, this);
         learn_kinds_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
         ui->lineEditLearnKind->setCompleter(learn_kinds_completer);
@@ -1611,7 +1609,7 @@ void Connect::on_pushButtonDatabase_pressed()
 void Connect::on_action_triggered()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.31.5", &ok);
+    QString text = QInputDialog::getText(this, "server address", "server address", QLineEdit::Normal, "192.168.1.5", &ok);
     if (ok && !text.isEmpty()) {
         server_ip = text;
     }
@@ -2336,4 +2334,13 @@ void Connect::on_lineEditName_editingFinished()
     ui->lineEditFName->setText(fname);
 }
 
+
+
+void Connect::on_lineEdit_Order_returnPressed()
+{
+    qDebug() << "Here we are";
+    QString receipt = ui->lineEdit_Order->text();
+
+    complete_fields("receipt", receipt);
+}
 

@@ -1202,33 +1202,6 @@
        <widget class="QWidget" name="fgroupWidget" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QLineEdit" name="lineEdit_Name">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>姓名</string>
-           </property>
-           <property name="whatsThis">
-            <string/>
-           </property>
-           <property name="placeholderText">
-            <string>姓名:</string>
-           </property>
-           <property name="clearButtonEnabled">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QLineEdit" name="lineEdit_Order">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1242,13 +1215,13 @@
             </font>
            </property>
            <property name="toolTip">
-            <string>序号，手写编号</string>
+            <string>手环号：</string>
            </property>
            <property name="inputMethodHints">
             <set>Qt::ImhExclusiveInputMask</set>
            </property>
            <property name="placeholderText">
-            <string>序号:</string>
+            <string>序号: 按 return</string>
            </property>
            <property name="clearButtonEnabled">
             <bool>true</bool>
@@ -1273,6 +1246,33 @@
            </property>
            <property name="placeholderText">
             <string>性别:</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_Name">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string>姓名</string>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="placeholderText">
+            <string>姓名:</string>
            </property>
            <property name="clearButtonEnabled">
             <bool>true</bool>
@@ -1377,7 +1377,7 @@
             <string notr="true">background-color: rgb(255, 204, 102);</string>
            </property>
            <property name="placeholderText">
-            <string>学佛小组种类：</string>
+            <string>学佛小组种类：按空格</string>
            </property>
            <property name="clearButtonEnabled">
             <bool>true</bool>
@@ -2021,9 +2021,9 @@
   <tabstop>lineEditBuddhistDisciplesOfFamily</tabstop>
   <tabstop>lineEditor</tabstop>
   <tabstop>lineEditTime</tabstop>
-  <tabstop>lineEdit_Name</tabstop>
   <tabstop>lineEdit_Order</tabstop>
   <tabstop>lineEdit_Gender</tabstop>
+  <tabstop>lineEdit_Name</tabstop>
   <tabstop>lineEdit_Birthday</tabstop>
   <tabstop>lineEdit_Phone</tabstop>
   <tabstop>lineEdit_ContractWay</tabstop>
@@ -2036,6 +2036,7 @@
   <tabstop>lineEditLearnAddress</tabstop>
   <tabstop>lineEdit_Note</tabstop>
   <tabstop>lineEditOthers</tabstop>
+  <tabstop>lineEditQuery</tabstop>
   <tabstop>tableView</tabstop>
   <tabstop>tableView_2</tabstop>
   <tabstop>pushButtonDatabase</tabstop>

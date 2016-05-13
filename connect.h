@@ -112,6 +112,8 @@ private slots:
 
     void on_lineEditName_editingFinished();
 
+    void on_lineEdit_Order_returnPressed();
+
 protected:
     void closeEvent(QCloseEvent *event);
 
